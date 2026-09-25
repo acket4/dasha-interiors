@@ -61,18 +61,22 @@ export default function Process() {
           Как проходит <span className="text-gradient-gold">проект</span>
         </motion.h2>
 
-        <div className="mt-20">
-          <div ref={trackRef} className="relative h-px bg-white/10">
+        <div className="mt-24">
+          <div ref={trackRef} className="relative h-[3px] rounded-full bg-white/10">
             {STEPS.map((s, i) => (
               <button
                 key={s.title}
                 onClick={() => goTo(i)}
                 aria-label={s.title}
                 style={{ left: `${(i / (N - 1)) * 100}%` }}
-                className={`absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-300 ${
-                  active === i ? "bg-[#D4AF37]" : "bg-white/20 hover:bg-white/40"
-                }`}
-              />
+                className="absolute top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+              >
+                <span
+                  className={`h-3.5 w-3.5 rounded-full transition-colors duration-300 ${
+                    active === i ? "bg-[#D4AF37]" : "bg-white/25 hover:bg-white/45"
+                  }`}
+                />
+              </button>
             ))}
 
             <motion.div
@@ -83,27 +87,27 @@ export default function Process() {
               onDrag={handleDrag}
               onDragEnd={() => goTo(active)}
               style={{ x }}
-              className="absolute left-0 top-1/2 z-10 h-4 w-4 -translate-y-1/2 cursor-grab touch-none rounded-full border-2 border-[#D4AF37] bg-[#0F1013] shadow-[0_0_0_5px_rgba(212,175,55,0.14)] active:cursor-grabbing"
+              className="absolute left-0 top-1/2 z-10 h-7 w-7 -translate-y-1/2 cursor-grab touch-none rounded-full border-[3px] border-[#D4AF37] bg-[#0F1013] shadow-[0_0_0_7px_rgba(212,175,55,0.14)] active:cursor-grabbing"
             />
           </div>
 
-          <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-9 sm:grid-cols-5">
+          <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-5">
             {STEPS.map((s, i) => (
               <button
                 key={s.title}
                 onClick={() => goTo(i)}
                 className="text-left"
               >
-                <span className="font-mono text-[10px] text-[#D4AF37]">0{i + 1}</span>
+                <span className="font-mono text-xs text-[#D4AF37]">0{i + 1}</span>
                 <h4
-                  className={`mt-1.5 font-body font-semibold text-[#EFE9DD] transition-all duration-300 ${
-                    active === i ? "text-lg opacity-100" : "text-sm opacity-35"
+                  className={`mt-2 font-body font-semibold text-[#EFE9DD] transition-all duration-300 ${
+                    active === i ? "text-2xl opacity-100" : "text-base opacity-35"
                   }`}
                 >
                   {s.title}
                 </h4>
                 <p
-                  className={`mt-1 text-[12px] leading-relaxed text-[#a49d8c] transition-opacity duration-300 ${
+                  className={`mt-1.5 text-sm leading-relaxed text-[#a49d8c] transition-opacity duration-300 ${
                     active === i ? "opacity-100" : "opacity-0 sm:opacity-35"
                   }`}
                 >
