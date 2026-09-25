@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
@@ -15,8 +15,8 @@ const item = {
 const REASONS = [
   {
     n: "I",
-    title: "Продуманный план — навсегда",
-    text: "У вас будет чёткий план по стенам, мебели и электрике — документ, которым вы сможете пользоваться в любой момент ремонта, хоть через год, хоть через десять лет.",
+    title: "Продуманный план навсегда",
+    text: "У вас будет чёткий план по стенам, мебели и электрике: документ, которым вы сможете пользоваться в любой момент ремонта, хоть через год, хоть через десять лет.",
   },
   {
     n: "II",
@@ -41,18 +41,18 @@ export default function WhyTechProject() {
           </motion.p>
           <motion.h2 variants={item} className="mt-4 font-display text-4xl leading-tight text-[#EFE9DD] sm:text-5xl">
             Почему стоит начать с{" "}
-            <span className="text-gradient-gold italic">техпроекта</span>
+            <span className="text-gradient-gold ">техпроекта</span>
           </motion.h2>
           <motion.p variants={item} className="mt-6 max-w-md text-[15px] leading-relaxed text-[#a49d8c]">
-            Это база любого ремонта — до того, как в квартире появится хоть одна
-            плитка или розетка.
+            Это база любого ремонта, ещё до того, как в квартире появится хоть
+            одна плитка или розетка.
           </motion.p>
 
           <motion.div variants={item} className="mt-8 rounded-[24px] border border-[#D4AF37]/25 bg-[#D4AF37]/[0.05] p-6">
-            <p className="font-display text-lg italic text-[#EFE9DD]">Как сэкономить</p>
+            <p className="font-display text-lg text-[#EFE9DD]">Как сэкономить</p>
             <p className="mt-2 text-[13.5px] leading-relaxed text-[#a49d8c]">
-              Правки на этапе чертежа стоят часов работы. Правки на этапе стройки —
-              стоят стен, штробы и нервов.
+              Правки на этапе чертежа стоят часов работы. Правки на этапе
+              стройки стоят стен, штробы и нервов.
             </p>
             <a
               href="#contact"
@@ -71,7 +71,7 @@ export default function WhyTechProject() {
               variants={item}
               className="rounded-[26px] border border-white/8 bg-white/[0.03] p-7 backdrop-blur-xl transition-colors hover:border-[#D4AF37]/25"
             >
-              <div className="font-display text-2xl italic text-[#D4AF37]">{r.n}</div>
+              <div className="font-display text-2xl text-[#D4AF37]">{r.n}</div>
               <h3 className="mt-4 font-body text-[16px] font-semibold text-[#EFE9DD]">{r.title}</h3>
               <p className="mt-2.5 text-[14px] leading-relaxed text-[#a49d8c]">{r.text}</p>
             </motion.div>

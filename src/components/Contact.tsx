@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -44,11 +44,11 @@ export default function Contact() {
         <div>
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">Контакты</p>
           <h2 className="mt-4 font-display text-4xl text-[#EFE9DD] sm:text-5xl">
-            Обсудим ваш <span className="text-gradient-gold italic">проект</span>
+            Обсудим ваш <span className="text-gradient-gold ">проект</span>
           </h2>
           <p className="mt-6 max-w-md text-[15px] leading-relaxed text-[#a49d8c]">
             Работаю в Ангарске, Иркутске и ближайших районах. Напишите в Instagram
-            или скопируйте почту — отвечаю в течение суток.
+            или скопируйте почту. Отвечаю в течение суток.
           </p>
           <a
             href="https://www.instagram.com/darya_zver"

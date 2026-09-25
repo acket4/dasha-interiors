@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
@@ -15,7 +15,7 @@ const item = {
 const CHECKS = [
   "Уже сделали ремонт по моим чертежам",
   "Построили дома по моим планам",
-  "Заказали повторно — уже полный дизайн",
+  "Заказали повторно, уже полный дизайн",
 ];
 
 export default function Testimonial() {
@@ -43,9 +43,9 @@ export default function Testimonial() {
 
         <motion.blockquote
           variants={item}
-          className="mt-12 font-display text-2xl italic leading-snug text-[#EFE9DD] sm:text-3xl"
+          className="mt-12 font-display text-2xl leading-snug text-[#EFE9DD] sm:text-3xl"
         >
-          «Хочу от души поблагодарить Дарью за её профессионализм — заказывали с
+          «Хочу от души поблагодарить Дарью за её профессионализм, заказывали с
           мужем технический план квартиры и остались очень довольны. Дарья учла
           все наши пожелания и была с нами на связи постоянно. Услуги очень
           упрощают ремонт на начальном этапе, экономят время и нервы. Спасибо

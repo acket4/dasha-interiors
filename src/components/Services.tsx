@@ -1,57 +1,66 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
 const container = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.09 } },
+  show: { transition: { staggerChildren: 0.08 } },
 };
 const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
 };
 
 const SERVICES = [
-  { n: "I", title: "Дизайн-проект", text: "Планировка, визуализация и вся документация для стройки." },
-  { n: "II", title: "Авторский надзор", text: "Слежу, чтобы стройка не разошлась с проектом." },
-  { n: "III", title: "Подбор мебели", text: "Комплектация под бюджет, с учётом сроков поставки." },
-  { n: "IV", title: "Онлайн-консультация", text: "Разбор планировки или подбора цвета за один созвон." },
+  { n: "01", title: "Дизайн-проект", text: "Планировка, визуализация и вся документация для стройки." },
+  { n: "02", title: "Авторский надзор", text: "Слежу, чтобы стройка не разошлась с проектом." },
+  { n: "03", title: "Подбор мебели", text: "Комплектация под бюджет, с учётом сроков поставки." },
+  { n: "04", title: "Онлайн-консультация", text: "Разбор планировки или подбора цвета за один созвон." },
 ];
 
 export default function Services() {
   return (
     <section id="services" className="px-6 pb-28 sm:px-10 lg:px-16">
-      <div className="mx-auto max-w-7xl">
-        <motion.div
+      <div className="mx-auto max-w-5xl">
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-14 text-center"
+          className="mb-4 font-display text-4xl text-[#EFE9DD] sm:text-5xl"
         >
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">Услуги</p>
-          <h2 className="mt-4 font-display text-4xl text-[#EFE9DD] sm:text-5xl">
-            Чем могу <span className="text-gradient-gold italic">помочь</span>
-          </h2>
-        </motion.div>
+          Чем могу <span className="text-gradient-gold">помочь</span>
+        </motion.h2>
 
         <motion.div
           variants={container}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          className="mt-10 divide-y divide-white/8 border-t border-white/8"
         >
           {SERVICES.map((s) => (
-            <motion.div
+            <motion.a
               key={s.n}
+              href="#contact"
               variants={item}
-              className="rounded-[26px] border border-white/8 bg-white/[0.03] p-7 backdrop-blur-xl transition-colors hover:border-[#D4AF37]/25"
+              className="group grid grid-cols-[3rem_1fr_auto] items-center gap-6 py-7 transition-colors hover:bg-white/[0.02] sm:grid-cols-[4rem_1fr_auto_2rem]"
             >
-              <div className="font-display text-2xl italic text-[#D4AF37]">{s.n}</div>
-              <h3 className="mt-5 font-body text-[15px] font-semibold text-[#EFE9DD]">{s.title}</h3>
-              <p className="mt-2.5 text-[13px] leading-relaxed text-[#a49d8c]">{s.text}</p>
-            </motion.div>
+              <span className="font-mono text-[13px] text-[#D4AF37]">{s.n}</span>
+              <span>
+                <span className="block font-body text-lg font-semibold text-[#EFE9DD] sm:text-xl">
+                  {s.title}
+                </span>
+                <span className="mt-1 block max-w-md text-[13px] leading-relaxed text-[#a49d8c] sm:text-sm">
+                  {s.text}
+                </span>
+              </span>
+              <span className="hidden font-mono text-[10px] uppercase tracking-widest text-[#6b6558] sm:block">
+                обсудить
+              </span>
+              <ArrowUpRight className="h-5 w-5 shrink-0 justify-self-end text-[#a49d8c] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#D4AF37]" />
+            </motion.a>
           ))}
         </motion.div>
       </div>

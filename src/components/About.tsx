@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { Award } from "lucide-react";
@@ -44,12 +44,12 @@ export default function About() {
             className="mt-4 font-display text-4xl leading-tight text-[#EFE9DD] sm:text-5xl"
           >
             Привет, я{" "}
-            <span className="text-gradient-gold italic">Зверева Дарья</span>
+            <span className="text-gradient-gold ">Зверева Дарья</span>
           </motion.h2>
           <motion.p variants={item} className="mt-6 max-w-xl text-[15px] leading-relaxed text-[#a49d8c]">
             Дизайнер интерьера, автор технических и авторских дизайн-проектов
             квартир и домов в Ангарске, Иркутске и ближайших районах. Веду каждый
-            объект лично — от обмера и планировки до финальной расстановки декора.
+            объект лично, от обмера и планировки до финальной расстановки декора.
           </motion.p>
           <motion.p variants={item} className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#a49d8c]">
             В Instagram показываю весь процесс: от чертежа до финального кадра. Это

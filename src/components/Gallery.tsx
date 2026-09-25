@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -17,7 +17,7 @@ const panelItem = {
 function Placeholder({ index }: { index: number }) {
   return (
     <div className="flex aspect-[4/5] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-white/12 bg-white/[0.02]">
-      <span className="font-display text-2xl italic text-white/15">#{index}</span>
+      <span className="font-display text-2xl text-white/15">#{index}</span>
       <span className="font-mono text-[10px] uppercase tracking-widest text-white/20">скоро</span>
     </div>
   );
@@ -49,7 +49,7 @@ function ZoomView({ type, onClose }: { type: "photo" | "video"; onClose: () => v
             </span>
           </div>
         )}
-        <span className="absolute bottom-5 left-5 font-display text-xl italic text-[#EFE9DD]">
+        <span className="absolute bottom-5 left-5 font-display text-xl text-[#EFE9DD]">
           Гостиная-кухня
         </span>
       </motion.div>
@@ -101,7 +101,7 @@ function Lightbox({ type, onClose }: { type: "photo" | "video"; onClose: () => v
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">
                 {type === "photo" ? "Все фото" : "Все видео"}
               </p>
-              <h3 className="mt-2 font-display text-3xl italic text-[#EFE9DD]">
+              <h3 className="mt-2 font-display text-3xl text-[#EFE9DD]">
                 {type === "photo" ? "Коллекция фотографий" : "Видео-туры по проектам"}
               </h3>
             </div>
@@ -132,7 +132,7 @@ function Lightbox({ type, onClose }: { type: "photo" | "video"; onClose: () => v
                   </span>
                 </div>
               )}
-              <span className="absolute bottom-3 left-3 font-display text-sm italic text-[#EFE9DD]">
+              <span className="absolute bottom-3 left-3 font-display text-sm text-[#EFE9DD]">
                 Гостиная-кухня
               </span>
             </button>
@@ -165,11 +165,11 @@ export default function Gallery() {
         >
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">Работы</p>
           <h2 className="mt-4 font-display text-4xl text-[#EFE9DD] sm:text-5xl">
-            Фото и <span className="text-gradient-gold italic">видео</span>
+            Фото и <span className="text-gradient-gold ">видео</span>
           </h2>
           <p className="mx-auto mt-5 max-w-md text-[14px] text-[#a49d8c]">
-            Это лишь <span className="font-display italic text-[#EFE9DD]">малая часть</span> —
-            полная коллекция открывается по клику и растёт с каждым проектом.
+            Это лишь <span className="font-display text-[#EFE9DD]">малая часть</span>.
+            Полная коллекция открывается по клику и растёт с каждым проектом.
           </p>
         </motion.div>
 
@@ -200,7 +200,7 @@ export default function Gallery() {
             </span>
 
             <div className="absolute inset-x-6 bottom-6 flex items-end justify-between gap-4">
-              <span className="font-display text-2xl italic text-[#EFE9DD]">Гостиная-кухня</span>
+              <span className="font-display text-2xl text-[#EFE9DD]">Гостиная-кухня</span>
               <span className="flex shrink-0 items-center gap-2 rounded-full border border-[#D4AF37]/50 bg-[#0F1013]/50 px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-[#EFE9DD] backdrop-blur-md transition-colors group-hover:bg-[#D4AF37] group-hover:text-[#0F1013]">
                 Все фото
                 <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
@@ -236,7 +236,7 @@ export default function Gallery() {
             </span>
 
             <div className="absolute inset-x-6 bottom-6 flex items-end justify-between gap-4">
-              <span className="font-display text-2xl italic text-[#EFE9DD]">Обзор проекта</span>
+              <span className="font-display text-2xl text-[#EFE9DD]">Обзор проекта</span>
               <span className="flex shrink-0 items-center gap-2 rounded-full border border-[#D4AF37]/50 bg-[#0F1013]/50 px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-[#EFE9DD] backdrop-blur-md transition-colors group-hover:bg-[#D4AF37] group-hover:text-[#0F1013]">
                 Все видео
                 <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
