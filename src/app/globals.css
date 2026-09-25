@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0f1013;
+  --surface: #15161a;
+  --foreground: #efe9dd;
+  --foreground-soft: #a49d8c;
+  --gold: #d4af37;
+  --bronze: #c5a880;
+  --line: rgba(239, 233, 221, 0.08);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-foreground-soft: var(--foreground-soft);
+  --color-gold: var(--gold);
+  --color-bronze: var(--bronze);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+  background-image:
+    radial-gradient(ellipse 70% 55% at 18% 0%, rgba(212, 175, 55, 0.10), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 100% 20%, rgba(197, 168, 128, 0.07), transparent 60%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgba(212, 175, 55, 0.28);
+  color: #fff;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 175, 55, 0.4) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f1013;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.35);
+  border-radius: 999px;
+  border: 2px solid #0f1013;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.6);
+}
+
+.custom-cursor,
+.custom-cursor * {
+  cursor: none !important;
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), monospace;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(120deg, #f3d98a 0%, #d4af37 45%, #c5a880 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes kenburns {
+  0% {
+    transform: scale(1.1) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.22) translate3d(-1.5%, -1.5%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
