@@ -1,25 +1,53 @@
 "use client";
 
-import { motion } from "framer-motion";
-
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
-};
-const item = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
-};
+import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, animate } from "framer-motion";
 
 const STEPS = [
-  { n: "01", title: "Бриф", text: "Обмер и разговор о привычках" },
-  { n: "02", title: "Концепция", text: "Планировка и 3D-визуализация" },
-  { n: "03", title: "Чертежи", text: "Документация для подрядчиков" },
-  { n: "04", title: "Стройка", text: "Авторский надзор на объекте" },
-  { n: "05", title: "Декор", text: "Расстановка и фотосъёмка" },
+  { title: "Бриф", text: "Обмер и разговор о привычках" },
+  { title: "Концепция", text: "Планировка и 3D-визуализация" },
+  { title: "Чертежи", text: "Документация для подрядчиков" },
+  { title: "Стройка", text: "Авторский надзор на объекте" },
+  { title: "Декор", text: "Расстановка и фотосъёмка" },
 ];
 
+const N = STEPS.length;
+
 export default function Process() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+  const x = useMotionValue(0);
+
+  function stepToX(i: number) {
+    const width = trackRef.current?.getBoundingClientRect().width ?? 0;
+    return (i / (N - 1)) * width;
+  }
+
+  function goTo(i: number, animated = true) {
+    setActive(i);
+    const target = stepToX(i);
+    if (animated) {
+      animate(x, target, { type: "spring", stiffness: 380, damping: 34 });
+    } else {
+      x.set(target);
+    }
+  }
+
+  function handleDrag() {
+    const width = trackRef.current?.getBoundingClientRect().width ?? 1;
+    const pct = Math.min(1, Math.max(0, x.get() / width));
+    const idx = Math.round(pct * (N - 1));
+    setActive((prev) => (prev === idx ? prev : idx));
+  }
+
+  useEffect(() => {
+    x.set(0);
+    const onResize = () => goTo(active, false);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <section id="process" className="px-6 pb-28 sm:px-10 lg:px-16">
       <div className="mx-auto max-w-7xl">
@@ -33,28 +61,57 @@ export default function Process() {
           Как проходит <span className="text-gradient-gold">проект</span>
         </motion.h2>
 
-        <div className="relative mt-16">
-          <div className="absolute left-[13px] top-0 h-full w-px bg-white/10 sm:left-0 sm:right-0 sm:top-[13px] sm:h-px sm:w-auto" />
+        <div className="mt-20">
+          <div ref={trackRef} className="relative h-px bg-white/10">
+            {STEPS.map((s, i) => (
+              <button
+                key={s.title}
+                onClick={() => goTo(i)}
+                aria-label={s.title}
+                style={{ left: `${(i / (N - 1)) * 100}%` }}
+                className={`absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-300 ${
+                  active === i ? "bg-[#D4AF37]" : "bg-white/20 hover:bg-white/40"
+                }`}
+              />
+            ))}
 
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            className="grid gap-10 sm:grid-cols-5"
-          >
-            {STEPS.map((s) => (
-              <motion.div key={s.n} variants={item} className="relative pl-11 sm:pl-0">
-                <div className="absolute left-0 top-0 z-10 flex h-[26px] w-[26px] items-center justify-center rounded-full border border-[#D4AF37]/50 bg-[#0F1013] font-mono text-[10px] text-[#D4AF37] sm:static">
-                  {s.n}
-                </div>
-                <h4 className="mt-0 font-body text-[14px] font-semibold text-[#EFE9DD] sm:mt-5">
+            <motion.div
+              drag="x"
+              dragConstraints={trackRef}
+              dragElastic={0}
+              dragMomentum={false}
+              onDrag={handleDrag}
+              onDragEnd={() => goTo(active)}
+              style={{ x }}
+              className="absolute left-0 top-1/2 z-10 h-4 w-4 -translate-y-1/2 cursor-grab touch-none rounded-full border-2 border-[#D4AF37] bg-[#0F1013] shadow-[0_0_0_5px_rgba(212,175,55,0.14)] active:cursor-grabbing"
+            />
+          </div>
+
+          <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-9 sm:grid-cols-5">
+            {STEPS.map((s, i) => (
+              <button
+                key={s.title}
+                onClick={() => goTo(i)}
+                className="text-left"
+              >
+                <span className="font-mono text-[10px] text-[#D4AF37]">0{i + 1}</span>
+                <h4
+                  className={`mt-1.5 font-body font-semibold text-[#EFE9DD] transition-all duration-300 ${
+                    active === i ? "text-lg opacity-100" : "text-sm opacity-35"
+                  }`}
+                >
                   {s.title}
                 </h4>
-                <p className="mt-1.5 text-[12.5px] leading-relaxed text-[#a49d8c]">{s.text}</p>
-              </motion.div>
+                <p
+                  className={`mt-1 text-[12px] leading-relaxed text-[#a49d8c] transition-opacity duration-300 ${
+                    active === i ? "opacity-100" : "opacity-0 sm:opacity-35"
+                  }`}
+                >
+                  {s.text}
+                </p>
+              </button>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
