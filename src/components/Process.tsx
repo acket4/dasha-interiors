@@ -61,7 +61,19 @@ export default function Process() {
           Как проходит <span className="text-gradient-gold">проект</span>
         </motion.h2>
 
-        <div className="mt-24">
+        <div className="mt-24 rounded-[24px] border border-white/10 bg-white/[0.03] px-6 py-6 backdrop-blur-xl sm:px-9 sm:py-8">
+          <div className="mb-8 flex items-center justify-between">
+            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#a49d8c]">
+              Этап{" "}
+              <span className="font-body text-lg font-semibold normal-case tracking-normal text-[#EFE9DD]">
+                {STEPS[active].title}
+              </span>
+            </span>
+            <span className="font-mono text-[11px] text-[#6b6558]">
+              0{active + 1} / 0{N}
+            </span>
+          </div>
+
           <div ref={trackRef} className="relative h-[3px] rounded-full bg-white/10">
             {STEPS.map((s, i) => (
               <button
@@ -72,8 +84,8 @@ export default function Process() {
                 className="absolute top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
               >
                 <span
-                  className={`h-3.5 w-3.5 rounded-full transition-colors duration-300 ${
-                    active === i ? "bg-[#D4AF37]" : "bg-white/25 hover:bg-white/45"
+                  className={`h-2.5 w-2.5 rounded-full transition-colors duration-300 ${
+                    active === i ? "bg-[#0F1013]" : "bg-white/25 hover:bg-white/45"
                   }`}
                 />
               </button>
@@ -87,35 +99,31 @@ export default function Process() {
               onDrag={handleDrag}
               onDragEnd={() => goTo(active)}
               style={{ x }}
-              className="absolute left-0 top-1/2 z-10 h-7 w-7 -translate-y-1/2 cursor-grab touch-none rounded-full border-[3px] border-[#D4AF37] bg-[#0F1013] shadow-[0_0_0_7px_rgba(212,175,55,0.14)] active:cursor-grabbing"
+              className="absolute left-0 top-1/2 z-10 h-6 w-6 -translate-y-1/2 cursor-grab touch-none rounded-full bg-[#D4AF37] shadow-[0_2px_12px_rgba(212,175,55,0.45)] active:cursor-grabbing"
             />
           </div>
+        </div>
 
-          <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-5">
-            {STEPS.map((s, i) => (
-              <button
-                key={s.title}
-                onClick={() => goTo(i)}
-                className="text-left"
+        <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-5">
+          {STEPS.map((s, i) => (
+            <button key={s.title} onClick={() => goTo(i)} className="text-left">
+              <span className="font-mono text-xs text-[#D4AF37]">0{i + 1}</span>
+              <h4
+                className={`mt-2 font-body font-semibold text-[#EFE9DD] transition-all duration-300 ${
+                  active === i ? "text-2xl opacity-100" : "text-base opacity-35"
+                }`}
               >
-                <span className="font-mono text-xs text-[#D4AF37]">0{i + 1}</span>
-                <h4
-                  className={`mt-2 font-body font-semibold text-[#EFE9DD] transition-all duration-300 ${
-                    active === i ? "text-2xl opacity-100" : "text-base opacity-35"
-                  }`}
-                >
-                  {s.title}
-                </h4>
-                <p
-                  className={`mt-1.5 text-sm leading-relaxed text-[#a49d8c] transition-opacity duration-300 ${
-                    active === i ? "opacity-100" : "opacity-0 sm:opacity-35"
-                  }`}
-                >
-                  {s.text}
-                </p>
-              </button>
-            ))}
-          </div>
+                {s.title}
+              </h4>
+              <p
+                className={`mt-1.5 text-sm leading-relaxed text-[#a49d8c] transition-opacity duration-300 ${
+                  active === i ? "opacity-100" : "opacity-0 sm:opacity-35"
+                }`}
+              >
+                {s.text}
+              </p>
+            </button>
+          ))}
         </div>
       </div>
     </section>
