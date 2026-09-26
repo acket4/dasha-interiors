@@ -182,7 +182,7 @@ export default function Gallery() {
             Фото и <span className="text-gradient-gold">видео</span>
           </h2>
           <p className="mx-auto mt-5 max-w-md text-[14px] text-[#a49d8c]">
-            Здесь <span className="font-display text-[#EFE9DD]">лишь малая часть</span> её
+            Здесь <span className="font-display text-[#EFE9DD]">лишь малая часть</span>
             работ. Вся коллекция значительно больше и продолжает расти с каждым проектом.
           </p>
         </motion.div>
