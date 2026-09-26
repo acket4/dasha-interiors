@@ -22,12 +22,12 @@ const TIMELINE = [
 ];
 
 const MOSAIC = [
-  "/gallery/10.webp",
-  "/gallery/11.webp",
-  "/gallery/13.webp",
-  "/gallery/9.webp",
-  "/gallery/15.webp",
-  "/gallery/16.webp",
+  "/gallery/10.jpg",
+  "/gallery/11.jpg",
+  "/gallery/13.jpg",
+  "/gallery/9.jpg",
+  "/gallery/15.jpg",
+  "/gallery/16.jpg",
 ];
 
 function TiltCard({
