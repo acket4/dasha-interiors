@@ -22,12 +22,12 @@ const TIMELINE = [
 ];
 
 const MOSAIC = [
-  { filter: "", position: "50% 30%" },
-  { filter: "grayscale", position: "15% 55%" },
-  { filter: "sepia contrast-110", position: "75% 35%" },
-  { filter: "contrast-125 brightness-75", position: "40% 75%" },
-  { filter: "grayscale contrast-110", position: "80% 15%" },
-  { filter: "sepia brightness-90", position: "55% 60%" },
+  "/gallery/10.webp",
+  "/gallery/11.webp",
+  "/gallery/13.webp",
+  "/gallery/9.webp",
+  "/gallery/15.webp",
+  "/gallery/16.webp",
 ];
 
 function TiltCard({
@@ -152,15 +152,9 @@ export default function Stats() {
             реализованных проектов
           </div>
           <div className="grid grid-cols-3 gap-1.5">
-            {MOSAIC.map((m, i) => (
+            {MOSAIC.map((src, i) => (
               <div key={i} className="relative aspect-square overflow-hidden rounded-lg">
-                <Image
-                  src="/hero-interior.webp"
-                  alt=""
-                  fill
-                  className={`object-cover ${m.filter}`}
-                  style={{ objectPosition: m.position }}
-                />
+                <Image src={src} alt="" fill className="object-cover" />
                 <div className="absolute inset-0 bg-[#0F1013]/20" />
               </div>
             ))}

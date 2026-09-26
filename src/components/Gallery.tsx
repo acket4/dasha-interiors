@@ -17,9 +17,17 @@ const PHOTOS = [
   { src: "/gallery/6.jpg", alt: "Интерьер, проект 06" },
   { src: "/gallery/7.jpg", alt: "Интерьер, проект 07" },
   { src: "/gallery/8.jpg", alt: "Интерьер, проект 08" },
+  { src: "/gallery/9.webp", alt: "Раздевалка, спа-клуб" },
+  { src: "/gallery/10.webp", alt: "Кухня в зелёных тонах" },
+  { src: "/gallery/11.webp", alt: "Кухня-столовая" },
+  { src: "/gallery/12.webp", alt: "Спальня" },
+  { src: "/gallery/13.webp", alt: "Кухня-остров с видом на сад" },
+  { src: "/gallery/14.webp", alt: "Гардеробная" },
+  { src: "/gallery/15.webp", alt: "Ванная комната" },
+  { src: "/gallery/16.webp", alt: "Детская комната" },
 ];
 
-const PLACEHOLDER_COUNT = 4;
+const PLACEHOLDER_COUNT = 0;
 
 const panelItem: Variants = {
   hidden: { opacity: 0, y: 28 },

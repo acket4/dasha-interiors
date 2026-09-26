@@ -61,10 +61,9 @@ export default function About() {
             и есть портфолио, которое растёт вместе с реализованными проектами.
           </motion.p>
 
-          <motion.div variants={item} className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/8 bg-white/8 sm:grid-cols-4">
+          <motion.div variants={item} className="mt-10 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-white/8 bg-white/8">
             {[
               { n: "120+", l: "чертежей в архиве" },
-              { n: "14", l: "городов" },
               { n: "4.9", l: "рейтинг клиентов" },
               { icon: true, l: "человек года / дизайнер" },
             ].map((s) => (
