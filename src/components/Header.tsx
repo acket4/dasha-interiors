@@ -53,7 +53,7 @@ export default function Header() {
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-[#0F1013]/40 text-[#EFE9DD] backdrop-blur-md md:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-[#0F1013]/40 text-[#EFE9DD] backdrop-blur-md md:hidden"
           aria-label="Меню"
         >
           {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}

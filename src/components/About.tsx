@@ -27,7 +27,7 @@ export default function About() {
           className="relative aspect-[4/5] overflow-hidden rounded-[26px] border border-white/8 bg-white/[0.03] backdrop-blur-xl"
         >
           <div className="absolute inset-0 flex items-center justify-center p-8 text-center font-mono text-[11px] uppercase tracking-widest text-[#6b6558]">
-            портрет · фото появится здесь
+            портрет / фото появится здесь
           </div>
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F1013] via-transparent to-transparent" />
         </motion.div>
@@ -41,7 +41,7 @@ export default function About() {
           </motion.p>
           <motion.h2
             variants={item}
-            className="mt-4 font-display text-4xl leading-tight text-[#EFE9DD] sm:text-5xl"
+            className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] sm:text-5xl"
           >
             Привет, я{" "}
             <span className="text-gradient-gold ">Зверева Дарья</span>
@@ -61,7 +61,7 @@ export default function About() {
               { n: "120+", l: "чертежей в архиве" },
               { n: "14", l: "городов" },
               { n: "4.9", l: "рейтинг клиентов" },
-              { icon: true, l: "человек года · дизайнер" },
+              { icon: true, l: "человек года / дизайнер" },
             ].map((s) => (
               <div key={s.l} className="bg-[#0F1013] px-4 py-5">
                 {s.icon ? (

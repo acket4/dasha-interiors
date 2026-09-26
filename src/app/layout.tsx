@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Unbounded, Manrope, IBM_Plex_Mono } from "next/font/google";
+import { Playfair_Display, Manrope, IBM_Plex_Mono } from "next/font/google";
 import Cursor from "@/components/Cursor";
 import "./globals.css";
 
-const display = Unbounded({
+const display = Playfair_Display({
   variable: "--font-display",
   subsets: ["latin", "cyrillic"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500"],
 });
 
 const manrope = Manrope({
   variable: "--font-body",
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600"],
 });
 
 const plexMono = IBM_Plex_Mono({

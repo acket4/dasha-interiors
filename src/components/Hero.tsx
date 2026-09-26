@@ -73,8 +73,8 @@ function GhostButton({ children, href }: { children: React.ReactNode; href: stri
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      <div className="absolute inset-0">
+    <section className="relative" style={{ height: "170vh" }}>
+      <div className="sticky top-0 h-[100svh] overflow-hidden">
         <Image
           src="/hero-interior.webp"
           alt="Интерьер из портфолио Дарьи"
@@ -84,12 +84,26 @@ export default function Hero() {
           className="object-cover motion-safe:animate-[kenburns_28s_ease-in-out_infinite_alternate]"
           style={{ objectPosition: "72% 40%" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0F1013] via-[#0F1013]/88 to-[#0F1013]/35" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0F1013] via-transparent to-[#0F1013]/50" />
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[68%]"
+          style={{
+            backdropFilter: "blur(28px)",
+            WebkitBackdropFilter: "blur(28px)",
+            maskImage: "linear-gradient(to top, black 0%, transparent 92%)",
+            WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 92%)",
+            background:
+              "linear-gradient(to top, rgba(15,16,19,0.55), rgba(15,16,19,0) 92%)",
+          }}
+        />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-6 pb-32 pt-20 sm:px-10 lg:px-16">
-        <motion.div variants={container} initial="hidden" animate="show" className="max-w-2xl">
+      <div className="absolute inset-x-0 top-0 flex h-[100svh] flex-col justify-end px-6 pb-16 sm:px-10 lg:px-16">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="mx-auto w-full max-w-7xl"
+        >
           <motion.div variants={item} className="mb-8 flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 backdrop-blur-xl">
               <span className="h-1.5 w-1.5 rounded-full bg-[#D4AF37]" />
@@ -107,22 +121,35 @@ export default function Hero() {
 
           <motion.h1
             variants={item}
-            className="break-words font-display text-[10.5vw] font-medium leading-[1.05] tracking-[-0.01em] sm:text-6xl lg:text-[4.4rem]"
+            style={{ textShadow: "0 4px 28px rgba(0,0,0,0.55)" }}
+            className="text-balance max-w-3xl break-words font-display text-[10.5vw] font-medium leading-[0.92] tracking-[-0.035em] hyphens-none sm:text-6xl lg:text-[4.4rem]"
           >
             Пространство,
             <br />
             где живёт <span className="text-gradient-gold">роскошь</span> тишины
           </motion.h1>
 
-          <motion.p variants={item} className="mt-7 max-w-md text-[15px] leading-relaxed text-[#c9c2b0]">
-            Проектирую интерьеры квартир и домов в Ангарске, Иркутске и ближайших
-            районах для тех, кто различает хороший вкус от навязанного тренда.
+          <motion.p
+            variants={item}
+            style={{ textShadow: "0 2px 16px rgba(0,0,0,0.5)" }}
+            className="mt-7 max-w-md text-[15px] leading-relaxed text-[#c9c2b0]"
+          >
+            Проектирую интерьеры квартир и домов&nbsp;в Ангарске, Иркутске
+            и&nbsp;ближайших районах для тех, кто различает хороший вкус
+            от&nbsp;навязанного тренда.
           </motion.p>
 
-          <motion.div variants={item} className="mt-10 flex flex-wrap items-center gap-x-2 gap-y-4">
+          <motion.div variants={item} className="mt-10 flex flex-wrap items-end gap-x-6 gap-y-4">
             <MagneticButton>Обсудить проект</MagneticButton>
             <GhostButton href="#gallery">Смотреть портфолио</GhostButton>
           </motion.div>
+
+          <motion.p
+            variants={item}
+            className="mt-4 font-mono text-[12px] uppercase tracking-[0.08em] text-[#a49d8c]"
+          >
+            Отвечаю лично, обычно в течение суток
+          </motion.p>
         </motion.div>
       </div>
     </section>

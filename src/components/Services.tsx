@@ -28,7 +28,7 @@ export default function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-4 font-display text-4xl text-[#EFE9DD] sm:text-5xl"
+          className="text-balance mb-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] sm:text-5xl"
         >
           Чем могу <span className="text-gradient-gold">помочь</span>
         </motion.h2>

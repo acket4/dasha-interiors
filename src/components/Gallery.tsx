@@ -164,7 +164,7 @@ export default function Gallery() {
           className="mb-14 text-center"
         >
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">Работы</p>
-          <h2 className="mt-4 font-display text-4xl text-[#EFE9DD] sm:text-5xl">
+          <h2 className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] sm:text-5xl">
             Фото и <span className="text-gradient-gold ">видео</span>
           </h2>
           <p className="mx-auto mt-5 max-w-md text-[14px] text-[#a49d8c]">

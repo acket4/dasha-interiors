@@ -43,7 +43,7 @@ export default function Testimonial() {
 
         <motion.blockquote
           variants={item}
-          className="mt-12 font-display text-2xl leading-snug text-[#EFE9DD] sm:text-3xl"
+          className="text-balance mt-12 font-display text-2xl leading-[1.15] text-[#EFE9DD] sm:text-3xl"
         >
           «Хочу от души поблагодарить Дарью за её профессионализм, заказывали с
           мужем технический план квартиры и остались очень довольны. Дарья учла
@@ -52,7 +52,7 @@ export default function Testimonial() {
           большое за проделанную работу»
         </motion.blockquote>
         <motion.cite variants={item} className="mt-6 block font-mono text-[11px] not-italic uppercase tracking-widest text-[#6b6558]">
-          реальный отзыв клиента · технический план квартиры
+          реальный отзыв клиента / технический план квартиры
         </motion.cite>
       </motion.div>
     </section>

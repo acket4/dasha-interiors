@@ -56,7 +56,7 @@ export default function Process() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display text-4xl text-[#EFE9DD] sm:text-5xl"
+          className="text-balance font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] sm:text-5xl"
         >
           Как проходит <span className="text-gradient-gold">проект</span>
         </motion.h2>
