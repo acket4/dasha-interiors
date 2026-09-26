@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, animate } from "framer-motion";
+import { motion, useMotionValue, animate, type AnimationPlaybackControls } from "framer-motion";
 
 const STEPS = [
   { title: "Бриф", text: "Обмер и разговор о привычках" },
@@ -12,59 +12,72 @@ const STEPS = [
 ];
 
 const N = STEPS.length;
-const SWEEP_DURATION = 14000;
+const HOLD_DURATION = 1900;
+const STEP_TRANSITION = 0.75;
 const RESUME_DELAY = 3500;
 
 export default function Process() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const activeRef = useRef(0);
   const x = useMotionValue(0);
-  const rafRef = useRef<number | null>(null);
-  const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const stepControls = useRef<AnimationPlaybackControls | null>(null);
   const reducedMotion = useRef(false);
 
   function trackWidth() {
     return trackRef.current?.getBoundingClientRect().width ?? 0;
   }
 
+  function stepToX(i: number) {
+    return (i / (N - 1)) * trackWidth();
+  }
+
+  function updateActive(i: number) {
+    activeRef.current = i;
+    setActive(i);
+  }
+
   function setActiveFromX(width: number) {
     const pct = Math.min(1, Math.max(0, x.get() / width));
     const idx = Math.round(pct * (N - 1));
-    setActive((prev) => (prev === idx ? prev : idx));
+    if (idx !== activeRef.current) updateActive(idx);
   }
 
   function stopLoop() {
-    if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-    rafRef.current = null;
+    if (holdTimer.current) clearTimeout(holdTimer.current);
+    holdTimer.current = null;
+    stepControls.current?.stop();
+    stepControls.current = null;
   }
 
-  function startLoop() {
+  function advance(i: number) {
+    holdTimer.current = setTimeout(() => {
+      const next = (i + 1) % N;
+      updateActive(next);
+      stepControls.current = animate(x, stepToX(next), {
+        duration: STEP_TRANSITION,
+        ease: [0.22, 1, 0.36, 1],
+        onComplete: () => advance(next),
+      });
+    }, HOLD_DURATION);
+  }
+
+  function startLoopFrom(i: number) {
     if (reducedMotion.current) return;
     stopLoop();
-    x.set(0);
-    setActive(0);
-    const t0 = performance.now();
-    const tick = (now: number) => {
-      const width = trackWidth();
-      if (width) {
-        const elapsed = (now - t0) % SWEEP_DURATION;
-        x.set((elapsed / SWEEP_DURATION) * width);
-        setActiveFromX(width);
-      }
-      rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
+    advance(i);
   }
 
   function pauseAndScheduleResume() {
     stopLoop();
-    if (resumeTimer.current) clearTimeout(resumeTimer.current);
-    resumeTimer.current = setTimeout(startLoop, RESUME_DELAY);
+    if (holdTimer.current) clearTimeout(holdTimer.current);
+    holdTimer.current = setTimeout(() => startLoopFrom(activeRef.current), RESUME_DELAY);
   }
 
   function snapTo(i: number) {
-    setActive(i);
-    animate(x, (i / (N - 1)) * trackWidth(), { type: "spring", stiffness: 380, damping: 34 });
+    updateActive(i);
+    animate(x, stepToX(i), { type: "spring", stiffness: 380, damping: 34 });
   }
 
   function goTo(i: number) {
@@ -86,10 +99,7 @@ export default function Process() {
     function onUp() {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerup", onUp);
-      setActive((current) => {
-        snapTo(current);
-        return current;
-      });
+      snapTo(activeRef.current);
     }
     window.addEventListener("pointermove", onMove);
     window.addEventListener("pointerup", onUp);
@@ -97,15 +107,13 @@ export default function Process() {
 
   useEffect(() => {
     reducedMotion.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    startLoop();
+    x.set(0);
+    startLoopFrom(0);
 
-    const onResize = () => {
-      if (rafRef.current !== null) startLoop();
-    };
+    const onResize = () => x.set(stepToX(activeRef.current));
     window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("resize", onResize);
-      if (resumeTimer.current) clearTimeout(resumeTimer.current);
       stopLoop();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Award } from "lucide-react";
 
@@ -26,10 +27,14 @@ export default function About() {
           variants={item}
           className="relative aspect-[4/5] overflow-hidden rounded-[26px] border border-white/8 bg-white/[0.03] backdrop-blur-xl"
         >
-          <div className="absolute inset-0 flex items-center justify-center p-8 text-center font-mono text-[11px] uppercase tracking-widest text-[#6b6558]">
-            портрет / фото появится здесь
-          </div>
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F1013] via-transparent to-transparent" />
+          <Image
+            src="/darya-portrait.jpg"
+            alt="Зверева Дарья"
+            fill
+            className="object-cover"
+            style={{ objectPosition: "50% 20%" }}
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F1013]/70 via-transparent to-transparent" />
         </motion.div>
 
         <div>

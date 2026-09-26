@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -6,8 +6,20 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Aperture, ArrowRight, Play, Video, X } from "lucide-react";
 
 type MediaType = "photo" | "video" | null;
+type ZoomTarget = { src: string; alt: string } | null;
 
-const PLACEHOLDER_COUNT = 11;
+const PHOTOS = [
+  { src: "/gallery/1.jpg", alt: "Раздевалка спа-клуба" },
+  { src: "/gallery/2.jpg", alt: "Кухня в зелёных тонах" },
+  { src: "/gallery/3.jpg", alt: "Интерьер, проект 03" },
+  { src: "/gallery/4.jpg", alt: "Интерьер, проект 04" },
+  { src: "/gallery/5.jpg", alt: "Кухня-гостиная с островом" },
+  { src: "/gallery/6.jpg", alt: "Интерьер, проект 06" },
+  { src: "/gallery/7.jpg", alt: "Интерьер, проект 07" },
+  { src: "/gallery/8.jpg", alt: "Интерьер, проект 08" },
+];
+
+const PLACEHOLDER_COUNT = 4;
 
 const panelItem = {
   hidden: { opacity: 0, y: 28 },
@@ -23,7 +35,8 @@ function Placeholder({ index }: { index: number }) {
   );
 }
 
-function ZoomView({ type, onClose }: { type: "photo" | "video"; onClose: () => void }) {
+function ZoomView({ target, isVideo, onClose }: { target: ZoomTarget; isVideo: boolean; onClose: () => void }) {
+  if (!target) return null;
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -41,17 +54,15 @@ function ZoomView({ type, onClose }: { type: "photo" | "video"; onClose: () => v
         onClick={(e) => e.stopPropagation()}
         className="relative aspect-[4/5] w-full max-w-2xl overflow-hidden rounded-[28px] border border-white/10"
       >
-        <Image src="/hero-interior.webp" alt="Гостиная-кухня" fill className="object-cover" />
-        {type === "video" && (
+        <Image src={target.src} alt={target.alt} fill className="object-cover" />
+        {isVideo && (
           <div className="absolute inset-0 flex items-center justify-center bg-[#0F1013]/35">
             <span className="flex h-16 w-16 items-center justify-center rounded-full border border-[#D4AF37]/60 bg-[#0F1013]/60 text-[#D4AF37] backdrop-blur-md">
               <Play className="h-5 w-5 translate-x-[2px]" />
             </span>
           </div>
         )}
-        <span className="absolute bottom-5 left-5 font-display text-xl text-[#EFE9DD]">
-          Гостиная-кухня
-        </span>
+        <span className="absolute bottom-5 left-5 font-display text-xl text-[#EFE9DD]">{target.alt}</span>
       </motion.div>
 
       <button
@@ -66,7 +77,9 @@ function ZoomView({ type, onClose }: { type: "photo" | "video"; onClose: () => v
 }
 
 function Lightbox({ type, onClose }: { type: "photo" | "video"; onClose: () => void }) {
-  const [zoomed, setZoomed] = useState(false);
+  const [zoomed, setZoomed] = useState<ZoomTarget>(null);
+  const items =
+    type === "photo" ? PHOTOS : [{ src: "/hero-interior.webp", alt: "Обзор проекта" }];
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -115,36 +128,37 @@ function Lightbox({ type, onClose }: { type: "photo" | "video"; onClose: () => v
           </div>
 
           <div className="grid flex-1 grid-cols-2 gap-4 overflow-y-auto pb-6 sm:grid-cols-3">
-            <button
-              onClick={() => setZoomed(true)}
-              className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 text-left"
-            >
-              <Image
-                src="/hero-interior.webp"
-                alt="Гостиная-кухня"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              {type === "video" && (
-                <div className="absolute inset-0 flex items-center justify-center bg-[#0F1013]/40">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#D4AF37]/60 bg-[#0F1013]/60 text-[#D4AF37] backdrop-blur-md">
-                    <Play className="h-4 w-4 translate-x-[1px]" />
-                  </span>
-                </div>
-              )}
-              <span className="absolute bottom-3 left-3 font-display text-sm text-[#EFE9DD]">
-                Гостиная-кухня
-              </span>
-            </button>
+            {items.map((item) => (
+              <button
+                key={item.src}
+                onClick={() => setZoomed(item)}
+                className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 text-left"
+              >
+                <Image
+                  src={item.src}
+                  alt={item.alt}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                {type === "video" && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-[#0F1013]/40">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#D4AF37]/60 bg-[#0F1013]/60 text-[#D4AF37] backdrop-blur-md">
+                      <Play className="h-4 w-4 translate-x-[1px]" />
+                    </span>
+                  </div>
+                )}
+                <span className="absolute bottom-3 left-3 font-display text-sm text-[#EFE9DD]">{item.alt}</span>
+              </button>
+            ))}
             {Array.from({ length: PLACEHOLDER_COUNT }).map((_, i) => (
-              <Placeholder key={i} index={i + 2} />
+              <Placeholder key={i} index={items.length + i + 1} />
             ))}
           </div>
         </motion.div>
       </motion.div>
 
       <AnimatePresence>
-        {zoomed && <ZoomView type={type} onClose={() => setZoomed(false)} />}
+        {zoomed && <ZoomView target={zoomed} isVideo={type === "video"} onClose={() => setZoomed(null)} />}
       </AnimatePresence>
     </>
   );
@@ -165,11 +179,11 @@ export default function Gallery() {
         >
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">Работы</p>
           <h2 className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] sm:text-5xl">
-            Фото и <span className="text-gradient-gold ">видео</span>
+            Фото и <span className="text-gradient-gold">видео</span>
           </h2>
           <p className="mx-auto mt-5 max-w-md text-[14px] text-[#a49d8c]">
-            Это лишь <span className="font-display text-[#EFE9DD]">малая часть</span>.
-            Полная коллекция открывается по клику и растёт с каждым проектом.
+            Здесь <span className="font-display text-[#EFE9DD]">лишь малая часть</span> её
+            работ. Вся коллекция значительно больше и продолжает расти с каждым проектом.
           </p>
         </motion.div>
 
@@ -187,8 +201,8 @@ export default function Gallery() {
             className="group relative aspect-[4/5] overflow-hidden rounded-[28px] border border-white/8 text-left sm:aspect-[3/4]"
           >
             <Image
-              src="/hero-interior.webp"
-              alt="Гостиная-кухня"
+              src={PHOTOS[0].src}
+              alt={PHOTOS[0].alt}
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -200,7 +214,7 @@ export default function Gallery() {
             </span>
 
             <div className="absolute inset-x-6 bottom-6 flex items-end justify-between gap-4">
-              <span className="font-display text-2xl text-[#EFE9DD]">Гостиная-кухня</span>
+              <span className="font-display text-2xl text-[#EFE9DD]">{PHOTOS[0].alt}</span>
               <span className="flex shrink-0 items-center gap-2 rounded-full border border-[#D4AF37]/50 bg-[#0F1013]/50 px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-[#EFE9DD] backdrop-blur-md transition-colors group-hover:bg-[#D4AF37] group-hover:text-[#0F1013]">
                 Все фото
                 <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
