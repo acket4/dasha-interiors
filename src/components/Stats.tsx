@@ -2,15 +2,15 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { motion, useMotionValue, useMotionTemplate, useSpring } from "framer-motion";
+import { motion, useMotionValue, useMotionTemplate, useSpring, type Variants } from "framer-motion";
 import { AtSign } from "lucide-react";
 
-const container = {
+const container: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.1 } },
 };
 
-const item = {
+const item: Variants = {
   hidden: { opacity: 0, y: 22 },
   show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } },
 };

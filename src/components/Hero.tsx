@@ -2,17 +2,17 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, type Variants } from "framer-motion";
 import { ArrowUpRight, Award, Play } from "lucide-react";
 
-const container = {
+const container: Variants = {
   hidden: {},
   show: {
     transition: { staggerChildren: 0.1, delayChildren: 0.1 },
   },
 };
 
-const item = {
+const item: Variants = {
   hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
   show: {
     opacity: 1,

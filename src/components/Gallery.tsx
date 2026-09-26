@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Aperture, ArrowRight, Play, Video, X } from "lucide-react";
 
 type MediaType = "photo" | "video" | null;
@@ -21,7 +21,7 @@ const PHOTOS = [
 
 const PLACEHOLDER_COUNT = 4;
 
-const panelItem = {
+const panelItem: Variants = {
   hidden: { opacity: 0, y: 28 },
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
 };

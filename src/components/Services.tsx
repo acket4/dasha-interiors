@@ -1,13 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { MessageCircle, PenTool, ShieldCheck, Sofa } from "lucide-react";
 
-const container = {
+const container: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.09 } },
 };
-const item = {
+const item: Variants = {
   hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
   show: {
     opacity: 1,
