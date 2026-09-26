@@ -127,21 +127,18 @@ export default function Stats() {
         </TiltCard>
 
         {/* Cell 2 — years, timeline */}
-        <TiltCard className="p-7 sm:col-start-3 sm:row-start-1">
+        <TiltCard className="flex flex-col p-7 sm:col-start-3 sm:row-start-1">
           <div className="font-display text-4xl text-[#EFE9DD]">8 лет</div>
-          <div className="mt-1 mb-6 font-mono text-[10px] uppercase tracking-widest text-[#a49d8c]">
+          <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-[#a49d8c]">
             практики и надзора
           </div>
-          <div className="space-y-3.5">
+          <div className="mt-6 flex flex-1 flex-col justify-between">
             {TIMELINE.map((t) => (
               <div key={t.year} className="flex gap-3">
-                <div className="flex flex-col items-center">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#D4AF37]" />
-                  <span className="mt-1 w-px flex-1 bg-white/10" />
-                </div>
-                <div className="-mt-1 pb-1">
+                <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#D4AF37]" />
+                <div>
                   <div className="font-mono text-[10px] text-[#D4AF37]">{t.year}</div>
-                  <div className="text-[12px] leading-snug text-[#c9c2b0]">{t.label}</div>
+                  <div className="text-[13px] leading-snug text-[#c9c2b0]">{t.label}</div>
                 </div>
               </div>
             ))}

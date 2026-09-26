@@ -12,39 +12,102 @@ const STEPS = [
 ];
 
 const N = STEPS.length;
+const SWEEP_DURATION = 14000;
+const RESUME_DELAY = 3500;
 
 export default function Process() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const x = useMotionValue(0);
+  const rafRef = useRef<number | null>(null);
+  const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reducedMotion = useRef(false);
 
-  function stepToX(i: number) {
-    const width = trackRef.current?.getBoundingClientRect().width ?? 0;
-    return (i / (N - 1)) * width;
+  function trackWidth() {
+    return trackRef.current?.getBoundingClientRect().width ?? 0;
   }
 
-  function goTo(i: number, animated = true) {
-    setActive(i);
-    const target = stepToX(i);
-    if (animated) {
-      animate(x, target, { type: "spring", stiffness: 380, damping: 34 });
-    } else {
-      x.set(target);
-    }
-  }
-
-  function handleDrag() {
-    const width = trackRef.current?.getBoundingClientRect().width ?? 1;
+  function setActiveFromX(width: number) {
     const pct = Math.min(1, Math.max(0, x.get() / width));
     const idx = Math.round(pct * (N - 1));
     setActive((prev) => (prev === idx ? prev : idx));
   }
 
-  useEffect(() => {
+  function stopLoop() {
+    if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    rafRef.current = null;
+  }
+
+  function startLoop() {
+    if (reducedMotion.current) return;
+    stopLoop();
     x.set(0);
-    const onResize = () => goTo(active, false);
+    setActive(0);
+    const t0 = performance.now();
+    const tick = (now: number) => {
+      const width = trackWidth();
+      if (width) {
+        const elapsed = (now - t0) % SWEEP_DURATION;
+        x.set((elapsed / SWEEP_DURATION) * width);
+        setActiveFromX(width);
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+  }
+
+  function pauseAndScheduleResume() {
+    stopLoop();
+    if (resumeTimer.current) clearTimeout(resumeTimer.current);
+    resumeTimer.current = setTimeout(startLoop, RESUME_DELAY);
+  }
+
+  function snapTo(i: number) {
+    setActive(i);
+    animate(x, (i / (N - 1)) * trackWidth(), { type: "spring", stiffness: 380, damping: 34 });
+  }
+
+  function goTo(i: number) {
+    pauseAndScheduleResume();
+    snapTo(i);
+  }
+
+  function handlePointerDown(e: React.PointerEvent<HTMLDivElement>) {
+    pauseAndScheduleResume();
+    e.currentTarget.setPointerCapture(e.pointerId);
+
+    function onMove(ev: PointerEvent) {
+      const rect = trackRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const px = Math.min(1, Math.max(0, (ev.clientX - rect.left) / rect.width));
+      x.set(px * rect.width);
+      setActiveFromX(rect.width);
+    }
+    function onUp() {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      setActive((current) => {
+        snapTo(current);
+        return current;
+      });
+    }
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+  }
+
+  useEffect(() => {
+    reducedMotion.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    startLoop();
+
+    const onResize = () => {
+      if (rafRef.current !== null) startLoop();
+    };
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      if (resumeTimer.current) clearTimeout(resumeTimer.current);
+      stopLoop();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -61,7 +124,13 @@ export default function Process() {
           Как проходит <span className="text-gradient-gold">проект</span>
         </motion.h2>
 
-        <div className="mt-24 rounded-[24px] border border-white/10 bg-white/[0.03] px-6 py-6 backdrop-blur-xl sm:px-9 sm:py-8">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+          className="mt-24 rounded-[24px] border border-white/10 bg-white/[0.03] px-6 py-6 backdrop-blur-xl sm:px-9 sm:py-8"
+        >
           <div className="mb-8 flex items-center justify-between">
             <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#a49d8c]">
               Этап{" "}
@@ -92,19 +161,20 @@ export default function Process() {
             ))}
 
             <motion.div
-              drag="x"
-              dragConstraints={trackRef}
-              dragElastic={0}
-              dragMomentum={false}
-              onDrag={handleDrag}
-              onDragEnd={() => goTo(active)}
+              onPointerDown={handlePointerDown}
               style={{ x }}
               className="absolute left-0 top-1/2 z-10 h-6 w-6 -translate-y-1/2 cursor-grab touch-none rounded-full bg-[#D4AF37] shadow-[0_2px_12px_rgba(212,175,55,0.45)] active:cursor-grabbing"
             />
           </div>
-        </div>
+        </motion.div>
 
-        <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-5">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.18 }}
+          className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-5"
+        >
           {STEPS.map((s, i) => (
             <button key={s.title} onClick={() => goTo(i)} className="text-left">
               <span className="font-mono text-xs text-[#D4AF37]">0{i + 1}</span>
@@ -124,7 +194,7 @@ export default function Process() {
               </p>
             </button>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
