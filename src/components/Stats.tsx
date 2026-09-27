@@ -110,7 +110,7 @@ export default function Stats() {
 
             <div>
               <div className="font-display text-6xl text-[#EFE9DD] sm:text-7xl">
-                50K<span className="text-gradient-gold">+</span>
+                50K<span className="text-gradient-gold-onphoto">+</span>
               </div>
               <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-[#EFE9DD]/85">
                 Почти 50 000 человек в Instagram следят за тем, как рождается

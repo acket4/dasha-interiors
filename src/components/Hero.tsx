@@ -111,7 +111,7 @@ export default function Hero() {
           >
             Пространство,
             <br />
-            где живёт <span className="text-gradient-gold">роскошь</span> тишины
+            где живёт <span className="text-gradient-gold-onphoto">роскошь</span> тишины
           </motion.h1>
 
           <motion.p
