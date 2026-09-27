@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useRef } from "react";
 import { motion, useMotionValue, useMotionTemplate, useSpring, type Variants } from "framer-motion";
 import { AtSign } from "lucide-react";
+import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 
 const container: Variants = {
   hidden: {},
@@ -21,14 +21,7 @@ const TIMELINE = [
   { year: "2026", label: "Студия полного цикла" },
 ];
 
-const MOSAIC = [
-  "/gallery/10.jpg",
-  "/gallery/11.jpg",
-  "/gallery/13.jpg",
-  "/gallery/9.jpg",
-  "/gallery/15.jpg",
-  "/gallery/16.jpg",
-];
+const MOSAIC_COUNT = 6;
 
 function TiltCard({
   className = "",
@@ -93,13 +86,7 @@ export default function Stats() {
         {/* Cell 1 — real photo, audience caption */}
         <TiltCard className="sm:col-span-2 sm:row-span-2">
           <div className="absolute inset-0">
-            <Image
-              src="/hero-interior.webp"
-              alt="Интерьер из портфолио Дарьи"
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-              style={{ objectPosition: "60% 38%" }}
-            />
+            <PhotoPlaceholder label="Фото интерьера" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0F1013] via-[#0F1013]/55 to-[#0F1013]/10" />
           </div>
 
@@ -152,10 +139,9 @@ export default function Stats() {
             реализованных проектов
           </div>
           <div className="grid grid-cols-3 gap-1.5">
-            {MOSAIC.map((src, i) => (
+            {Array.from({ length: MOSAIC_COUNT }).map((_, i) => (
               <div key={i} className="relative aspect-square overflow-hidden rounded-lg">
-                <Image src={src} alt="" fill className="object-cover" />
-                <div className="absolute inset-0 bg-[#0F1013]/20" />
+                <PhotoPlaceholder />
               </div>
             ))}
           </div>

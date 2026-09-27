@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, type Variants } from "framer-motion";
 import { ArrowUpRight, Award, Play } from "lucide-react";
+import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 
 const container: Variants = {
   hidden: {},
@@ -75,15 +75,7 @@ export default function Hero() {
   return (
     <section className="relative" style={{ height: "170vh" }}>
       <div className="sticky top-0 h-[100svh] overflow-hidden">
-        <Image
-          src="/hero-interior.webp"
-          alt="Интерьер из портфолио Дарьи"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover motion-safe:animate-[kenburns_28s_ease-in-out_infinite_alternate]"
-          style={{ objectPosition: "72% 40%" }}
-        />
+        <PhotoPlaceholder label="Фон: главное фото" />
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 h-[68%]"
           style={{

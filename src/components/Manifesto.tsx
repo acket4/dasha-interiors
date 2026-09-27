@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
+import PhotoWheel from "@/components/PhotoWheel";
 
 export default function Manifesto() {
   return (
@@ -22,20 +22,7 @@ export default function Manifesto() {
         десять&nbsp;лет после&nbsp;ремонта
       </motion.h2>
 
-      <motion.div
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-        className="relative mx-auto mt-16 aspect-[16/10] w-full max-w-2xl overflow-hidden rounded-[28px] border border-white/10"
-      >
-        <Image
-          src="/gallery/11.jpg"
-          alt="Кухня-столовая из портфолио"
-          fill
-          className="object-cover"
-        />
-      </motion.div>
+      <PhotoWheel />
     </section>
   );
 }
