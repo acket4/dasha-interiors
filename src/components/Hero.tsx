@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, type Variants } from "framer-motion";
-import { ArrowUpRight, Award, Play } from "lucide-react";
+import { ArrowUpRight, Play } from "lucide-react";
 import PhotoFrame from "@/components/PhotoFrame";
 
 const container: Variants = {
@@ -104,24 +104,6 @@ export default function Hero() {
           animate="show"
           className="mx-auto w-full max-w-7xl"
         >
-          <motion.div variants={item} className="mb-5">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-[#0F1013]/60 px-4 py-2 backdrop-blur-xl">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#D4AF37]" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#EFE9DD]">
-                Зверева Дарья, дизайнер интерьера
-              </span>
-            </span>
-          </motion.div>
-
-          <motion.div
-            variants={item}
-            style={{ textShadow: "0 2px 10px rgba(0,0,0,0.6)" }}
-            className="mb-3 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-[#EFE9DD]/80"
-          >
-            <Award className="h-3 w-3 shrink-0 text-[#D4AF37]" />
-            Человек года в номинации «Дизайнер»
-          </motion.div>
-
           <motion.h1
             variants={item}
             style={{ textShadow: "0 4px 28px rgba(0,0,0,0.75), 0 2px 10px rgba(0,0,0,0.6)" }}

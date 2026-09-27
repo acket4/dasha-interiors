@@ -45,6 +45,13 @@ export default function About() {
             Привет, я{" "}
             <span className="text-gradient-gold ">Зверева Дарья</span>
           </motion.h2>
+          <motion.div
+            variants={item}
+            className="mt-3 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-[#a49d8c] light:text-[#8f8874]"
+          >
+            <Award className="h-3 w-3 shrink-0 text-[#D4AF37]" />
+            Человек года в номинации «Дизайнер»
+          </motion.div>
           <motion.p variants={item} className="mt-6 max-w-xl text-[15px] leading-relaxed text-[#a49d8c] light:text-[#5c5648]">
             Дизайнер интерьера, автор технических и авторских дизайн-проектов
             квартир и домов. Работаю по всей России. Веду каждый

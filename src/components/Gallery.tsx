@@ -20,6 +20,18 @@ const PHOTOS = [
   { src: "/photos/komnata-na-dvoih.png", alt: "Комната на двоих", w: 2410, h: 2502 },
 ];
 
+function distributeIntoColumns<T extends { w: number; h: number }>(items: T[], cols: number) {
+  const heights = Array(cols).fill(0);
+  const columns: T[][] = Array.from({ length: cols }, () => []);
+  for (const item of items) {
+    let idx = 0;
+    for (let i = 1; i < cols; i++) if (heights[i] < heights[idx]) idx = i;
+    columns[idx].push(item);
+    heights[idx] += item.h / item.w;
+  }
+  return columns;
+}
+
 const panelItem: Variants = {
   hidden: { opacity: 0, y: 28 },
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
@@ -68,6 +80,33 @@ function ZoomView({ target, onClose }: { target: ZoomTarget; onClose: () => void
   );
 }
 
+function GalleryCard({
+  item,
+  onOpen,
+}: {
+  item: { src: string; alt: string; w: number; h: number };
+  onOpen: () => void;
+}) {
+  return (
+    <button onClick={onOpen} className="group block w-full text-left">
+      <div className="overflow-hidden rounded-2xl border border-white/10 light:border-[#18140f]/10 bg-white/[0.02] light:bg-[#18140f]/[0.02]">
+        <Image
+          src={item.src}
+          alt={item.alt}
+          width={item.w}
+          height={item.h}
+          sizes="(max-width: 640px) 45vw, 320px"
+          style={{ aspectRatio: `${item.w} / ${item.h}` }}
+          className="block w-full h-auto transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+        <span className="block px-3 py-2.5 font-display text-sm text-[#EFE9DD] light:text-[#18140f]">
+          {item.alt}
+        </span>
+      </div>
+    </button>
+  );
+}
+
 function PhotoLightbox({ onClose }: { onClose: () => void }) {
   const [zoomed, setZoomed] = useState<ZoomTarget>(null);
 
@@ -113,29 +152,25 @@ function PhotoLightbox({ onClose }: { onClose: () => void }) {
             </button>
           </div>
 
-          <div className="grid flex-1 grid-cols-2 items-start gap-4 overflow-y-auto pb-6 sm:grid-cols-3">
-            {PHOTOS.map((item) => (
-              <button
-                key={item.src}
-                onClick={() => setZoomed(item)}
-                className="group block w-full text-left"
-              >
-                <div className="overflow-hidden rounded-2xl border border-white/10 light:border-[#18140f]/10 bg-white/[0.02] light:bg-[#18140f]/[0.02]">
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    width={item.w}
-                    height={item.h}
-                    sizes="(max-width: 640px) 45vw, 320px"
-                    style={{ aspectRatio: `${item.w} / ${item.h}` }}
-                    className="block w-full h-auto transition-transform duration-500 group-hover:scale-[1.03]"
-                  />
-                  <span className="block px-3 py-2.5 font-display text-sm text-[#EFE9DD] light:text-[#18140f]">
-                    {item.alt}
-                  </span>
+          <div className="flex-1 overflow-y-auto pb-6">
+            <div className="flex gap-4 sm:hidden">
+              {distributeIntoColumns(PHOTOS, 2).map((col, i) => (
+                <div key={i} className="flex flex-1 flex-col gap-4">
+                  {col.map((item) => (
+                    <GalleryCard key={item.src} item={item} onOpen={() => setZoomed(item)} />
+                  ))}
                 </div>
-              </button>
-            ))}
+              ))}
+            </div>
+            <div className="hidden gap-4 sm:flex">
+              {distributeIntoColumns(PHOTOS, 3).map((col, i) => (
+                <div key={i} className="flex flex-1 flex-col gap-4">
+                  {col.map((item) => (
+                    <GalleryCard key={item.src} item={item} onOpen={() => setZoomed(item)} />
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </motion.div>
