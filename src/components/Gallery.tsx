@@ -143,11 +143,11 @@ export default function Gallery() {
           className="mb-14 text-center"
         >
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">Работы</p>
-          <h2 className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] sm:text-5xl">
+          <h2 className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] light:text-[#18140f] sm:text-5xl">
             Фото и <span className="text-gradient-gold">видео</span>
           </h2>
-          <p className="mx-auto mt-5 max-w-md text-[14px] text-[#a49d8c]">
-            Здесь <span className="font-display text-[#EFE9DD]">лишь малая часть</span>
+          <p className="mx-auto mt-5 max-w-md text-[14px] text-[#a49d8c] light:text-[#5c5648]">
+            Здесь <span className="font-display text-[#EFE9DD] light:text-[#18140f]">лишь малая часть</span>
             работ. Вся коллекция значительно больше и продолжает расти с каждым проектом.
           </p>
         </motion.div>
@@ -163,7 +163,7 @@ export default function Gallery() {
           <motion.button
             variants={panelItem}
             onClick={() => setOpen("photo")}
-            className="group relative aspect-[4/5] overflow-hidden rounded-[28px] border border-white/8 text-left sm:aspect-[3/4]"
+            className="group relative aspect-[4/5] overflow-hidden rounded-[28px] border border-white/8 light:border-[#18140f]/8 text-left sm:aspect-[3/4]"
           >
             <PhotoFrame src={PHOTOS[0].src} alt={PHOTOS[0].alt} sizes="(max-width: 1024px) 100vw, 50vw" />
             <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0F1013] via-[#0F1013]/10 to-transparent" />
@@ -185,7 +185,7 @@ export default function Gallery() {
           {/* Video panel */}
           <motion.div
             variants={panelItem}
-            className="group relative aspect-[4/5] overflow-hidden rounded-[28px] border border-white/8 text-left sm:aspect-[3/4]"
+            className="group relative aspect-[4/5] overflow-hidden rounded-[28px] border border-white/8 light:border-[#18140f]/8 text-left sm:aspect-[3/4]"
           >
             <PhotoPlaceholder label="Видео-обзор" />
             <div className="absolute inset-0 bg-[#0F1013]/45" />

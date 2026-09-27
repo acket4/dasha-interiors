@@ -18,11 +18,11 @@ function CopyRow({ value }: { value: string }) {
   }
 
   return (
-    <div className="flex items-center justify-between gap-4 border-t border-white/8 py-4 first:border-t-0">
-      <span className="font-mono text-[13px] text-[#EFE9DD]">{value}</span>
+    <div className="flex items-center justify-between gap-4 border-t border-white/8 light:border-[#18140f]/8 py-4 first:border-t-0">
+      <span className="font-mono text-[13px] text-[#EFE9DD] light:text-[#18140f]">{value}</span>
       <button
         onClick={handleCopy}
-        className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-[#a49d8c] transition-colors hover:text-[#D4AF37]"
+        className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-[#a49d8c] light:text-[#6b6050] transition-colors hover:text-[#D4AF37]"
       >
         {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
         {copied ? "готово" : "копировать"}
@@ -43,10 +43,10 @@ export default function Contact() {
       >
         <div>
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">[ Контакты ]</p>
-          <h2 className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] sm:text-5xl">
+          <h2 className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] light:text-[#18140f] sm:text-5xl">
             Обсудим ваш <span className="text-gradient-gold ">проект</span>
           </h2>
-          <p className="mt-6 max-w-md text-[15px] leading-relaxed text-[#a49d8c]">
+          <p className="mt-6 max-w-md text-[15px] leading-relaxed text-[#a49d8c] light:text-[#5c5648]">
             Работаю по всей России. Напишите в Instagram
             или скопируйте почту. Отвечаю в течение суток.
           </p>
@@ -61,7 +61,7 @@ export default function Contact() {
           </a>
         </div>
 
-        <div className="rounded-[26px] border border-white/8 bg-white/[0.03] p-7 backdrop-blur-xl">
+        <div className="rounded-[26px] border border-white/8 light:border-[#18140f]/8 bg-white/[0.03] light:bg-[#18140f]/[0.03] p-7 backdrop-blur-xl">
           <CopyRow value="hello@dasha-interiors.ru" />
           <CopyRow value="+7 (952) 616-25-03" />
         </div>

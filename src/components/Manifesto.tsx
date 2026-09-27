@@ -16,7 +16,7 @@ export default function Manifesto() {
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="text-balance mx-auto mt-8 max-w-4xl text-center font-display text-4xl leading-[0.98] tracking-[-0.02em] hyphens-none text-[#EFE9DD] sm:text-6xl lg:text-7xl"
+        className="text-balance mx-auto mt-8 max-w-4xl text-center font-display text-4xl leading-[0.98] tracking-[-0.02em] hyphens-none text-[#EFE9DD] light:text-[#18140f] sm:text-6xl lg:text-7xl"
       >
         Мы проектируем интерьеры,&nbsp;которые остаются точными и&nbsp;через
         десять&nbsp;лет после&nbsp;ремонта

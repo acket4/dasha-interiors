@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter, IBM_Plex_Mono } from "next/font/google";
 import Cursor from "@/components/Cursor";
 import ScrollManager from "@/components/ScrollManager";
+import ThemeInit from "@/components/ThemeInit";
 import "./globals.css";
 
 const display = Cormorant_Garamond({
@@ -32,9 +33,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ru"
+      suppressHydrationWarning
       className={`${display.variable} ${manrope.variable} ${plexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#0F1013] text-[#EFE9DD]">
+      <head>
+        <ThemeInit />
+      </head>
+      <body className="min-h-full flex flex-col bg-background text-foreground" suppressHydrationWarning>
         <ScrollManager />
         <Cursor />
         {children}

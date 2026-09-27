@@ -62,7 +62,7 @@ export default function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="text-balance mb-14 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] sm:text-5xl"
+          className="text-balance mb-14 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] light:text-[#18140f] sm:text-5xl"
         >
           Чем могу <span className="text-gradient-gold">помочь</span>
         </motion.h2>
@@ -72,7 +72,7 @@ export default function Services() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-1 divide-y divide-white/8 rounded-[24px] border border-white/8 sm:grid-cols-2 sm:divide-x sm:divide-y-0"
+          className="grid grid-cols-1 divide-y divide-white/8 light:divide-[#18140f]/8 rounded-[24px] border border-white/8 light:border-[#18140f]/8 sm:grid-cols-2 sm:divide-x sm:divide-y-0"
         >
           {SERVICES.map((s) => {
             const Icon = s.icon;
@@ -80,17 +80,17 @@ export default function Services() {
               <motion.div
                 key={s.n}
                 variants={item}
-                className="group relative flex flex-col gap-5 p-8 transition-colors hover:bg-white/[0.02] sm:p-10"
+                className="group relative flex flex-col gap-5 p-8 transition-colors hover:bg-white/[0.02] light:hover:bg-[#18140f]/[0.02] sm:p-10"
               >
                 <div className="flex items-center justify-between">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#D4AF37]/30 text-[#D4AF37] transition-colors duration-300 group-hover:border-[#D4AF37]/60 group-hover:bg-[#D4AF37]/10">
                     <Icon className="h-5 w-5" strokeWidth={1.5} />
                   </span>
-                  <span className="font-mono text-xs text-[#6b6558]">{s.n}</span>
+                  <span className="font-mono text-xs text-[#6b6558] light:text-[#8f8874]">{s.n}</span>
                 </div>
                 <div>
-                  <h3 className="font-body text-xl font-semibold text-[#EFE9DD]">{s.title}</h3>
-                  <p className="mt-2 max-w-sm text-[14px] leading-relaxed text-[#a49d8c]">{s.text}</p>
+                  <h3 className="font-body text-xl font-semibold text-[#EFE9DD] light:text-[#18140f]">{s.title}</h3>
+                  <p className="mt-2 max-w-sm text-[14px] leading-relaxed text-[#a49d8c] light:text-[#5c5648]">{s.text}</p>
                 </div>
               </motion.div>
             );

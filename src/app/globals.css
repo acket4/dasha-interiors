@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
 :root {
   --background: #0f1013;
   --surface: #15161a;
@@ -12,6 +14,20 @@
   --cream-ink: #1c1811;
   --cream-ink-soft: #6b6050;
   color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --background: #faf8f4;
+  --surface: #f2ede4;
+  --foreground: #18140f;
+  --foreground-soft: #6b6050;
+  --gold: #9c6b14;
+  --bronze: #8a6a3a;
+  --line: rgba(24, 20, 15, 0.1);
+  --cream: #e8dcc4;
+  --cream-ink: #18140f;
+  --cream-ink-soft: #6b6050;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -34,14 +50,26 @@ body {
   color: var(--foreground);
   font-family: var(--font-body), "Segoe UI", sans-serif;
   background-image:
-    radial-gradient(ellipse 70% 55% at 18% 0%, rgba(212, 175, 55, 0.10), transparent 60%),
+    radial-gradient(ellipse 70% 55% at 18% 0%, rgba(212, 175, 55, 0.1), transparent 60%),
     radial-gradient(ellipse 60% 45% at 100% 20%, rgba(197, 168, 128, 0.07), transparent 60%);
   background-attachment: fixed;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+[data-theme="light"] body {
+  background-image:
+    radial-gradient(ellipse 70% 55% at 18% 0%, rgba(156, 107, 20, 0.07), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 100% 20%, rgba(138, 106, 58, 0.05), transparent 60%);
 }
 
 ::selection {
   background: rgba(212, 175, 55, 0.28);
   color: #fff;
+}
+
+[data-theme="light"] ::selection {
+  background: rgba(156, 107, 20, 0.22);
+  color: #18140f;
 }
 
 * {
@@ -68,6 +96,19 @@ body {
   background: rgba(212, 175, 55, 0.6);
 }
 
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #faf8f4;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(156, 107, 20, 0.3);
+  border-color: #faf8f4;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 107, 20, 0.5);
+}
+
 .custom-cursor,
 .custom-cursor * {
   cursor: none !important;
@@ -88,8 +129,20 @@ body {
   -webkit-backdrop-filter: blur(20px);
 }
 
+[data-theme="light"] .glass {
+  background: rgba(24, 20, 15, 0.03);
+  border: 1px solid rgba(24, 20, 15, 0.08);
+}
+
 .text-gradient-gold {
   background: linear-gradient(120deg, #f3d98a 0%, #d4af37 45%, #c5a880 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+[data-theme="light"] .text-gradient-gold {
+  background: linear-gradient(120deg, #b8860b 0%, #9c6b14 45%, #8a6a3a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

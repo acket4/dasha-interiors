@@ -9,11 +9,11 @@ export default function PhotoPlaceholder({
 }) {
   return (
     <div
-      className={`absolute inset-0 flex flex-col items-center justify-center gap-2 border border-dashed border-white/10 bg-white/[0.03] ${className}`}
+      className={`absolute inset-0 flex flex-col items-center justify-center gap-2 border border-dashed border-white/10 light:border-[#18140f]/10 bg-white/[0.03] light:bg-[#18140f]/[0.03] ${className}`}
     >
-      <ImageIcon className="h-6 w-6 text-white/15" strokeWidth={1.5} />
+      <ImageIcon className="h-6 w-6 text-white/15 light:text-[#18140f]/20" strokeWidth={1.5} />
       {label && (
-        <span className="px-4 text-center font-mono text-[10px] uppercase tracking-widest text-white/20">
+        <span className="px-4 text-center font-mono text-[10px] uppercase tracking-widest text-white/20 light:text-[#18140f]/30">
           {label}
         </span>
       )}

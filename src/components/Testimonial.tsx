@@ -20,7 +20,7 @@ const CHECKS = [
 
 export default function Testimonial() {
   return (
-    <section className="border-y border-white/8 px-6 py-24 sm:px-10 lg:px-16">
+    <section className="border-y border-white/8 light:border-[#18140f]/8 px-6 py-24 sm:px-10 lg:px-16">
       <motion.div
         variants={container}
         initial="hidden"
@@ -34,7 +34,7 @@ export default function Testimonial() {
 
         <motion.div variants={item} className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
           {CHECKS.map((c) => (
-            <span key={c} className="inline-flex items-center gap-2 text-[13px] text-[#c9c2b0]">
+            <span key={c} className="inline-flex items-center gap-2 text-[13px] text-[#c9c2b0] light:text-[#5c5648]">
               <CheckCircle2 className="h-4 w-4 shrink-0 text-[#D4AF37]" />
               {c}
             </span>
@@ -43,7 +43,7 @@ export default function Testimonial() {
 
         <motion.blockquote
           variants={item}
-          className="text-balance mt-12 font-display text-2xl leading-[1.15] text-[#EFE9DD] sm:text-3xl"
+          className="text-balance mt-12 font-display text-2xl leading-[1.15] text-[#EFE9DD] light:text-[#18140f] sm:text-3xl"
         >
           «Хочу от души поблагодарить Дарью за её профессионализм, заказывали с
           мужем технический план квартиры и остались очень довольны. Дарья учла
@@ -51,7 +51,7 @@ export default function Testimonial() {
           упрощают ремонт на начальном этапе, экономят время и нервы. Спасибо
           большое за проделанную работу»
         </motion.blockquote>
-        <motion.cite variants={item} className="mt-6 block font-mono text-[11px] not-italic uppercase tracking-widest text-[#6b6558]">
+        <motion.cite variants={item} className="mt-6 block font-mono text-[11px] not-italic uppercase tracking-widest text-[#6b6558] light:text-[#8f8874]">
           реальный отзыв клиента / технический план квартиры
         </motion.cite>
       </motion.div>

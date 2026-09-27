@@ -69,7 +69,7 @@ function TiltCard({
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       style={{ rotateX: srx, rotateY: sry, transformPerspective: 1000 }}
-      className={`group relative overflow-hidden rounded-[26px] border border-white/8 bg-white/[0.03] backdrop-blur-xl transition-colors hover:border-[#D4AF37]/25 ${className}`}
+      className={`group relative overflow-hidden rounded-[26px] border border-white/8 light:border-[#18140f]/8 bg-white/[0.03] light:bg-[#18140f]/[0.03] backdrop-blur-xl transition-colors hover:border-[#D4AF37]/25 ${className}`}
     >
       <motion.div
         style={{ background: spotlight }}
@@ -122,8 +122,8 @@ export default function Stats() {
 
         {/* Cell 2 — years, timeline */}
         <TiltCard className="flex flex-col p-7 sm:col-start-3 sm:row-start-1">
-          <div className="font-display text-4xl text-[#EFE9DD]">8 лет</div>
-          <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-[#a49d8c]">
+          <div className="font-display text-4xl text-[#EFE9DD] light:text-[#18140f]">8 лет</div>
+          <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-[#a49d8c] light:text-[#6b6050]">
             практики и надзора
           </div>
           <div className="mt-6 flex flex-1 flex-col justify-between">
@@ -132,7 +132,7 @@ export default function Stats() {
                 <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#D4AF37]" />
                 <div>
                   <div className="font-mono text-[10px] text-[#D4AF37]">{t.year}</div>
-                  <div className="text-[13px] leading-snug text-[#c9c2b0]">{t.label}</div>
+                  <div className="text-[13px] leading-snug text-[#c9c2b0] light:text-[#5c5648]">{t.label}</div>
                 </div>
               </div>
             ))}
@@ -141,8 +141,8 @@ export default function Stats() {
 
         {/* Cell 3 — projects, micro previews */}
         <TiltCard className="p-7 sm:col-start-3 sm:row-start-2">
-          <div className="font-display text-4xl text-[#EFE9DD]">60+</div>
-          <div className="mt-1 mb-5 font-mono text-[10px] uppercase tracking-widest text-[#a49d8c]">
+          <div className="font-display text-4xl text-[#EFE9DD] light:text-[#18140f]">60+</div>
+          <div className="mt-1 mb-5 font-mono text-[10px] uppercase tracking-widest text-[#a49d8c] light:text-[#6b6050]">
             реализованных проектов
           </div>
           <div className="grid grid-cols-3 gap-1.5">
@@ -153,7 +153,7 @@ export default function Stats() {
               </div>
             ))}
           </div>
-          <div className="mt-3 font-mono text-[9px] uppercase tracking-wider text-[#6b6558]">
+          <div className="mt-3 font-mono text-[9px] uppercase tracking-wider text-[#6b6558] light:text-[#8f8874]">
             превью появятся по мере съёмок
           </div>
         </TiltCard>

@@ -27,7 +27,7 @@ const REASONS = [
 
 export default function WhyTechProject() {
   return (
-    <section className="border-y border-white/8 px-6 py-28 sm:px-10 lg:px-16">
+    <section className="border-y border-white/8 light:border-[#18140f]/8 px-6 py-28 sm:px-10 lg:px-16">
       <motion.div
         variants={container}
         initial="hidden"
@@ -39,18 +39,18 @@ export default function WhyTechProject() {
           <motion.p variants={item} className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">
             [ Технический проект ]
           </motion.p>
-          <motion.h2 variants={item} className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] sm:text-5xl">
+          <motion.h2 variants={item} className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] light:text-[#18140f] sm:text-5xl">
             Почему стоит начать с{" "}
             <span className="text-gradient-gold ">техпроекта</span>
           </motion.h2>
-          <motion.p variants={item} className="mt-6 max-w-md text-[15px] leading-relaxed text-[#a49d8c]">
+          <motion.p variants={item} className="mt-6 max-w-md text-[15px] leading-relaxed text-[#a49d8c] light:text-[#5c5648]">
             Это база любого ремонта, ещё до того, как в квартире появится хоть
             одна плитка или розетка.
           </motion.p>
 
           <motion.div variants={item} className="relative mt-8 rounded-[24px] bg-[#D4AF37]/[0.06] p-6 before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-[#D4AF37]/30">
-            <p className="font-display text-lg text-[#EFE9DD]">Как сэкономить</p>
-            <p className="mt-2 text-[13.5px] leading-relaxed text-[#a49d8c]">
+            <p className="font-display text-lg text-[#EFE9DD] light:text-[#18140f]">Как сэкономить</p>
+            <p className="mt-2 text-[13.5px] leading-relaxed text-[#a49d8c] light:text-[#5c5648]">
               Правки на этапе чертежа стоят часов работы. Правки на этапе
               стройки стоят стен, штробы и нервов.
             </p>
@@ -69,11 +69,11 @@ export default function WhyTechProject() {
             <motion.div
               key={r.n}
               variants={item}
-              className="rounded-[26px] border border-white/8 bg-white/[0.03] p-7 backdrop-blur-xl transition-colors hover:border-[#D4AF37]/25"
+              className="rounded-[26px] border border-white/8 light:border-[#18140f]/8 bg-white/[0.03] light:bg-[#18140f]/[0.03] p-7 backdrop-blur-xl transition-colors hover:border-[#D4AF37]/25"
             >
               <div className="font-display text-2xl text-[#D4AF37]">{r.n}</div>
-              <h3 className="mt-4 font-body text-[16px] font-semibold text-[#EFE9DD]">{r.title}</h3>
-              <p className="mt-2.5 text-[14px] leading-relaxed text-[#a49d8c]">{r.text}</p>
+              <h3 className="mt-4 font-body text-[16px] font-semibold text-[#EFE9DD] light:text-[#18140f]">{r.title}</h3>
+              <p className="mt-2.5 text-[14px] leading-relaxed text-[#a49d8c] light:text-[#5c5648]">{r.text}</p>
             </motion.div>
           ))}
         </div>

@@ -112,7 +112,7 @@ export default function PhotoWheel() {
               width: cardWidth,
               height: cardHeight,
             }}
-            className="absolute left-1/2 top-0 -translate-x-1/2 touch-pan-y cursor-grab overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6)] active:cursor-grabbing"
+            className="absolute left-1/2 top-0 -translate-x-1/2 touch-pan-y cursor-grab overflow-hidden rounded-[24px] border border-white/10 light:border-[#18140f]/10 bg-white/[0.03] light:bg-[#18140f]/[0.03] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6)] active:cursor-grabbing"
           >
             <PhotoFrame src={card.src} alt={card.label} sizes="460px" />
             {isActive && (
