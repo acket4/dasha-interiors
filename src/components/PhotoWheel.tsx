@@ -2,16 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import PhotoFrame from "@/components/PhotoFrame";
+import Image from "next/image";
 
 const CARDS = [
-  { src: "/photos/kuhnya-gostinaya.png", label: "Кухня-гостиная" },
-  { src: "/photos/kuhnya-s-ostrovom.png", label: "Кухня с островом" },
-  { src: "/photos/kuhnya-zelenaya.png", label: "Кухня в зелёных оттенках" },
-  { src: "/photos/vannaya.png", label: "Ванная комната" },
-  { src: "/photos/garderobnaya.png", label: "Гардеробная" },
-  { src: "/photos/komnata-na-dvoih.png", label: "Комната на двоих" },
-  { src: "/photos/razdevalka.png", label: "Раздевалка, спа-клуб" },
+  { src: "/photos/kuhnya-gostinaya.png", label: "Кухня-гостиная", w: 1127, h: 1396 },
+  { src: "/photos/kuhnya-s-ostrovom.png", label: "Кухня с островом", w: 2412, h: 2522 },
+  { src: "/photos/kuhnya-zelenaya.png", label: "Кухня в зелёных оттенках", w: 1206, h: 1502 },
+  { src: "/photos/vannaya.png", label: "Ванная комната", w: 2412, h: 2524 },
+  { src: "/photos/garderobnaya.png", label: "Гардеробная", w: 2412, h: 2546 },
+  { src: "/photos/komnata-na-dvoih.png", label: "Комната на двоих", w: 2410, h: 2502 },
+  { src: "/photos/razdevalka.png", label: "Раздевалка, спа-клуб", w: 2412, h: 2564 },
 ];
 
 const N = CARDS.length;
@@ -46,10 +46,10 @@ export default function PhotoWheel() {
   }, []);
 
   const cardWidth = Math.min(460, Math.max(220, containerWidth * 0.32));
-  const cardHeight = cardWidth * 1.25;
+  const maxCardHeight = Math.max(...CARDS.map((c) => cardWidth * (c.h / c.w)));
   const xStep = cardWidth * 0.62;
   const yStep = cardWidth * 0.15;
-  const containerHeight = cardHeight + yStep * 2 + 40;
+  const containerHeight = maxCardHeight + yStep * 2 + 40;
 
   function handlePointerDown(e: React.PointerEvent<HTMLDivElement>) {
     start.current = { x: e.clientX, y: e.clientY };
@@ -93,6 +93,7 @@ export default function PhotoWheel() {
         const d = shortestOffset(i, active);
         const isActive = d === 0;
         const visible = Math.abs(d) <= 2;
+        const cardHeight = cardWidth * (card.h / card.w);
 
         return (
           <motion.div
@@ -114,7 +115,13 @@ export default function PhotoWheel() {
             }}
             className="absolute left-1/2 top-0 -translate-x-1/2 touch-pan-y cursor-grab overflow-hidden rounded-[24px] border border-white/10 light:border-[#18140f]/10 bg-white/[0.03] light:bg-[#18140f]/[0.03] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6)] active:cursor-grabbing"
           >
-            <PhotoFrame src={card.src} alt={card.label} sizes="460px" />
+            <Image
+              src={card.src}
+              alt={card.label}
+              fill
+              sizes="460px"
+              className="object-cover object-center"
+            />
             {isActive && (
               <motion.span
                 initial={{ opacity: 0, y: 8 }}

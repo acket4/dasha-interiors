@@ -113,7 +113,7 @@ function PhotoLightbox({ onClose }: { onClose: () => void }) {
             </button>
           </div>
 
-          <div className="grid flex-1 grid-cols-2 gap-4 overflow-y-auto pb-6 sm:grid-cols-3">
+          <div className="grid flex-1 grid-cols-2 items-start gap-4 overflow-y-auto pb-6 sm:grid-cols-3">
             {PHOTOS.map((item) => (
               <button
                 key={item.src}
@@ -121,15 +121,15 @@ function PhotoLightbox({ onClose }: { onClose: () => void }) {
                 className="group block w-full text-left"
               >
                 <div className="overflow-hidden rounded-2xl border border-white/10 light:border-[#18140f]/10 bg-white/[0.02] light:bg-[#18140f]/[0.02]">
-                  <div className="relative aspect-[4/5] w-full overflow-hidden bg-black/20">
-                    <Image
-                      src={item.src}
-                      alt={item.alt}
-                      fill
-                      sizes="(max-width: 640px) 45vw, 320px"
-                      className="object-contain transition-transform duration-500 group-hover:scale-[1.03]"
-                    />
-                  </div>
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    width={item.w}
+                    height={item.h}
+                    sizes="(max-width: 640px) 45vw, 320px"
+                    style={{ aspectRatio: `${item.w} / ${item.h}` }}
+                    className="block w-full h-auto transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
                   <span className="block px-3 py-2.5 font-display text-sm text-[#EFE9DD] light:text-[#18140f]">
                     {item.alt}
                   </span>
