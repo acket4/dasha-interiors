@@ -2,7 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import { Award } from "lucide-react";
-import PhotoPlaceholder from "@/components/PhotoPlaceholder";
+import PhotoFrame from "@/components/PhotoFrame";
 
 const container: Variants = {
   hidden: {},
@@ -33,7 +33,7 @@ export default function About() {
         <motion.div variants={item} className="relative mx-auto w-full max-w-sm lg:ml-12 lg:max-w-none">
           <div className="absolute -right-3 -top-3 z-0 h-[62%] w-[72%] rounded-2xl bg-gradient-to-br from-[#D4AF37]/20 to-[#D4AF37]/5" />
           <div className="relative z-10 w-full aspect-[4/5] -rotate-3 overflow-hidden rounded-2xl border border-white/8 light:border-[#18140f]/8 shadow-[0_30px_60px_-25px_rgba(0,0,0,0.7)]">
-            <PhotoPlaceholder label="Портрет Дарьи" />
+            <PhotoFrame src="/photos/darya-portrait.jpg" alt="Зверева Дарья" sizes="(max-width: 1024px) 90vw, 420px" cover />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F1013]/60 light:from-[#faf8f4]/60 via-transparent to-transparent" />
           </div>
         </motion.div>
