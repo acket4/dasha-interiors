@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { motion, type Variants } from "framer-motion";
 import { Award } from "lucide-react";
@@ -21,14 +21,21 @@ export default function About() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-80px" }}
-        className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-20"
+        className="relative mx-auto grid max-w-7xl gap-16 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-20"
       >
-        <motion.div
-          variants={item}
-          className="relative aspect-[4/5] overflow-hidden rounded-[26px] border border-white/8 light:border-[#18140f]/8 bg-white/[0.03] light:bg-[#18140f]/[0.03] backdrop-blur-xl"
+        <span
+          className="pointer-events-none absolute left-0 top-1/2 hidden -translate-y-1/2 -rotate-180 font-mono text-[10px] uppercase tracking-[0.22em] text-[#6b6558] light:text-[#8f8874] lg:block"
+          style={{ writingMode: "vertical-rl" }}
         >
-          <PhotoPlaceholder label="Портрет Дарьи" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F1013]/70 light:from-[#faf8f4]/70 via-transparent to-transparent" />
+          Обо мне
+        </span>
+
+        <motion.div variants={item} className="relative mx-auto w-full max-w-sm lg:ml-12 lg:max-w-none">
+          <div className="absolute -right-3 -top-3 z-0 h-[62%] w-[72%] rounded-2xl bg-gradient-to-br from-[#D4AF37]/20 to-[#D4AF37]/5" />
+          <div className="relative z-10 w-full aspect-[4/5] -rotate-3 overflow-hidden rounded-2xl border border-white/8 light:border-[#18140f]/8 shadow-[0_30px_60px_-25px_rgba(0,0,0,0.7)]">
+            <PhotoPlaceholder label="Портрет Дарьи" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F1013]/60 light:from-[#faf8f4]/60 via-transparent to-transparent" />
+          </div>
         </motion.div>
 
         <div>
@@ -62,22 +69,19 @@ export default function About() {
             и есть портфолио, которое растёт вместе с реализованными проектами.
           </motion.p>
 
-          <motion.div variants={item} className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/8 light:border-[#18140f]/8 bg-white/8 light:bg-[#18140f]/8">
-            {[
-              { n: "120+", l: "чертежей в архиве" },
-              { icon: true, l: "человек года / дизайнер" },
-            ].map((s) => (
-              <div key={s.l} className="bg-[#0F1013] light:bg-[#faf8f4] px-4 py-5">
-                {s.icon ? (
-                  <Award className="h-6 w-6 text-[#D4AF37]" />
-                ) : (
-                  <div className="font-display text-2xl text-[#EFE9DD] light:text-[#18140f]">{s.n}</div>
-                )}
-                <div className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[#a49d8c] light:text-[#6b6050]">
-                  {s.l}
-                </div>
+          <motion.div variants={item} className="mt-10 flex flex-wrap gap-x-12 gap-y-6">
+            <div className="border-t border-white/10 light:border-[#18140f]/10 pt-3">
+              <div className="font-display text-2xl text-[#EFE9DD] light:text-[#18140f]">120+</div>
+              <div className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[#a49d8c] light:text-[#6b6050]">
+                чертежей в архиве
               </div>
-            ))}
+            </div>
+            <div className="border-t border-white/10 light:border-[#18140f]/10 pt-3">
+              <div className="font-display text-2xl text-[#EFE9DD] light:text-[#18140f]">8 лет</div>
+              <div className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[#a49d8c] light:text-[#6b6050]">
+                практики и надзора
+              </div>
+            </div>
           </motion.div>
         </div>
       </motion.div>
