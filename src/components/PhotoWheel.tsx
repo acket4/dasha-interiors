@@ -85,7 +85,7 @@ export default function PhotoWheel() {
     <div
       ref={containerRef}
       onPointerDown={handlePointerDown}
-      className="relative mx-auto mt-16 w-full touch-pan-y select-none"
+      className="relative mx-auto mt-16 w-full touch-pan-y select-none overflow-hidden"
       style={{ perspective: 1200, height: containerHeight || undefined }}
     >
       {CARDS.map((label, i) => {
@@ -104,7 +104,7 @@ export default function PhotoWheel() {
               scale: 1 - Math.abs(d) * 0.1,
               opacity: visible ? 1 - Math.abs(d) * 0.3 : 0,
             }}
-            transition={{ type: "spring", stiffness: 260, damping: 28 }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             style={{
               zIndex: 10 - Math.abs(d),
               pointerEvents: visible ? "auto" : "none",
