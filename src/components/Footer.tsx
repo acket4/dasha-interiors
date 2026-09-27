@@ -7,7 +7,7 @@ export default function Footer() {
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/8 pt-6 font-mono text-[11px] uppercase tracking-widest text-[#6b6558]">
           <span>© Зверева Дарья, дизайнер интерьера</span>
-          <span>Ангарск / Иркутск и область</span>
+          <span>Работаем по всей России</span>
         </div>
       </div>
     </footer>

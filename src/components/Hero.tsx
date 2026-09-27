@@ -91,7 +91,7 @@ export default function Hero() {
 
       <div className="pointer-events-none absolute inset-x-0 top-0 hidden h-[100svh] items-start justify-between px-6 pt-28 font-mono text-[11px] uppercase tracking-[0.22em] text-[#c9c2b0]/70 sm:flex sm:px-10 lg:px-16">
         <span>[ Дизайн интерьера ]</span>
-        <span>[ Ангарск / Иркутск ]</span>
+        <span>[ Вся Россия ]</span>
       </div>
 
       <div className="absolute inset-x-0 top-0 flex h-[100svh] flex-col justify-end px-6 pb-16 sm:px-10 lg:px-16">
@@ -131,8 +131,8 @@ export default function Hero() {
             style={{ textShadow: "0 2px 16px rgba(0,0,0,0.5)" }}
             className="mt-7 max-w-md text-[15px] leading-relaxed text-[#c9c2b0]"
           >
-            Проектирую интерьеры квартир и домов&nbsp;в Ангарске, Иркутске
-            и&nbsp;ближайших районах для тех, кто различает хороший вкус
+            Проектирую интерьеры квартир и домов&nbsp;по&nbsp;всей России
+            для тех, кто различает хороший вкус
             от&nbsp;навязанного тренда.
           </motion.p>
 

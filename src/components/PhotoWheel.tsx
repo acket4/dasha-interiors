@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ImageIcon } from "lucide-react";
 
@@ -15,8 +15,6 @@ const CARDS = [
 
 const N = CARDS.length;
 const ANGLE_STEP = 9;
-const X_STEP = 128;
-const Y_STEP = 34;
 const DRAG_THRESHOLD = 60;
 
 function wrap(i: number) {
@@ -32,8 +30,25 @@ function shortestOffset(index: number, active: number) {
 
 export default function PhotoWheel() {
   const [active, setActive] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
   const start = useRef({ x: 0, y: 0 });
   const intent = useRef<"none" | "horizontal" | "vertical">("none");
+
+  useEffect(() => {
+    function measure() {
+      if (containerRef.current) setContainerWidth(containerRef.current.getBoundingClientRect().width);
+    }
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  const cardWidth = Math.min(460, Math.max(220, containerWidth * 0.32));
+  const cardHeight = cardWidth * 1.25;
+  const xStep = cardWidth * 0.62;
+  const yStep = cardWidth * 0.15;
+  const containerHeight = cardHeight + yStep * 2 + 40;
 
   function handlePointerDown(e: React.PointerEvent<HTMLDivElement>) {
     start.current = { x: e.clientX, y: e.clientY };
@@ -68,9 +83,10 @@ export default function PhotoWheel() {
 
   return (
     <div
+      ref={containerRef}
       onPointerDown={handlePointerDown}
-      className="relative mx-auto mt-16 h-[420px] w-full max-w-3xl touch-pan-y select-none sm:h-[480px]"
-      style={{ perspective: 1200 }}
+      className="relative mx-auto mt-16 w-full touch-pan-y select-none"
+      style={{ perspective: 1200, height: containerHeight || undefined }}
     >
       {CARDS.map((label, i) => {
         const d = shortestOffset(i, active);
@@ -82,18 +98,23 @@ export default function PhotoWheel() {
             key={label}
             onClick={() => setActive(i)}
             animate={{
-              x: d * X_STEP,
-              y: Math.abs(d) * Y_STEP,
+              x: d * xStep,
+              y: Math.abs(d) * yStep,
               rotate: d * ANGLE_STEP,
               scale: 1 - Math.abs(d) * 0.1,
               opacity: visible ? 1 - Math.abs(d) * 0.3 : 0,
             }}
             transition={{ type: "spring", stiffness: 260, damping: 28 }}
-            style={{ zIndex: 10 - Math.abs(d), pointerEvents: visible ? "auto" : "none" }}
-            className="absolute left-1/2 top-0 aspect-[4/5] w-[220px] -translate-x-1/2 touch-pan-y cursor-grab overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.03] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6)] active:cursor-grabbing sm:w-[260px]"
+            style={{
+              zIndex: 10 - Math.abs(d),
+              pointerEvents: visible ? "auto" : "none",
+              width: cardWidth,
+              height: cardHeight,
+            }}
+            className="absolute left-1/2 top-0 -translate-x-1/2 touch-pan-y cursor-grab overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6)] active:cursor-grabbing"
           >
             <div className="flex h-full w-full flex-col items-center justify-center gap-3">
-              <ImageIcon className="h-7 w-7 text-white/15" strokeWidth={1.5} />
+              <ImageIcon className="h-8 w-8 text-white/15" strokeWidth={1.5} />
               <span className="font-mono text-[10px] uppercase tracking-widest text-white/20">
                 скоро
               </span>
@@ -103,7 +124,7 @@ export default function PhotoWheel() {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15, duration: 0.4 }}
-                className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0F1013] via-[#0F1013]/70 to-transparent px-5 pb-5 pt-10 font-display text-xl text-[#EFE9DD]"
+                className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0F1013] via-[#0F1013]/70 to-transparent px-6 pb-6 pt-14 font-display text-2xl text-[#EFE9DD] sm:text-3xl"
               >
                 {label}
               </motion.span>

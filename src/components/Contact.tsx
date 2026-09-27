@@ -47,7 +47,7 @@ export default function Contact() {
             Обсудим ваш <span className="text-gradient-gold ">проект</span>
           </h2>
           <p className="mt-6 max-w-md text-[15px] leading-relaxed text-[#a49d8c]">
-            Работаю в Ангарске, Иркутске и ближайших районах. Напишите в Instagram
+            Работаю по всей России. Напишите в Instagram
             или скопируйте почту. Отвечаю в течение суток.
           </p>
           <a

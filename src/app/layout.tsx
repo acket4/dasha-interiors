@@ -25,7 +25,7 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "Дарья Design — дизайнер интерьера",
   description:
-    "Дизайн-проекты квартир и домов под ключ в Ангарске, Иркутске и области.",
+    "Дизайн-проекты квартир и домов под ключ по всей России.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
