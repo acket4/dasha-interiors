@@ -75,7 +75,7 @@ export default function Hero() {
   return (
     <section className="relative" style={{ height: "170vh" }}>
       <div className="sticky top-0 h-[100svh] overflow-hidden">
-        <PhotoFrame src="/photos/kuhnya-s-ostrovom.png" alt="Кухня с островом" priority sizes="100vw" />
+        <PhotoFrame src="/photos/kuhnya-s-ostrovom.png" alt="Кухня с островом" priority sizes="100vw" stretchX={1.12} />
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 h-[68%]"
           style={{
@@ -84,12 +84,15 @@ export default function Hero() {
             maskImage: "linear-gradient(to top, black 0%, transparent 92%)",
             WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 92%)",
             background:
-              "linear-gradient(to top, rgba(15,16,19,0.55), rgba(15,16,19,0) 92%)",
+              "linear-gradient(to top, rgba(9,9,11,0.85), rgba(9,9,11,0.2) 92%)",
           }}
         />
       </div>
 
-      <div className="pointer-events-none absolute inset-x-0 top-0 hidden h-[100svh] items-start justify-between px-6 pt-28 font-mono text-[11px] uppercase tracking-[0.22em] text-[#c9c2b0]/70 sm:flex sm:px-10 lg:px-16">
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 hidden h-[100svh] items-start justify-between px-6 pt-28 font-mono text-[11px] uppercase tracking-[0.22em] text-[#EFE9DD]/85 sm:flex sm:px-10 lg:px-16"
+        style={{ textShadow: "0 2px 10px rgba(0,0,0,0.6)" }}
+      >
         <span>[ Дизайн интерьера ]</span>
         <span>[ Вся Россия ]</span>
       </div>
@@ -102,15 +105,15 @@ export default function Hero() {
           className="mx-auto w-full max-w-7xl"
         >
           <motion.div variants={item} className="mb-8 flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 backdrop-blur-xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-[#0F1013]/60 px-4 py-2 backdrop-blur-xl">
               <span className="h-1.5 w-1.5 rounded-full bg-[#D4AF37]" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#c9c2b0]">
+              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#EFE9DD]">
                 Зверева Дарья, дизайнер интерьера
               </span>
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#D4AF37]/25 bg-white/[0.03] px-4 py-2 backdrop-blur-xl">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#D4AF37]/40 bg-[#0F1013]/60 px-4 py-2 backdrop-blur-xl">
               <Award className="h-3 w-3 shrink-0 text-[#D4AF37]" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#c9c2b0]">
+              <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#EFE9DD]">
                 Человек года в номинации «Дизайнер»
               </span>
             </span>
@@ -118,7 +121,7 @@ export default function Hero() {
 
           <motion.h1
             variants={item}
-            style={{ textShadow: "0 4px 28px rgba(0,0,0,0.55)" }}
+            style={{ textShadow: "0 4px 28px rgba(0,0,0,0.75), 0 2px 10px rgba(0,0,0,0.6)" }}
             className="text-balance max-w-3xl break-words font-display text-[10.5vw] font-medium leading-[0.92] tracking-[-0.035em] hyphens-none sm:text-6xl lg:text-[4.4rem]"
           >
             Пространство,
@@ -128,8 +131,8 @@ export default function Hero() {
 
           <motion.p
             variants={item}
-            style={{ textShadow: "0 2px 16px rgba(0,0,0,0.5)" }}
-            className="mt-7 max-w-md text-[15px] leading-relaxed text-[#c9c2b0]"
+            style={{ textShadow: "0 2px 16px rgba(0,0,0,0.7)" }}
+            className="mt-7 max-w-md text-[15px] leading-relaxed text-[#EFE9DD]/90"
           >
             Проектирую интерьеры квартир и домов&nbsp;по&nbsp;всей России
             для тех, кто различает хороший вкус
@@ -143,7 +146,8 @@ export default function Hero() {
 
           <motion.p
             variants={item}
-            className="mt-4 font-mono text-[12px] uppercase tracking-[0.08em] text-[#a49d8c]"
+            style={{ textShadow: "0 2px 10px rgba(0,0,0,0.6)" }}
+            className="mt-4 font-mono text-[12px] uppercase tracking-[0.08em] text-[#EFE9DD]/75"
           >
             Отвечаю лично, обычно в течение суток
           </motion.p>

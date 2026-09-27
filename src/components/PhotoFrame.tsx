@@ -6,12 +6,15 @@ export default function PhotoFrame({
   className = "",
   sizes,
   priority,
+  stretchX,
 }: {
   src: string;
   alt: string;
   className?: string;
   sizes?: string;
   priority?: boolean;
+  /** Slight horizontal scale on the sharp layer only, to shrink letterbox margins. Not a crop — no pixels are cut. */
+  stretchX?: number;
 }) {
   return (
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
@@ -30,6 +33,7 @@ export default function PhotoFrame({
         priority={priority}
         sizes={sizes}
         className="object-contain object-center"
+        style={stretchX ? { transform: `scaleX(${stretchX})` } : undefined}
       />
     </div>
   );

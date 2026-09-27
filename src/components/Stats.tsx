@@ -126,10 +126,11 @@ export default function Stats() {
           <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-[#a49d8c] light:text-[#6b6050]">
             практики и надзора
           </div>
-          <div className="mt-6 flex flex-1 flex-col justify-between">
+          <div className="relative mt-6 flex flex-1 flex-col justify-between">
+            <div className="pointer-events-none absolute left-[3px] top-2 bottom-2 w-px bg-gradient-to-b from-[#D4AF37]/50 via-[#D4AF37]/15 to-[#D4AF37]/50" />
             {TIMELINE.map((t) => (
               <div key={t.year} className="flex gap-3">
-                <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#D4AF37]" />
+                <span className="relative z-10 mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#D4AF37]" />
                 <div>
                   <div className="font-mono text-[10px] text-[#D4AF37]">{t.year}</div>
                   <div className="text-[13px] leading-snug text-[#c9c2b0] light:text-[#5c5648]">{t.label}</div>

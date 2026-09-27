@@ -1,22 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Aperture, ArrowRight, Play, Video, X } from "lucide-react";
 import PhotoFrame from "@/components/PhotoFrame";
 import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 
 type MediaType = "photo" | "video" | null;
-type ZoomTarget = { src: string; alt: string } | null;
+type ZoomTarget = { src: string; alt: string; w: number; h: number } | null;
 
 const PHOTOS = [
-  { src: "/photos/razdevalka.png", alt: "Раздевалка, спа-клуб" },
-  { src: "/photos/kuhnya-gostinaya.png", alt: "Кухня-гостиная" },
-  { src: "/photos/kuhnya-s-ostrovom.png", alt: "Кухня с островом" },
-  { src: "/photos/kuhnya-zelenaya.png", alt: "Кухня в зелёных оттенках" },
-  { src: "/photos/vannaya.png", alt: "Ванная комната" },
-  { src: "/photos/garderobnaya.png", alt: "Гардеробная" },
-  { src: "/photos/komnata-na-dvoih.png", alt: "Комната на двоих" },
+  { src: "/photos/razdevalka.png", alt: "Раздевалка, спа-клуб", w: 2412, h: 2564 },
+  { src: "/photos/kuhnya-gostinaya.png", alt: "Кухня-гостиная", w: 1127, h: 1396 },
+  { src: "/photos/kuhnya-s-ostrovom.png", alt: "Кухня с островом", w: 2412, h: 2522 },
+  { src: "/photos/kuhnya-zelenaya.png", alt: "Кухня в зелёных оттенках", w: 1206, h: 1502 },
+  { src: "/photos/vannaya.png", alt: "Ванная комната", w: 2412, h: 2524 },
+  { src: "/photos/garderobnaya.png", alt: "Гардеробная", w: 2412, h: 2546 },
+  { src: "/photos/komnata-na-dvoih.png", alt: "Комната на двоих", w: 2410, h: 2502 },
 ];
 
 const panelItem: Variants = {
@@ -41,9 +42,16 @@ function ZoomView({ target, onClose }: { target: ZoomTarget; onClose: () => void
         exit={{ opacity: 0, scale: 0.96 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="relative aspect-[4/5] w-full max-w-2xl overflow-hidden rounded-[28px] border border-white/10"
+        className="relative max-h-[85vh] w-full max-w-2xl overflow-hidden rounded-[28px] border border-white/10"
       >
-        <PhotoFrame src={target.src} alt={target.alt} sizes="(max-width: 640px) 90vw, 640px" />
+        <Image
+          src={target.src}
+          alt={target.alt}
+          width={target.w}
+          height={target.h}
+          sizes="(max-width: 672px) 90vw, 672px"
+          className="max-h-[85vh] w-full object-contain"
+        />
         <span className="absolute bottom-5 left-5 z-10 font-display text-xl text-[#EFE9DD]" style={{ textShadow: "0 2px 12px rgba(0,0,0,0.7)" }}>
           {target.alt}
         </span>
@@ -105,17 +113,28 @@ function PhotoLightbox({ onClose }: { onClose: () => void }) {
             </button>
           </div>
 
-          <div className="grid flex-1 grid-cols-2 gap-4 overflow-y-auto pb-6 sm:grid-cols-3">
+          <div className="flex flex-1 flex-col gap-8 overflow-y-auto pb-6">
             {PHOTOS.map((item) => (
               <button
                 key={item.src}
                 onClick={() => setZoomed(item)}
-                className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 text-left"
+                className="group relative shrink-0 overflow-hidden rounded-2xl border border-white/10 light:border-[#18140f]/10 bg-white/[0.02] light:bg-[#18140f]/[0.02] text-left"
               >
-                <PhotoFrame src={item.src} alt={item.alt} sizes="(max-width: 640px) 45vw, 320px" />
-                <span className="absolute bottom-3 left-3 z-10 font-display text-sm text-[#EFE9DD]" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.7)" }}>
-                  {item.alt}
-                </span>
+                <Image
+                  src={item.src}
+                  alt={item.alt}
+                  width={item.w}
+                  height={item.h}
+                  sizes="(max-width: 768px) 90vw, 720px"
+                  style={{ aspectRatio: `${item.w} / ${item.h}` }}
+                  className="block w-full h-auto transition-transform duration-500 group-hover:scale-[1.01]"
+                />
+                <div className="flex items-center justify-between px-5 py-4">
+                  <span className="font-display text-lg text-[#EFE9DD] light:text-[#18140f]">{item.alt}</span>
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-[#a49d8c] light:text-[#8f8874]">
+                    Открыть
+                  </span>
+                </div>
               </button>
             ))}
           </div>
