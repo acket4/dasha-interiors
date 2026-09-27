@@ -37,7 +37,7 @@ export default function WhyTechProject() {
       >
         <div>
           <motion.p variants={item} className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">
-            Технический проект
+            [ Технический проект ]
           </motion.p>
           <motion.h2 variants={item} className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] sm:text-5xl">
             Почему стоит начать с{" "}

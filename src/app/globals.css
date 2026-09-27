@@ -8,6 +8,9 @@
   --gold: #d4af37;
   --bronze: #c5a880;
   --line: rgba(239, 233, 221, 0.08);
+  --cream: #ece4d3;
+  --cream-ink: #1c1811;
+  --cream-ink-soft: #6b6050;
   color-scheme: dark;
 }
 
@@ -18,6 +21,9 @@
   --color-foreground-soft: var(--foreground-soft);
   --color-gold: var(--gold);
   --color-bronze: var(--bronze);
+  --color-cream: var(--cream);
+  --color-cream-ink: var(--cream-ink);
+  --color-cream-ink-soft: var(--cream-ink-soft);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --font-mono: var(--font-mono);

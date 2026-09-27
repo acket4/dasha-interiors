@@ -42,7 +42,7 @@ export default function About() {
             variants={item}
             className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]"
           >
-            Обо мне
+            [ Обо мне ]
           </motion.p>
           <motion.h2
             variants={item}

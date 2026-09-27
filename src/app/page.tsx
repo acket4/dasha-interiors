@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import Manifesto from "@/components/Manifesto";
 import Stats from "@/components/Stats";
 import About from "@/components/About";
 import Services from "@/components/Services";
@@ -16,6 +17,7 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <Hero />
+        <Manifesto />
         <Stats />
         <About />
         <Services />

@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Manrope, IBM_Plex_Mono } from "next/font/google";
+import { Cormorant_Garamond, Inter, IBM_Plex_Mono } from "next/font/google";
 import Cursor from "@/components/Cursor";
 import ScrollManager from "@/components/ScrollManager";
 import "./globals.css";
 
-const display = Playfair_Display({
+const display = Cormorant_Garamond({
   variable: "--font-display",
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
 });
 
-const manrope = Manrope({
+const manrope = Inter({
   variable: "--font-body",
   subsets: ["latin", "cyrillic"],
   weight: ["400", "600"],
@@ -23,7 +23,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Зверева Дарья, дизайнер интерьера",
+  title: "Дарья Design — дизайнер интерьера",
   description:
     "Дизайн-проекты квартир и домов под ключ в Ангарске, Иркутске и области.",
 };

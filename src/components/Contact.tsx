@@ -42,7 +42,7 @@ export default function Contact() {
         className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-20"
       >
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">Контакты</p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">[ Контакты ]</p>
           <h2 className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] sm:text-5xl">
             Обсудим ваш <span className="text-gradient-gold ">проект</span>
           </h2>

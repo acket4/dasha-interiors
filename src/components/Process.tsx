@@ -120,16 +120,19 @@ export default function Process() {
   }, []);
 
   return (
-    <section id="process" className="px-6 pb-28 sm:px-10 lg:px-16">
+    <section id="process" className="bg-cream px-6 py-28 text-cream-ink sm:px-10 lg:px-16">
       <div className="mx-auto max-w-7xl">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#9c6b1f]">
+          [ Процесс ]
+        </p>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="text-balance font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] sm:text-5xl"
+          className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-cream-ink sm:text-5xl"
         >
-          Как проходит <span className="text-gradient-gold">проект</span>
+          Как проходит проект
         </motion.h2>
 
         <motion.div
@@ -137,21 +140,21 @@ export default function Process() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-          className="mt-24 rounded-[24px] border border-white/10 bg-white/[0.03] px-6 py-6 backdrop-blur-xl sm:px-9 sm:py-8"
+          className="mt-24 rounded-[24px] border border-[#1c1811]/10 bg-white/50 px-6 py-6 backdrop-blur-xl sm:px-9 sm:py-8"
         >
           <div className="mb-8 flex items-center justify-between">
-            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#a49d8c]">
+            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-cream-ink-soft">
               Этап{" "}
-              <span className="font-body text-lg font-semibold normal-case tracking-normal text-[#EFE9DD]">
+              <span className="font-body text-lg font-semibold normal-case tracking-normal text-cream-ink">
                 {STEPS[active].title}
               </span>
             </span>
-            <span className="font-mono text-[11px] text-[#6b6558]">
+            <span className="font-mono text-[11px] text-cream-ink-soft">
               0{active + 1} / 0{N}
             </span>
           </div>
 
-          <div ref={trackRef} className="relative h-[3px] rounded-full bg-white/10">
+          <div ref={trackRef} className="relative h-[3px] rounded-full bg-[#1c1811]/10">
             {STEPS.map((s, i) => (
               <button
                 key={s.title}
@@ -162,7 +165,7 @@ export default function Process() {
               >
                 <span
                   className={`h-2.5 w-2.5 rounded-full transition-colors duration-300 ${
-                    active === i ? "bg-[#0F1013]" : "bg-white/25 hover:bg-white/45"
+                    active === i ? "bg-[#1c1811]" : "bg-[#1c1811]/20 hover:bg-[#1c1811]/40"
                   }`}
                 />
               </button>
@@ -185,17 +188,17 @@ export default function Process() {
         >
           {STEPS.map((s, i) => (
             <button key={s.title} onClick={() => goTo(i)} className="text-left">
-              <span className="font-mono text-xs text-[#D4AF37]">0{i + 1}</span>
+              <span className="font-mono text-xs text-[#9c6b1f]">0{i + 1}</span>
               <h4
-                className={`mt-2 font-body font-semibold text-[#EFE9DD] transition-all duration-300 ${
-                  active === i ? "text-2xl opacity-100" : "text-base opacity-35"
+                className={`mt-2 font-body font-semibold text-cream-ink transition-all duration-300 ${
+                  active === i ? "text-2xl opacity-100" : "text-base opacity-40"
                 }`}
               >
                 {s.title}
               </h4>
               <p
-                className={`mt-1.5 text-sm leading-relaxed text-[#a49d8c] transition-opacity duration-300 ${
-                  active === i ? "opacity-100" : "opacity-0 sm:opacity-35"
+                className={`mt-1.5 text-sm leading-relaxed text-cream-ink-soft transition-opacity duration-300 ${
+                  active === i ? "opacity-100" : "opacity-0 sm:opacity-40"
                 }`}
               >
                 {s.text}
