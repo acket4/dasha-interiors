@@ -46,10 +46,10 @@ export default function PhotoWheel() {
   }, []);
 
   const cardWidth = Math.min(460, Math.max(220, containerWidth * 0.32));
-  const maxCardHeight = Math.max(...CARDS.map((c) => cardWidth * (c.h / c.w)));
+  const cardHeight = cardWidth * 1.25;
   const xStep = cardWidth * 0.62;
   const yStep = cardWidth * 0.15;
-  const containerHeight = maxCardHeight + yStep * 2 + 40;
+  const containerHeight = cardHeight + yStep * 2 + 40;
 
   function handlePointerDown(e: React.PointerEvent<HTMLDivElement>) {
     start.current = { x: e.clientX, y: e.clientY };
@@ -93,7 +93,6 @@ export default function PhotoWheel() {
         const d = shortestOffset(i, active);
         const isActive = d === 0;
         const visible = Math.abs(d) <= 2;
-        const cardHeight = cardWidth * (card.h / card.w);
 
         return (
           <motion.div
