@@ -2,15 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ImageIcon } from "lucide-react";
+import PhotoFrame from "@/components/PhotoFrame";
 
 const CARDS = [
-  "Кухня-гостиная",
-  "Спальня",
-  "Ванная комната",
-  "Гардеробная",
-  "Прихожая",
-  "Детская",
+  { src: "/photos/kuhnya-gostinaya.png", label: "Кухня-гостиная" },
+  { src: "/photos/kuhnya-s-ostrovom.png", label: "Кухня с островом" },
+  { src: "/photos/kuhnya-zelenaya.png", label: "Кухня в зелёных оттенках" },
+  { src: "/photos/vannaya.png", label: "Ванная комната" },
+  { src: "/photos/garderobnaya.png", label: "Гардеробная" },
+  { src: "/photos/komnata-na-dvoih.png", label: "Комната на двоих" },
+  { src: "/photos/razdevalka.png", label: "Раздевалка, спа-клуб" },
 ];
 
 const N = CARDS.length;
@@ -88,14 +89,14 @@ export default function PhotoWheel() {
       className="relative mx-auto mt-16 w-full touch-pan-y select-none overflow-hidden"
       style={{ perspective: 1200, height: containerHeight || undefined }}
     >
-      {CARDS.map((label, i) => {
+      {CARDS.map((card, i) => {
         const d = shortestOffset(i, active);
         const isActive = d === 0;
         const visible = Math.abs(d) <= 2;
 
         return (
           <motion.div
-            key={label}
+            key={card.src}
             onClick={() => setActive(i)}
             animate={{
               x: d * xStep,
@@ -113,12 +114,7 @@ export default function PhotoWheel() {
             }}
             className="absolute left-1/2 top-0 -translate-x-1/2 touch-pan-y cursor-grab overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6)] active:cursor-grabbing"
           >
-            <div className="flex h-full w-full flex-col items-center justify-center gap-3">
-              <ImageIcon className="h-8 w-8 text-white/15" strokeWidth={1.5} />
-              <span className="font-mono text-[10px] uppercase tracking-widest text-white/20">
-                скоро
-              </span>
-            </div>
+            <PhotoFrame src={card.src} alt={card.label} sizes="460px" />
             {isActive && (
               <motion.span
                 initial={{ opacity: 0, y: 8 }}
@@ -126,7 +122,7 @@ export default function PhotoWheel() {
                 transition={{ delay: 0.15, duration: 0.4 }}
                 className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0F1013] via-[#0F1013]/70 to-transparent px-6 pb-6 pt-14 font-display text-2xl text-[#EFE9DD] sm:text-3xl"
               >
-                {label}
+                {card.label}
               </motion.span>
             )}
           </motion.div>

@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useMotionTemplate, useSpring, type Variants } from "framer-motion";
 import { AtSign } from "lucide-react";
-import PhotoPlaceholder from "@/components/PhotoPlaceholder";
+import PhotoFrame from "@/components/PhotoFrame";
 
 const container: Variants = {
   hidden: {},
@@ -21,7 +21,14 @@ const TIMELINE = [
   { year: "2026", label: "Студия полного цикла" },
 ];
 
-const MOSAIC_COUNT = 6;
+const MOSAIC = [
+  "/photos/kuhnya-zelenaya.png",
+  "/photos/vannaya.png",
+  "/photos/garderobnaya.png",
+  "/photos/komnata-na-dvoih.png",
+  "/photos/razdevalka.png",
+  "/photos/kuhnya-gostinaya.png",
+];
 
 function TiltCard({
   className = "",
@@ -86,11 +93,11 @@ export default function Stats() {
         {/* Cell 1 — real photo, audience caption */}
         <TiltCard className="sm:col-span-2 sm:row-span-2">
           <div className="absolute inset-0">
-            <PhotoPlaceholder label="Фото интерьера" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1013] via-[#0F1013]/55 to-[#0F1013]/10" />
+            <PhotoFrame src="/photos/kuhnya-s-ostrovom.png" alt="Кухня с островом" sizes="(max-width: 1024px) 100vw, 66vw" />
+            <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0F1013] via-[#0F1013]/55 to-[#0F1013]/10" />
           </div>
 
-          <div className="relative flex h-full min-h-[320px] flex-col justify-between p-7">
+          <div className="relative z-10 flex h-full min-h-[320px] flex-col justify-between p-7">
             <a
               href="https://www.instagram.com/darya_zver"
               target="_blank"
@@ -139,9 +146,10 @@ export default function Stats() {
             реализованных проектов
           </div>
           <div className="grid grid-cols-3 gap-1.5">
-            {Array.from({ length: MOSAIC_COUNT }).map((_, i) => (
+            {MOSAIC.map((src, i) => (
               <div key={i} className="relative aspect-square overflow-hidden rounded-lg">
-                <PhotoPlaceholder />
+                <PhotoFrame src={src} alt="" sizes="120px" />
+                <div className="absolute inset-0 z-10 bg-[#0F1013]/20" />
               </div>
             ))}
           </div>
