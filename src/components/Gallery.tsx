@@ -191,7 +191,7 @@ export default function Gallery() {
             onClick={() => setOpen("photo")}
             className="group relative aspect-[4/5] overflow-hidden rounded-[28px] border border-white/8 light:border-[#18140f]/8 text-left sm:aspect-[3/4]"
           >
-            <PhotoFrame src={PHOTOS[0].src} alt={PHOTOS[0].alt} sizes="(max-width: 1024px) 100vw, 50vw" />
+            <PhotoFrame src={PHOTOS[0].src} alt={PHOTOS[0].alt} sizes="(max-width: 1024px) 100vw, 50vw" cover />
             <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0F1013] via-[#0F1013]/10 to-transparent" />
 
             <span className="absolute left-6 top-6 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0F1013]/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-[#EFE9DD] backdrop-blur-md">

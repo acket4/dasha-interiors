@@ -7,6 +7,7 @@ export default function PhotoFrame({
   sizes,
   priority,
   stretchX,
+  cover,
 }: {
   src: string;
   alt: string;
@@ -15,7 +16,24 @@ export default function PhotoFrame({
   priority?: boolean;
   /** Slight horizontal scale on the sharp layer only, to shrink letterbox margins. Not a crop — no pixels are cut. */
   stretchX?: number;
+  /** Full-bleed crop instead of contain+blur — for narrow/tall boxes (e.g. mobile hero) where a near-square photo would otherwise leave huge empty margins. */
+  cover?: boolean;
 }) {
+  if (cover) {
+    return (
+      <div className={`absolute inset-0 overflow-hidden ${className}`}>
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          priority={priority}
+          sizes={sizes}
+          className="object-cover object-center"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
       <Image

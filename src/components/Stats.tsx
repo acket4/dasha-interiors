@@ -93,7 +93,7 @@ export default function Stats() {
         {/* Cell 1 — real photo, audience caption */}
         <TiltCard className="sm:col-span-2 sm:row-span-2">
           <div className="absolute inset-0">
-            <PhotoFrame src="/photos/kuhnya-s-ostrovom.png" alt="Кухня с островом" sizes="(max-width: 1024px) 100vw, 66vw" />
+            <PhotoFrame src="/photos/kuhnya-s-ostrovom.png" alt="Кухня с островом" sizes="(max-width: 1024px) 100vw, 66vw" cover />
             <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0F1013] via-[#0F1013]/55 to-[#0F1013]/10" />
           </div>
 
@@ -149,7 +149,7 @@ export default function Stats() {
           <div className="grid grid-cols-3 gap-1.5">
             {MOSAIC.map((src, i) => (
               <div key={i} className="relative aspect-square overflow-hidden rounded-lg">
-                <PhotoFrame src={src} alt="" sizes="120px" />
+                <PhotoFrame src={src} alt="" sizes="120px" cover />
                 <div className="absolute inset-0 z-10 bg-[#0F1013]/20" />
               </div>
             ))}

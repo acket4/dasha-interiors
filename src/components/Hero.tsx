@@ -75,7 +75,7 @@ export default function Hero() {
   return (
     <section className="relative" style={{ height: "170vh" }}>
       <div className="sticky top-0 h-[100svh] overflow-hidden">
-        <PhotoFrame src="/photos/kuhnya-s-ostrovom.png" alt="Кухня с островом" priority sizes="100vw" stretchX={1.12} />
+        <PhotoFrame src="/photos/kuhnya-s-ostrovom.png" alt="Кухня с островом" priority sizes="100vw" cover />
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 h-[68%]"
           style={{
