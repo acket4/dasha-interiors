@@ -113,26 +113,25 @@ function PhotoLightbox({ onClose }: { onClose: () => void }) {
             </button>
           </div>
 
-          <div className="flex flex-1 flex-col gap-8 overflow-y-auto pb-6">
+          <div className="grid flex-1 grid-cols-2 gap-4 overflow-y-auto pb-6 sm:grid-cols-3">
             {PHOTOS.map((item) => (
               <button
                 key={item.src}
                 onClick={() => setZoomed(item)}
-                className="group relative shrink-0 overflow-hidden rounded-2xl border border-white/10 light:border-[#18140f]/10 bg-white/[0.02] light:bg-[#18140f]/[0.02] text-left"
+                className="group block w-full text-left"
               >
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  width={item.w}
-                  height={item.h}
-                  sizes="(max-width: 768px) 90vw, 720px"
-                  style={{ aspectRatio: `${item.w} / ${item.h}` }}
-                  className="block w-full h-auto transition-transform duration-500 group-hover:scale-[1.01]"
-                />
-                <div className="flex items-center justify-between px-5 py-4">
-                  <span className="font-display text-lg text-[#EFE9DD] light:text-[#18140f]">{item.alt}</span>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-[#a49d8c] light:text-[#8f8874]">
-                    Открыть
+                <div className="overflow-hidden rounded-2xl border border-white/10 light:border-[#18140f]/10 bg-white/[0.02] light:bg-[#18140f]/[0.02]">
+                  <div className="relative aspect-[4/5] w-full overflow-hidden bg-black/20">
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      sizes="(max-width: 640px) 45vw, 320px"
+                      className="object-contain transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <span className="block px-3 py-2.5 font-display text-sm text-[#EFE9DD] light:text-[#18140f]">
+                    {item.alt}
                   </span>
                 </div>
               </button>

@@ -139,7 +139,7 @@ export default function Hero() {
             от&nbsp;навязанного тренда.
           </motion.p>
 
-          <motion.div variants={item} className="mt-10 flex flex-wrap items-end gap-x-6 gap-y-4">
+          <motion.div variants={item} className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
             <MagneticButton>Обсудить проект</MagneticButton>
             <GhostButton href="#gallery">Смотреть портфолио</GhostButton>
           </motion.div>
