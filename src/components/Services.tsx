@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import { MessageCircle, PenTool, ShieldCheck, Sofa } from "lucide-react";
 
@@ -19,30 +20,67 @@ const item: Variants = {
 
 const SERVICES = [
   {
-    n: "01",
     icon: PenTool,
     title: "Дизайн-проект",
     text: "Планировка, визуализация и вся документация для стройки.",
+    span: "col-span-2 row-span-2",
   },
   {
-    n: "02",
     icon: ShieldCheck,
     title: "Авторский надзор",
     text: "Слежу, чтобы стройка не разошлась с проектом.",
+    span: "col-span-1 sm:col-span-2 row-span-1",
   },
   {
-    n: "03",
     icon: Sofa,
     title: "Подбор мебели",
     text: "Комплектация под бюджет, с учётом сроков поставки.",
+    span: "col-span-1 sm:col-span-2 row-span-1",
   },
   {
-    n: "04",
     icon: MessageCircle,
     title: "Онлайн-консультация",
     text: "Разбор планировки или подбора цвета за один созвон.",
+    span: "col-span-2 sm:col-span-4 row-span-1",
   },
 ];
+
+function ServiceCard({ s }: { s: (typeof SERVICES)[number] }) {
+  const [flipped, setFlipped] = useState(false);
+  const Icon = s.icon;
+
+  return (
+    <motion.div
+      variants={item}
+      className={`flip-card ${s.span} ${flipped ? "is-flipped" : ""}`}
+      onClick={() => setFlipped((v) => !v)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setFlipped((v) => !v);
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`${s.title}: ${s.text}`}
+    >
+      <div className="flip-inner cursor-pointer">
+        <div className="flip-face flip-face-front flex flex-col items-center justify-center gap-4 rounded-[20px] border border-white/8 light:border-[#18140f]/8 bg-white/[0.02] light:bg-[#18140f]/[0.02] p-6 text-center">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#D4AF37]/30 text-[#D4AF37]">
+            <Icon className="h-5 w-5" strokeWidth={1.5} />
+          </span>
+          <h3 className="font-display text-2xl text-[#EFE9DD] light:text-[#18140f]">{s.title}</h3>
+        </div>
+
+        <div className="flip-face flip-face-back flex flex-col items-center justify-center gap-3 rounded-[20px] border border-[#D4AF37]/30 bg-gradient-to-br from-[#D4AF37]/12 to-[#D4AF37]/[0.03] p-6 text-center">
+          <Icon className="h-6 w-6 text-[#D4AF37]" strokeWidth={1.5} />
+          <h3 className="font-display text-lg text-[#EFE9DD] light:text-[#18140f]">{s.title}</h3>
+          <p className="max-w-[26ch] text-[13px] leading-relaxed text-[#a49d8c] light:text-[#5c5648]">{s.text}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function Services() {
   return (
@@ -72,29 +110,11 @@ export default function Services() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-1 divide-y divide-white/8 light:divide-[#18140f]/8 rounded-[24px] border border-white/8 light:border-[#18140f]/8 sm:grid-cols-2 sm:divide-x sm:divide-y-0"
+          className="grid grid-cols-2 gap-4 [grid-auto-rows:160px] sm:grid-cols-4 sm:[grid-auto-rows:170px]"
         >
-          {SERVICES.map((s) => {
-            const Icon = s.icon;
-            return (
-              <motion.div
-                key={s.n}
-                variants={item}
-                className="group relative flex flex-col gap-5 p-8 transition-colors hover:bg-white/[0.02] light:hover:bg-[#18140f]/[0.02] sm:p-10"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#D4AF37]/30 text-[#D4AF37] transition-colors duration-300 group-hover:border-[#D4AF37]/60 group-hover:bg-[#D4AF37]/10">
-                    <Icon className="h-5 w-5" strokeWidth={1.5} />
-                  </span>
-                  <span className="font-mono text-xs text-[#6b6558] light:text-[#8f8874]">{s.n}</span>
-                </div>
-                <div>
-                  <h3 className="font-body text-xl font-semibold text-[#EFE9DD] light:text-[#18140f]">{s.title}</h3>
-                  <p className="mt-2 max-w-sm text-[14px] leading-relaxed text-[#a49d8c] light:text-[#5c5648]">{s.text}</p>
-                </div>
-              </motion.div>
-            );
-          })}
+          {SERVICES.map((s) => (
+            <ServiceCard key={s.title} s={s} />
+          ))}
         </motion.div>
       </div>
     </section>
