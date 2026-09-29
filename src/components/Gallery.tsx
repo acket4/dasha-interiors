@@ -3,22 +3,29 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Aperture, ArrowRight, Play, Video, X } from "lucide-react";
+import PhotoFrame from "@/components/PhotoFrame";
 import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 
 type MediaType = "photo" | "video" | null;
 
-const PLACEHOLDER_COUNT = 5;
+const PHOTOS = [
+  { src: "/photos/bathtub.jpg", alt: "Ванная комната с ванной" },
+  { src: "/photos/guest-ensuite.jpg", alt: "Гостевой санузел" },
+  { src: "/photos/living-room.jpg", alt: "Гостиная" },
+  { src: "/photos/shower.jpg", alt: "Душевая" },
+  { src: "/photos/vanity-detail.jpg", alt: "Деталь интерьера" },
+];
 
 const panelItem: Variants = {
   hidden: { opacity: 0, y: 28 },
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
 };
 
-function GalleryCard({ index }: { index: number }) {
+function GalleryCard({ photo }: { photo: (typeof PHOTOS)[number] }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-dashed border-white/12 light:border-[#18140f]/12">
+    <div className="overflow-hidden rounded-2xl border border-white/8 light:border-[#18140f]/8">
       <div className="relative aspect-[4/5] w-full overflow-hidden">
-        <PhotoPlaceholder label={`#${index} скоро`} />
+        <PhotoFrame src={photo.src} alt={photo.alt} sizes="(min-width: 640px) 33vw, 50vw" cover />
       </div>
     </div>
   );
@@ -67,8 +74,8 @@ function PhotoLightbox({ onClose }: { onClose: () => void }) {
         </div>
 
         <div className="grid flex-1 grid-cols-2 items-start gap-4 overflow-y-auto pb-6 sm:grid-cols-3">
-          {Array.from({ length: PLACEHOLDER_COUNT }).map((_, i) => (
-            <GalleryCard key={i} index={i + 1} />
+          {PHOTOS.map((photo) => (
+            <GalleryCard key={photo.src} photo={photo} />
           ))}
         </div>
       </motion.div>
@@ -112,7 +119,7 @@ export default function Gallery() {
             onClick={() => setOpen("photo")}
             className="group relative aspect-[4/5] overflow-hidden rounded-[28px] border border-white/8 light:border-[#18140f]/8 text-left sm:aspect-[3/4]"
           >
-            <PhotoPlaceholder label="Фото проекта" />
+            <PhotoFrame src="/photos/bedroom.jpg" alt="Спальня" sizes="(min-width: 1024px) 50vw, 100vw" cover />
             <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0F1013] via-[#0F1013]/10 to-transparent" />
 
             <span className="absolute left-6 top-6 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0F1013]/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-[#EFE9DD] backdrop-blur-md">
@@ -121,7 +128,7 @@ export default function Gallery() {
             </span>
 
             <div className="absolute inset-x-6 bottom-6 z-10 flex items-end justify-between gap-4">
-              <span className="font-display text-2xl text-[#EFE9DD]">Скоро здесь будут фото</span>
+              <span className="font-display text-2xl text-[#EFE9DD]">Спальня</span>
               <span className="flex shrink-0 items-center gap-2 rounded-full border border-[#D4AF37]/50 bg-[#0F1013]/50 px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-[#EFE9DD] backdrop-blur-md transition-colors group-hover:bg-[#D4AF37] group-hover:text-[#0F1013]">
                 Все фото
                 <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />

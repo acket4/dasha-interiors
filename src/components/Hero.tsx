@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, type Variants } from "framer-motion";
 import { ArrowUpRight, Play } from "lucide-react";
-import PhotoPlaceholder from "@/components/PhotoPlaceholder";
+import PhotoFrame from "@/components/PhotoFrame";
 
 const container: Variants = {
   hidden: {},
@@ -75,7 +75,7 @@ export default function Hero() {
   return (
     <section className="relative" style={{ height: "170vh" }}>
       <div className="sticky top-0 h-[100svh] overflow-hidden">
-        <PhotoPlaceholder label="Фон: главное фото" />
+        <PhotoFrame src="/photos/hero-bath.jpg" alt="Ванная комната с панорамным окном" priority sizes="100vw" cover />
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 h-[68%]"
           style={{

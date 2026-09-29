@@ -3,7 +3,15 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useMotionTemplate, useSpring, type Variants } from "framer-motion";
 import { AtSign } from "lucide-react";
-import PhotoPlaceholder from "@/components/PhotoPlaceholder";
+import PhotoFrame from "@/components/PhotoFrame";
+
+const MOSAIC = [
+  { src: "/photos/kitchen.jpg", alt: "Кухня" },
+  { src: "/photos/closet.jpg", alt: "Гардеробная" },
+  { src: "/photos/shower.jpg", alt: "Душевая" },
+  { src: "/photos/bathroom.jpg", alt: "Ванная комната" },
+  { src: "/photos/vanity-detail.jpg", alt: "Деталь интерьера" },
+];
 
 const container: Variants = {
   hidden: {},
@@ -84,7 +92,7 @@ export default function Stats() {
         {/* Cell 1 — real photo, audience caption */}
         <TiltCard className="sm:col-span-2 sm:row-span-2">
           <div className="absolute inset-0">
-            <PhotoPlaceholder label="Фото интерьера" />
+            <PhotoFrame src="/photos/stone-ensuite.jpg" alt="Санузел, отделанный натуральным камнем" sizes="(min-width: 640px) 66vw, 100vw" cover />
             <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0F1013] via-[#0F1013]/55 to-[#0F1013]/10" />
           </div>
 
@@ -139,22 +147,19 @@ export default function Stats() {
           </div>
           <div>
             <div className="flex gap-1.5">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="aspect-square flex-1 overflow-hidden rounded-lg">
-                  <PhotoPlaceholder />
+              {MOSAIC.slice(0, 3).map((m) => (
+                <div key={m.src} className="relative aspect-square flex-1 overflow-hidden rounded-lg">
+                  <PhotoFrame src={m.src} alt={m.alt} sizes="120px" cover />
                 </div>
               ))}
             </div>
             <div className="mt-1.5 flex gap-1.5 px-[16.5%]">
-              {Array.from({ length: 2 }).map((_, i) => (
-                <div key={i} className="aspect-square flex-1 overflow-hidden rounded-lg">
-                  <PhotoPlaceholder />
+              {MOSAIC.slice(3, 5).map((m) => (
+                <div key={m.src} className="relative aspect-square flex-1 overflow-hidden rounded-lg">
+                  <PhotoFrame src={m.src} alt={m.alt} sizes="120px" cover />
                 </div>
               ))}
             </div>
-          </div>
-          <div className="mt-3 font-mono text-[9px] uppercase tracking-wider text-[#6b6558] light:text-[#8f8874]">
-            превью появятся по мере съёмок
           </div>
         </TiltCard>
       </motion.div>

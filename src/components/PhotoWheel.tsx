@@ -2,15 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import PhotoPlaceholder from "@/components/PhotoPlaceholder";
+import PhotoFrame from "@/components/PhotoFrame";
 
 const CARDS = [
-  { label: "Кухня-гостиная" },
-  { label: "Кухня с островом" },
-  { label: "Ванная комната" },
-  { label: "Гардеробная" },
-  { label: "Спальня" },
-  { label: "Прихожая" },
+  { label: "Кухня-гостиная", src: "/photos/kitchen.jpg" },
+  { label: "Гостиная", src: "/photos/living-room.jpg" },
+  { label: "Ванная комната", src: "/photos/bathroom.jpg" },
+  { label: "Гардеробная", src: "/photos/closet.jpg" },
+  { label: "Спальня", src: "/photos/bedroom.jpg" },
+  { label: "Гостевой санузел", src: "/photos/guest-ensuite.jpg" },
 ];
 
 const N = CARDS.length;
@@ -113,7 +113,7 @@ export default function PhotoWheel() {
             }}
             className="absolute left-1/2 top-0 -translate-x-1/2 touch-pan-y cursor-grab overflow-hidden rounded-[24px] border border-white/10 light:border-[#18140f]/10 bg-white/[0.03] light:bg-[#18140f]/[0.03] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6)] active:cursor-grabbing"
           >
-            <PhotoPlaceholder />
+            <PhotoFrame src={card.src} alt={card.label} sizes="460px" cover />
             {isActive && (
               <motion.span
                 initial={{ opacity: 0, y: 8 }}
