@@ -146,7 +146,7 @@ body {
    dark-scrimmed regardless of site theme) — must not switch to the
    deeper light-theme gold, which reads too dark on a photo. */
 .text-gradient-gold-onphoto {
-  background: linear-gradient(120deg, #fdf0c8 0%, #f3d98a 55%, #e8cc7b 100%);
+  background: linear-gradient(120deg, #fbeab0 0%, #eecb72 55%, #d9b559 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
