@@ -8,6 +8,7 @@ export default function PhotoFrame({
   priority,
   stretchX,
   cover,
+  focalPoint = "center",
 }: {
   src: string;
   alt: string;
@@ -18,6 +19,8 @@ export default function PhotoFrame({
   stretchX?: number;
   /** Full-bleed crop instead of contain+blur — for narrow/tall boxes (e.g. mobile hero) where a near-square photo would otherwise leave huge empty margins. */
   cover?: boolean;
+  /** object-position for the cover crop, e.g. "center 20%" to keep more of the top in frame. */
+  focalPoint?: string;
 }) {
   if (cover) {
     return (
@@ -28,7 +31,8 @@ export default function PhotoFrame({
           fill
           priority={priority}
           sizes={sizes}
-          className="object-cover object-center"
+          className="object-cover"
+          style={{ objectPosition: focalPoint }}
         />
       </div>
     );

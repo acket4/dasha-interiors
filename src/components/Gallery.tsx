@@ -9,11 +9,11 @@ import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 type MediaType = "photo" | "video" | null;
 
 const PHOTOS = [
-  { src: "/photos/bathtub.jpg", alt: "Ванная комната с ванной" },
-  { src: "/photos/guest-ensuite.jpg", alt: "Гостевой санузел" },
-  { src: "/photos/living-room.jpg", alt: "Гостиная" },
-  { src: "/photos/shower.jpg", alt: "Душевая" },
-  { src: "/photos/vanity-detail.jpg", alt: "Деталь интерьера" },
+  { src: "/photos/bathtub.jpg", alt: "Ванная комната с ванной", label: "Ванная" },
+  { src: "/photos/guest-ensuite.jpg", alt: "Гостевой санузел", label: "Гостевой санузел" },
+  { src: "/photos/living-room.jpg", alt: "Гостиная", label: "Гостиная" },
+  { src: "/photos/shower.jpg", alt: "Душевая", label: "Душевая" },
+  { src: "/photos/vanity-detail.jpg", alt: "Деталь интерьера", label: "Деталь интерьера" },
 ];
 
 const panelItem: Variants = {
@@ -23,10 +23,13 @@ const panelItem: Variants = {
 
 function GalleryCard({ photo }: { photo: (typeof PHOTOS)[number] }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/8 light:border-[#18140f]/8">
-      <div className="relative aspect-[4/5] w-full overflow-hidden">
+    <div>
+      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-white/8 light:border-[#18140f]/8">
         <PhotoFrame src={photo.src} alt={photo.alt} sizes="(min-width: 640px) 33vw, 50vw" cover />
       </div>
+      <p className="mt-2 font-mono text-[11px] uppercase tracking-widest text-[#a49d8c] light:text-[#6b6050]">
+        {photo.label}
+      </p>
     </div>
   );
 }
@@ -57,7 +60,7 @@ function PhotoLightbox({ onClose }: { onClose: () => void }) {
         exit={{ opacity: 0, y: 16, scale: 0.98 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="mx-auto flex h-full max-w-6xl flex-col px-6 py-10 sm:px-10"
+        className="mx-auto flex h-full max-w-6xl flex-col overflow-y-auto px-6 py-10 sm:px-10"
       >
         <div className="mb-8 flex items-center justify-between">
           <div>
@@ -73,7 +76,7 @@ function PhotoLightbox({ onClose }: { onClose: () => void }) {
           </button>
         </div>
 
-        <div className="grid flex-1 grid-cols-2 items-start gap-4 overflow-y-auto pb-6 sm:grid-cols-3">
+        <div className="grid grid-cols-2 items-start gap-x-4 gap-y-8 pb-6 sm:grid-cols-3">
           {PHOTOS.map((photo) => (
             <GalleryCard key={photo.src} photo={photo} />
           ))}
