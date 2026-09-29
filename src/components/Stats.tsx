@@ -21,8 +21,6 @@ const TIMELINE = [
   { year: "2026", label: "Студия полного цикла" },
 ];
 
-const MOSAIC_COUNT = 6;
-
 function TiltCard({
   className = "",
   children,
@@ -103,7 +101,7 @@ export default function Stats() {
 
             <div>
               <div className="font-display text-5xl text-[#EFE9DD] sm:text-6xl">
-                более двух тысяч
+                Более 2<span className="font-body">-</span>х тысяч
               </div>
               <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-[#EFE9DD]/85">
                 Несколько тысяч человек в Instagram следят за тем, как рождается
@@ -139,12 +137,21 @@ export default function Stats() {
           <div className="mt-1 mb-5 font-mono text-[10px] uppercase tracking-widest text-[#a49d8c] light:text-[#6b6050]">
             реализованных проектов
           </div>
-          <div className="grid grid-cols-3 gap-1.5">
-            {Array.from({ length: MOSAIC_COUNT }).map((_, i) => (
-              <div key={i} className="relative aspect-square overflow-hidden rounded-lg">
-                <PhotoPlaceholder />
-              </div>
-            ))}
+          <div>
+            <div className="flex gap-2">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="aspect-square flex-1 overflow-hidden rounded-full border border-white/10 light:border-[#18140f]/10">
+                  <PhotoPlaceholder />
+                </div>
+              ))}
+            </div>
+            <div className="-mt-[16%] flex gap-2 px-[16.5%]">
+              {Array.from({ length: 2 }).map((_, i) => (
+                <div key={i} className="aspect-square flex-1 overflow-hidden rounded-full border border-white/10 light:border-[#18140f]/10">
+                  <PhotoPlaceholder />
+                </div>
+              ))}
+            </div>
           </div>
           <div className="mt-3 font-mono text-[9px] uppercase tracking-wider text-[#6b6558] light:text-[#8f8874]">
             превью появятся по мере съёмок

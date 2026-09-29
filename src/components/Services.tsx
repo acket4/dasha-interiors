@@ -73,9 +73,9 @@ function ServiceCard({ s }: { s: (typeof SERVICES)[number] }) {
         </div>
 
         <div className="flip-face flip-face-back flex flex-col items-center justify-center gap-3 rounded-[20px] border border-[#D4AF37]/30 bg-gradient-to-br from-[#D4AF37]/12 to-[#D4AF37]/[0.03] p-6 text-center">
-          <Icon className="h-6 w-6 text-[#D4AF37]" strokeWidth={1.5} />
-          <h3 className="font-display text-lg text-[#EFE9DD] light:text-[#18140f]">{s.title}</h3>
-          <p className="max-w-[26ch] text-[13px] leading-relaxed text-[#a49d8c] light:text-[#5c5648]">{s.text}</p>
+          <Icon className="h-7 w-7 text-[#D4AF37]" strokeWidth={1.5} />
+          <h3 className="font-display text-2xl text-[#EFE9DD] light:text-[#18140f]">{s.title}</h3>
+          <p className="max-w-[26ch] text-[15px] leading-relaxed text-[#c9c2b0] light:text-[#5c5648]">{s.text}</p>
         </div>
       </div>
     </motion.div>
