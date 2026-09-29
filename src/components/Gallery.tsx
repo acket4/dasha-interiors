@@ -7,7 +7,7 @@ import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 
 type MediaType = "photo" | "video" | null;
 
-const PLACEHOLDER_COUNT = 8;
+const PLACEHOLDER_COUNT = 5;
 
 const panelItem: Variants = {
   hidden: { opacity: 0, y: 28 },

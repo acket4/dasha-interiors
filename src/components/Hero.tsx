@@ -109,9 +109,9 @@ export default function Hero() {
             style={{ textShadow: "0 4px 28px rgba(0,0,0,0.75), 0 2px 10px rgba(0,0,0,0.6)" }}
             className="text-balance max-w-3xl break-words font-display text-[10.5vw] font-medium leading-[0.92] tracking-[-0.035em] text-[#F5F1E8] hyphens-none sm:text-6xl lg:text-[4.4rem]"
           >
-            Пространство,
+            Функционально.
             <br />
-            где живёт <span className="text-gradient-gold-onphoto">роскошь</span> тишины
+            С&nbsp;характером. <span className="text-gradient-gold-onphoto">Для вас.</span>
           </motion.h1>
 
           <motion.p

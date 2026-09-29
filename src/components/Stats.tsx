@@ -102,11 +102,11 @@ export default function Stats() {
             </a>
 
             <div>
-              <div className="font-display text-6xl text-[#EFE9DD] sm:text-7xl">
-                50K<span className="text-gradient-gold-onphoto">+</span>
+              <div className="font-display text-5xl text-[#EFE9DD] sm:text-6xl">
+                более двух тысяч
               </div>
               <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-[#EFE9DD]/85">
-                Почти 50 000 человек в Instagram следят за тем, как рождается
+                Несколько тысяч человек в Instagram следят за тем, как рождается
                 каждый проект: от первого эскиза до финального кадра.
               </p>
             </div>
@@ -135,7 +135,7 @@ export default function Stats() {
 
         {/* Cell 3 — projects, micro previews */}
         <TiltCard className="p-7 sm:col-start-3 sm:row-start-2">
-          <div className="font-display text-4xl text-[#EFE9DD] light:text-[#18140f]">60+</div>
+          <div className="font-display text-4xl text-[#EFE9DD] light:text-[#18140f]">10+</div>
           <div className="mt-1 mb-5 font-mono text-[10px] uppercase tracking-widest text-[#a49d8c] light:text-[#6b6050]">
             реализованных проектов
           </div>
