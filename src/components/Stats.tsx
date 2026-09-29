@@ -138,16 +138,16 @@ export default function Stats() {
             реализованных проектов
           </div>
           <div>
-            <div className="flex gap-2">
+            <div className="flex gap-1.5">
               {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="aspect-square flex-1 overflow-hidden rounded-full border border-white/10 light:border-[#18140f]/10">
+                <div key={i} className="aspect-square flex-1 overflow-hidden rounded-lg">
                   <PhotoPlaceholder />
                 </div>
               ))}
             </div>
-            <div className="-mt-[16%] flex gap-2 px-[16.5%]">
+            <div className="mt-1.5 flex gap-1.5 px-[16.5%]">
               {Array.from({ length: 2 }).map((_, i) => (
-                <div key={i} className="aspect-square flex-1 overflow-hidden rounded-full border border-white/10 light:border-[#18140f]/10">
+                <div key={i} className="aspect-square flex-1 overflow-hidden rounded-lg">
                   <PhotoPlaceholder />
                 </div>
               ))}
