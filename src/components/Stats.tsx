@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useMotionTemplate, useSpring, type Variants } from "framer-motion";
 import { AtSign } from "lucide-react";
-import PhotoFrame from "@/components/PhotoFrame";
+import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 
 const container: Variants = {
   hidden: {},
@@ -16,19 +16,12 @@ const item: Variants = {
 };
 
 const TIMELINE = [
-  { year: "2018", label: "Первый проект под ключ" },
-  { year: "2021", label: "Авторский надзор на 20+ объектах" },
+  { year: "2022", label: "Первый проект под ключ" },
+  { year: "2024", label: "Авторский надзор на нескольких объектах" },
   { year: "2026", label: "Студия полного цикла" },
 ];
 
-const MOSAIC = [
-  "/photos/kuhnya-zelenaya.png",
-  "/photos/vannaya.png",
-  "/photos/garderobnaya.png",
-  "/photos/komnata-na-dvoih.png",
-  "/photos/razdevalka.png",
-  "/photos/kuhnya-gostinaya.png",
-];
+const MOSAIC_COUNT = 6;
 
 function TiltCard({
   className = "",
@@ -93,19 +86,19 @@ export default function Stats() {
         {/* Cell 1 — real photo, audience caption */}
         <TiltCard className="sm:col-span-2 sm:row-span-2">
           <div className="absolute inset-0">
-            <PhotoFrame src="/photos/kuhnya-s-ostrovom.png" alt="Кухня с островом" sizes="(max-width: 1024px) 100vw, 66vw" cover />
+            <PhotoPlaceholder label="Фото интерьера" />
             <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0F1013] via-[#0F1013]/55 to-[#0F1013]/10" />
           </div>
 
           <div className="relative z-10 flex h-full min-h-[320px] flex-col justify-between p-7">
             <a
-              href="https://www.instagram.com/darya_zver"
+              href="https://www.instagram.com/evgeniya_isakova90"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex w-fit items-center gap-1.5 rounded-full border border-white/15 bg-[#0F1013]/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-[#EFE9DD] backdrop-blur-md transition-colors hover:border-[#D4AF37]/50"
             >
               <AtSign className="h-3 w-3 text-[#D4AF37]" />
-              darya_zver
+              evgeniya_isakova90
             </a>
 
             <div>
@@ -122,7 +115,7 @@ export default function Stats() {
 
         {/* Cell 2 — years, timeline */}
         <TiltCard className="flex flex-col p-7 sm:col-start-3 sm:row-start-1">
-          <div className="font-display text-4xl text-[#EFE9DD] light:text-[#18140f]">8 лет</div>
+          <div className="font-display text-4xl text-[#EFE9DD] light:text-[#18140f]">4 года</div>
           <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-[#a49d8c] light:text-[#6b6050]">
             практики и надзора
           </div>
@@ -147,10 +140,9 @@ export default function Stats() {
             реализованных проектов
           </div>
           <div className="grid grid-cols-3 gap-1.5">
-            {MOSAIC.map((src, i) => (
+            {Array.from({ length: MOSAIC_COUNT }).map((_, i) => (
               <div key={i} className="relative aspect-square overflow-hidden rounded-lg">
-                <PhotoFrame src={src} alt="" sizes="120px" cover />
-                <div className="absolute inset-0 z-10 bg-[#0F1013]/20" />
+                <PhotoPlaceholder />
               </div>
             ))}
           </div>

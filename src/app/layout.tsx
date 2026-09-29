@@ -24,7 +24,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Дарья Design — дизайнер интерьера",
+  title: "Евгения Design — дизайнер интерьера",
   description:
     "Дизайн-проекты квартир и домов под ключ по всей России.",
 };

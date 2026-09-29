@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Check, Copy, MessageCircle, Send } from "lucide-react";
+import { ArrowUpRight, Check, Copy, MessageCircle, MessageSquare, Send } from "lucide-react";
 
-const PHONE_DISPLAY = "+7 (952) 616-25-03";
-const PHONE_DIGITS = "79526162503";
+const PHONE_DISPLAY = "+7 (902) 769-33-88";
+const PHONE_DIGITS = "79027693388";
 
 const MESSENGERS = [
   { name: "Telegram", href: `https://t.me/+${PHONE_DIGITS}`, icon: Send },
   { name: "WhatsApp", href: `https://wa.me/${PHONE_DIGITS}`, icon: MessageCircle },
+  { name: "MAX", href: "https://max.ru", icon: MessageSquare },
 ];
 
 export default function Contact() {
@@ -44,12 +45,12 @@ export default function Contact() {
             Отвечаю в течение суток.
           </p>
           <a
-            href="https://www.instagram.com/darya_zver"
+            href="https://www.instagram.com/evgeniya_isakova90"
             target="_blank"
             rel="noopener noreferrer"
             className="group mt-8 inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#E8CC7B] via-[#D4AF37] to-[#C5A880] px-7 py-4 font-body text-sm font-semibold text-[#0F1013] transition-shadow duration-500 hover:shadow-[0_0_38px_6px_rgba(212,175,55,0.35)]"
           >
-            Instagram @darya_zver
+            Instagram @evgeniya_isakova90
             <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </div>
@@ -74,7 +75,7 @@ export default function Contact() {
             </button>
           </div>
 
-          <div className="mt-6 grid grid-cols-2 gap-3 border-t border-white/8 light:border-[#18140f]/8 pt-6">
+          <div className="mt-6 grid grid-cols-3 gap-3 border-t border-white/8 light:border-[#18140f]/8 pt-6">
             {MESSENGERS.map((m) => {
               const Icon = m.icon;
               return (

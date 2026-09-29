@@ -37,7 +37,7 @@ export default function Header() {
           href="#"
           className="rounded-full border border-white/12 light:border-[#18140f]/12 px-4 py-2 font-display text-lg italic tracking-tight text-[#EFE9DD] light:text-[#18140f]"
         >
-          Дарья <span className="text-gradient-gold not-italic">Design</span>
+          Евгения <span className="text-gradient-gold not-italic">Design</span>
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">

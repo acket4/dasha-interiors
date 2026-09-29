@@ -2,16 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 
 const CARDS = [
-  { src: "/photos/kuhnya-gostinaya.png", label: "Кухня-гостиная", w: 1127, h: 1396 },
-  { src: "/photos/kuhnya-s-ostrovom.png", label: "Кухня с островом", w: 2412, h: 2522 },
-  { src: "/photos/kuhnya-zelenaya.png", label: "Кухня в зелёных оттенках", w: 1206, h: 1502 },
-  { src: "/photos/vannaya.png", label: "Ванная комната", w: 2412, h: 2524 },
-  { src: "/photos/garderobnaya.png", label: "Гардеробная", w: 2412, h: 2546 },
-  { src: "/photos/komnata-na-dvoih.png", label: "Комната на двоих", w: 2410, h: 2502 },
-  { src: "/photos/razdevalka.png", label: "Раздевалка, спа-клуб", w: 2412, h: 2564 },
+  { label: "Кухня-гостиная" },
+  { label: "Кухня с островом" },
+  { label: "Ванная комната" },
+  { label: "Гардеробная" },
+  { label: "Спальня" },
+  { label: "Прихожая" },
 ];
 
 const N = CARDS.length;
@@ -96,7 +95,7 @@ export default function PhotoWheel() {
 
         return (
           <motion.div
-            key={card.src}
+            key={card.label}
             onClick={() => setActive(i)}
             animate={{
               x: d * xStep,
@@ -114,13 +113,7 @@ export default function PhotoWheel() {
             }}
             className="absolute left-1/2 top-0 -translate-x-1/2 touch-pan-y cursor-grab overflow-hidden rounded-[24px] border border-white/10 light:border-[#18140f]/10 bg-white/[0.03] light:bg-[#18140f]/[0.03] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6)] active:cursor-grabbing"
           >
-            <Image
-              src={card.src}
-              alt={card.label}
-              fill
-              sizes="460px"
-              className="object-cover object-center"
-            />
+            <PhotoPlaceholder />
             {isActive && (
               <motion.span
                 initial={{ opacity: 0, y: 8 }}
