@@ -19,7 +19,12 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const { scrollY } = useScroll();
 
-  useMotionValueEvent(scrollY, "change", (v) => setSolid(v > window.innerHeight * 0.85));
+  // Turn solid once the hero dive has faded into the paper-coloured sections.
+  useMotionValueEvent(scrollY, "change", (v) => {
+    const hero = document.querySelector("main section") as HTMLElement | null;
+    const end = hero ? hero.offsetHeight - window.innerHeight : window.innerHeight;
+    setSolid(v > end * 0.8);
+  });
 
   useEffect(() => {
     const io = new IntersectionObserver(
