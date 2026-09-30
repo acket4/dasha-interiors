@@ -1,112 +1,58 @@
 @import "tailwindcss";
 
-@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
-
-:root {
-  --background: #0f1013;
-  --surface: #15161a;
-  --foreground: #efe9dd;
-  --foreground-soft: #a49d8c;
-  --gold: #d4af37;
-  --bronze: #c5a880;
-  --line: rgba(239, 233, 221, 0.08);
-  --cream: #ece4d3;
-  --cream-ink: #1c1811;
-  --cream-ink-soft: #6b6050;
-  color-scheme: dark;
+/* Tokens: plaster paper + near-black ink, one walnut accent (sand on dark), one easing curve. */
+@theme {
+  --color-paper: #ece9e3;
+  --color-paper-2: #e2ded6;
+  --color-ink: #161513;
+  --color-ink-2: #1f1e1b;
+  --color-walnut: #8a6a47;
+  --color-sand: #d6bb8f;
+  --font-sans: var(--font-onest), "Segoe UI", system-ui, sans-serif;
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-:root[data-theme="light"] {
-  --background: #faf8f4;
-  --surface: #f2ede4;
-  --foreground: #18140f;
-  --foreground-soft: #6b6050;
-  --gold: #9c6b14;
-  --bronze: #8a6a3a;
-  --line: rgba(24, 20, 15, 0.1);
-  --cream: #e8dcc4;
-  --cream-ink: #18140f;
-  --cream-ink-soft: #6b6050;
+:root {
   color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-foreground: var(--foreground);
-  --color-foreground-soft: var(--foreground-soft);
-  --color-gold: var(--gold);
-  --color-bronze: var(--bronze);
-  --color-cream: var(--cream);
-  --color-cream-ink: var(--cream-ink);
-  --color-cream-ink-soft: var(--cream-ink-soft);
-  --font-display: var(--font-display);
-  --font-body: var(--font-body);
-  --font-mono: var(--font-mono);
+html {
+  background: var(--color-ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-body), "Segoe UI", sans-serif;
-  background-image:
-    radial-gradient(ellipse 70% 55% at 18% 0%, rgba(212, 175, 55, 0.1), transparent 60%),
-    radial-gradient(ellipse 60% 45% at 100% 20%, rgba(197, 168, 128, 0.07), transparent 60%);
-  background-attachment: fixed;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
 }
 
-[data-theme="light"] body {
-  background-image:
-    radial-gradient(ellipse 70% 55% at 18% 0%, rgba(156, 107, 20, 0.07), transparent 60%),
-    radial-gradient(ellipse 60% 45% at 100% 20%, rgba(138, 106, 58, 0.05), transparent 60%);
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+  hyphens: none;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 ::selection {
-  background: rgba(212, 175, 55, 0.28);
-  color: #fff;
+  background: var(--color-walnut);
+  color: var(--color-paper);
 }
 
-[data-theme="light"] ::selection {
-  background: rgba(156, 107, 20, 0.22);
-  color: #18140f;
-}
-
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(212, 175, 55, 0.4) transparent;
-}
-
-::-webkit-scrollbar {
-  width: 9px;
-  height: 9px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0f1013;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(212, 175, 55, 0.35);
-  border-radius: 999px;
-  border: 2px solid #0f1013;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(212, 175, 55, 0.6);
-}
-
-[data-theme="light"] ::-webkit-scrollbar-track {
-  background: #faf8f4;
-}
-
-[data-theme="light"] ::-webkit-scrollbar-thumb {
-  background: rgba(156, 107, 20, 0.3);
-  border-color: #faf8f4;
-}
-
-[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
-  background: rgba(156, 107, 20, 0.5);
+/* Film grain keeps the flat fields from reading as plastic. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .custom-cursor,
@@ -114,115 +60,54 @@ body {
   cursor: none !important;
 }
 
-.font-display {
-  font-family: var(--font-display), Georgia, serif;
-  font-variant-numeric: lining-nums;
+/* Legibility for hero copy: blur + fade at the bottom of the photo instead of a flat tint. */
+.hero-mask {
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  mask-image: linear-gradient(to top, #000 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 100%);
+  background: linear-gradient(to top, rgba(22, 21, 19, 0.72), rgba(22, 21, 19, 0) 100%);
 }
 
-.font-mono {
-  font-family: var(--font-mono), monospace;
+/* Preloader runs on CSS so it moves from first paint, before hydration. */
+@keyframes pl-rise {
+  from {
+    transform: translateY(115%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes pl-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.pl-rise {
+  animation: pl-rise 0.95s var(--ease-soft) 0.1s both;
+}
+.pl-rise-late {
+  animation: pl-rise 0.95s var(--ease-soft) 0.25s both;
+}
+.pl-grow {
+  transform-origin: left;
+  animation: pl-grow 1.1s var(--ease-soft) 0.15s both;
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+.no-scrollbar {
+  scrollbar-width: none;
 }
-
-[data-theme="light"] .glass {
-  background: rgba(24, 20, 15, 0.03);
-  border: 1px solid rgba(24, 20, 15, 0.08);
-}
-
-.text-gradient-gold {
-  background: linear-gradient(120deg, #f3d98a 0%, #d4af37 45%, #c5a880 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Fixed bright gradient for gold text sitting on top of a photo (always
-   dark-scrimmed regardless of site theme) — must not switch to the
-   deeper light-theme gold, which reads too dark on a photo. */
-.text-gradient-gold-onphoto {
-  background: linear-gradient(120deg, #fbeab0 0%, #eecb72 55%, #d9b559 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-[data-theme="light"] .text-gradient-gold {
-  background: linear-gradient(120deg, #b8860b 0%, #9c6b14 45%, #8a6a3a 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.flip-card {
-  perspective: 1400px;
-}
-
-.flip-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-.flip-card:hover .flip-inner,
-.flip-card.is-flipped .flip-inner {
-  transform: rotateY(180deg) scale(1.03);
-}
-
-.flip-face {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.flip-face-back {
-  transform: rotateY(180deg);
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .flip-inner {
-    transition: opacity 0.3s ease;
-  }
-  .flip-card:hover .flip-inner,
-  .flip-card.is-flipped .flip-inner {
-    transform: none;
-  }
-  .flip-face-back {
-    transform: none;
-    opacity: 0;
-    pointer-events: none;
-  }
-  .flip-card:hover .flip-face-back,
-  .flip-card.is-flipped .flip-face-back {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .flip-card:hover .flip-face-front,
-  .flip-card.is-flipped .flip-face-front {
-    opacity: 0;
-  }
-}
-
-@keyframes kenburns {
-  0% {
-    transform: scale(1.1) translate3d(0, 0, 0);
-  }
-  100% {
-    transform: scale(1.22) translate3d(-1.5%, -1.5%, 0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

@@ -1,101 +1,131 @@
 "use client";
 
-import { useState } from "react";
-import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { ArrowUpRight, Menu, X } from "lucide-react";
-import ThemeToggle from "@/components/ThemeToggle";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import { EASE, INTRO } from "@/components/motion";
 
 const LINKS = [
-  { href: "#about", label: "Обо мне" },
-  { href: "#services", label: "Услуги" },
-  { href: "#process", label: "Процесс" },
-  { href: "#gallery", label: "Работы" },
+  { id: "about", label: "Обо мне" },
+  { id: "services", label: "Услуги" },
+  { id: "gallery", label: "Работы" },
+  { id: "process", label: "Процесс" },
 ];
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
+  const reduced = useReducedMotion();
   const [solid, setSolid] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
   const { scrollY } = useScroll();
 
-  useMotionValueEvent(scrollY, "change", (v) => setSolid(v > 60));
+  useMotionValueEvent(scrollY, "change", (v) => setSolid(v > window.innerHeight * 0.85));
+
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id || null)),
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    document.querySelectorAll("main section").forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.style.overflow = open ? "hidden" : "";
+  }, [open]);
+
+  const light = !solid && !open;
 
   return (
-    <motion.header
-      initial={{ opacity: 0, y: -16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 sm:pt-6"
-    >
-      <div
-        className={`mx-auto flex max-w-7xl items-center justify-between rounded-full border px-3 py-2.5 transition-colors duration-300 sm:px-4 ${
-          solid
-            ? "border-white/10 light:border-[#18140f]/10 bg-[#0F1013]/85 light:bg-[#faf8f4]/85 backdrop-blur-xl"
-            : "border-white/8 light:border-[#18140f]/8 bg-[#0F1013]/30 light:bg-[#faf8f4]/30 backdrop-blur-md"
+    <>
+      <motion.header
+        initial={reduced ? false : { opacity: 0, y: -24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: EASE, delay: reduced ? 0 : INTRO - 0.05 }}
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,color,border-color] duration-500 ${
+          solid && !open
+            ? "border-b border-ink/10 bg-paper/85 text-ink backdrop-blur-xl"
+            : "border-b border-transparent text-paper"
         }`}
       >
-        <a
-          href="#"
-          className="rounded-full border border-white/12 light:border-[#18140f]/12 px-4 py-2 font-display text-lg italic tracking-tight text-[#EFE9DD] light:text-[#18140f]"
-        >
-          Исакова <span className="text-gradient-gold not-italic">Design</span>
-        </a>
+        <div className="flex items-center justify-between gap-4 px-5 py-4 sm:px-10 lg:px-16">
+          <a href="#" className="text-lg font-light tracking-[-0.03em]" onClick={() => setOpen(false)}>
+            Исакова <span className={light ? "text-sand" : "text-walnut"}>Design</span>
+          </a>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="font-body text-sm text-[#c9c2b0] light:text-[#5c5648] transition-colors hover:text-[#EFE9DD] light:hover:text-[#18140f]"
-            >
-              {l.label}
-            </a>
-          ))}
-        </nav>
+          <nav
+            className={`hidden items-center gap-1 rounded-full p-1 md:flex ${
+              light ? "bg-ink/25 backdrop-blur-md" : "bg-ink/[0.05]"
+            }`}
+          >
+            {LINKS.map((l) => (
+              <a key={l.id} href={`#${l.id}`} className="relative rounded-full px-4 py-2 text-[14px]">
+                {active === l.id && solid && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full bg-ink"
+                    transition={{ type: "spring", stiffness: 380, damping: 34 }}
+                  />
+                )}
+                <span
+                  className={`relative transition-colors duration-300 ${
+                    active === l.id && solid ? "text-paper" : "opacity-75 hover:opacity-100"
+                  }`}
+                >
+                  {l.label}
+                </span>
+              </a>
+            ))}
+          </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <ThemeToggle />
           <a
             href="#contact"
-            className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#E8CC7B] via-[#D4AF37] to-[#C5A880] px-5 py-2.5 font-body text-sm font-semibold text-[#0F1013] transition-shadow duration-500 hover:shadow-[0_0_28px_4px_rgba(212,175,55,0.35)]"
+            className={`hidden min-h-11 items-center rounded-full px-5 text-[14px] transition-colors duration-300 md:inline-flex ${
+              light ? "bg-paper text-ink hover:bg-sand" : "bg-ink text-paper hover:bg-walnut"
+            }`}
           >
             Записаться
-            <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
-        </div>
 
-        <div className="flex items-center gap-2 md:hidden">
-          <ThemeToggle />
           <button
             onClick={() => setOpen((v) => !v)}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 light:border-[#18140f]/15 bg-[#0F1013]/40 light:bg-[#faf8f4]/40 text-[#EFE9DD] light:text-[#18140f] backdrop-blur-md"
-            aria-label="Меню"
+            aria-label={open ? "Закрыть меню" : "Открыть меню"}
+            className="flex h-11 w-11 items-center justify-center md:hidden"
           >
-            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {open ? <X className="h-5 w-5" strokeWidth={1.5} /> : <Menu className="h-5 w-5" strokeWidth={1.5} />}
           </button>
         </div>
-      </div>
+      </motion.header>
 
-      {open && (
-        <div className="mx-auto mt-2 flex max-w-7xl flex-col gap-1 rounded-[26px] border border-white/8 light:border-[#18140f]/8 bg-[#0F1013]/95 light:bg-[#faf8f4]/95 px-6 py-5 backdrop-blur-xl md:hidden">
-          {LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="py-2.5 font-display text-2xl italic text-[#c9c2b0] light:text-[#5c5648]"
-            >
-              {l.label}
-            </a>
-          ))}
-          <a
-            href="#contact"
-            onClick={() => setOpen(false)}
-            className="mt-3 rounded-full bg-gradient-to-r from-[#E8CC7B] via-[#D4AF37] to-[#C5A880] px-5 py-3 text-center font-body text-sm font-semibold text-[#0F1013]"
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="fixed inset-0 z-40 flex flex-col justify-end bg-ink px-5 pb-10 pt-24 text-paper md:hidden"
+            initial={{ clipPath: "inset(0% 0% 100% 0%)" }}
+            animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
+            exit={{ clipPath: "inset(0% 0% 100% 0%)" }}
+            transition={{ duration: 0.7, ease: EASE }}
           >
-            Записаться
-          </a>
-        </div>
-      )}
-    </motion.header>
+            <nav className="flex flex-col">
+              {[...LINKS, { id: "contact", label: "Контакты" }].map((l, i) => (
+                <div key={l.id} className="overflow-hidden border-t border-paper/10">
+                  <motion.a
+                    href={`#${l.id}`}
+                    onClick={() => setOpen(false)}
+                    className="block py-3 text-[2.6rem] font-light leading-none tracking-[-0.04em]"
+                    initial={{ y: "110%" }}
+                    animate={{ y: "0%" }}
+                    transition={{ duration: 0.8, ease: EASE, delay: 0.2 + i * 0.06 }}
+                  >
+                    {l.label}
+                  </motion.a>
+                </div>
+              ))}
+            </nav>
+            <p className="mt-8 text-[13px] text-paper/55">Отвечаю лично, обычно в течение суток</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

@@ -1,16 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowUpRight, Check, Copy, MessageCircle, MessageSquare, Send } from "lucide-react";
+import { Check, Copy } from "lucide-react";
+import Pill from "@/components/Pill";
+import { Lines, Reveal } from "@/components/motion";
 
 const PHONE_DISPLAY = "+7 (902) 769-33-88";
 const PHONE_DIGITS = "79027693388";
 
 const MESSENGERS = [
-  { name: "Telegram", href: `https://t.me/+${PHONE_DIGITS}`, icon: Send },
-  { name: "WhatsApp", href: `https://wa.me/${PHONE_DIGITS}`, icon: MessageCircle },
-  { name: "MAX", href: "https://max.ru", icon: MessageSquare },
+  { name: "Telegram", href: `https://t.me/+${PHONE_DIGITS}` },
+  { name: "WhatsApp", href: `https://wa.me/${PHONE_DIGITS}` },
+  { name: "MAX", href: "https://max.ru" },
 ];
 
 export default function Contact() {
@@ -19,81 +20,64 @@ export default function Contact() {
   async function handleCopy() {
     try {
       await navigator.clipboard.writeText(PHONE_DISPLAY);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1400);
     } catch {
-      // clipboard unavailable — still flip the state so the UI stays honest-looking briefly
+      // Clipboard blocked: the number is still selectable text.
     }
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1400);
   }
 
   return (
-    <section id="contact" className="px-6 py-28 sm:px-10 lg:px-16">
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-20"
-      >
-        <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">[ Контакты ]</p>
-          <h2 className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] light:text-[#18140f] sm:text-5xl">
-            Обсудим ваш <span className="text-gradient-gold ">проект</span>
-          </h2>
-          <p className="mt-6 max-w-md text-[15px] leading-relaxed text-[#a49d8c] light:text-[#5c5648]">
-            Работаю по всей России. Напишите в Instagram или в мессенджер.
-            Отвечаю в течение суток.
-          </p>
-          <a
-            href="https://www.instagram.com/evgeniya_isakova90"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group mt-8 inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#E8CC7B] via-[#D4AF37] to-[#C5A880] px-7 py-4 font-body text-sm font-semibold text-[#0F1013] transition-shadow duration-500 hover:shadow-[0_0_38px_6px_rgba(212,175,55,0.35)]"
-          >
-            Instagram @evgeniya_isakova90
-            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
+    <section id="contact" className="bg-paper px-5 py-28 sm:px-10 lg:px-16 lg:py-40">
+      <div className="mx-auto grid max-w-[1440px] gap-16 lg:grid-cols-12 lg:gap-10">
+        <div className="lg:col-span-7">
+          <Reveal>
+            <p className="mb-6 text-[12px] uppercase tracking-[0.16em] text-walnut">Контакты</p>
+          </Reveal>
+          <Lines
+            className="text-[clamp(3rem,8vw,8.5rem)] font-light leading-[0.88] tracking-[-0.05em]"
+            lines={["Обсудим", "ваш проект"]}
+          />
+          <Reveal delay={0.2} className="mt-10 flex flex-col items-start gap-3">
+            <Pill href="https://www.instagram.com/evgeniya_isakova90" external>
+              Написать в&nbsp;Instagram
+            </Pill>
+            <span className="pl-1 text-[13px] text-ink/55">Работаю по&nbsp;всей России, отвечаю в&nbsp;течение суток</span>
+          </Reveal>
         </div>
 
-        <div className="rounded-[26px] border border-white/8 light:border-[#18140f]/8 bg-white/[0.03] light:bg-[#18140f]/[0.03] p-7 backdrop-blur-xl">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-[#a49d8c] light:text-[#8f8874]">
-            Телефон
-          </p>
-          <div className="mt-2 flex items-center justify-between gap-4">
-            <a
-              href={`tel:+${PHONE_DIGITS}`}
-              className="font-display text-3xl tracking-tight text-[#EFE9DD] light:text-[#18140f] transition-colors hover:text-[#D4AF37]"
-            >
-              {PHONE_DISPLAY}
-            </a>
-            <button
-              onClick={handleCopy}
-              aria-label="Скопировать номер"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 light:border-[#18140f]/15 text-[#a49d8c] light:text-[#6b6050] transition-colors hover:border-[#D4AF37]/50 hover:text-[#D4AF37]"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-            </button>
-          </div>
+        <div className="flex flex-col justify-end lg:col-span-4 lg:col-start-9">
+          <Reveal delay={0.1} className="border-t border-ink/15 pt-6">
+            <p className="text-[12px] uppercase tracking-[0.16em] text-ink/55">Телефон</p>
+            <div className="mt-4 flex items-center justify-between gap-4">
+              <a
+                href={`tel:+${PHONE_DIGITS}`}
+                className="text-[clamp(1.6rem,2.6vw,2.4rem)] font-light tracking-[-0.03em] transition-colors duration-300 hover:text-walnut"
+              >
+                {PHONE_DISPLAY}
+              </a>
+              <button
+                onClick={handleCopy}
+                aria-label="Скопировать номер"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ink/20 transition-colors duration-300 hover:bg-ink hover:text-paper"
+              >
+                {copied ? <Check className="h-4 w-4" strokeWidth={1.5} /> : <Copy className="h-4 w-4" strokeWidth={1.5} />}
+              </button>
+            </div>
+          </Reveal>
 
-          <div className="mt-6 grid grid-cols-3 gap-3 border-t border-white/8 light:border-[#18140f]/8 pt-6">
-            {MESSENGERS.map((m) => {
-              const Icon = m.icon;
-              return (
-                <a
-                  key={m.name}
-                  href={m.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-center gap-2 rounded-full border border-white/12 light:border-[#18140f]/12 py-3 font-body text-[13px] text-[#EFE9DD] light:text-[#18140f] transition-colors hover:border-[#D4AF37]/50 hover:text-[#D4AF37]"
-                >
-                  <Icon className="h-4 w-4" strokeWidth={1.5} />
+          <Reveal delay={0.2} className="mt-10 border-t border-ink/15 pt-6">
+            <p className="text-[12px] uppercase tracking-[0.16em] text-ink/55">Мессенджеры на&nbsp;этом номере</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {MESSENGERS.map((m) => (
+                <Pill key={m.name} href={m.href} external variant="outline">
                   {m.name}
-                </a>
-              );
-            })}
-          </div>
+                </Pill>
+              ))}
+            </div>
+          </Reveal>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

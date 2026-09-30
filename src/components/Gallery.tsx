@@ -1,179 +1,171 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
-import { Aperture, ArrowRight, Play, Video, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { X } from "lucide-react";
 import PhotoFrame from "@/components/PhotoFrame";
-import PhotoPlaceholder from "@/components/PhotoPlaceholder";
+import Pill from "@/components/Pill";
+import { EASE, ImageReveal, Lines, Reveal } from "@/components/motion";
 
-type MediaType = "photo" | "video" | null;
-
-const PHOTOS = [
-  { src: "/photos/bathtub.jpg", alt: "Ванная комната с ванной", label: "Ванная" },
-  { src: "/photos/guest-ensuite.jpg", alt: "Гостевой санузел", label: "Гостевой санузел" },
-  { src: "/photos/living-room.jpg", alt: "Гостиная", label: "Гостиная" },
-  { src: "/photos/shower.jpg", alt: "Душевая", label: "Душевая" },
-  { src: "/photos/vanity-detail.jpg", alt: "Деталь интерьера", label: "Деталь интерьера" },
+const FEATURED = [
+  { src: "/photos/bedroom.jpg", label: "Спальня" },
+  { src: "/photos/kitchen.jpg", label: "Кухня-гостиная" },
+  { src: "/photos/stone-ensuite.jpg", label: "Санузел в камне" },
+  { src: "/photos/closet.jpg", label: "Гардеробная" },
+  { src: "/photos/hero-bath.jpg", label: "Ванная с панорамным окном" },
+  { src: "/photos/living-room.jpg", label: "Гостиная" },
+  { src: "/photos/guest-ensuite.jpg", label: "Гостевой санузел" },
 ];
 
-const panelItem: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
-};
+const ALL = [
+  ...FEATURED,
+  { src: "/photos/bathroom.jpg", label: "Ванная комната" },
+  { src: "/photos/bathtub.jpg", label: "Ванная" },
+  { src: "/photos/shower.jpg", label: "Душевая" },
+  { src: "/photos/vanity-detail.jpg", label: "Деталь интерьера" },
+];
 
-function GalleryCard({ photo }: { photo: (typeof PHOTOS)[number] }) {
+export default function Gallery() {
+  const [active, setActive] = useState(0);
+  const [open, setOpen] = useState(false);
+
   return (
-    <div>
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-white/8 light:border-[#18140f]/8">
-        <PhotoFrame src={photo.src} alt={photo.alt} sizes="(min-width: 640px) 33vw, 50vw" cover />
+    <section id="gallery" className="bg-ink px-5 py-28 text-paper sm:px-10 lg:px-16 lg:py-36">
+      <div className="mx-auto max-w-[1440px]">
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
+            <Reveal>
+              <p className="mb-6 text-[12px] uppercase tracking-[0.16em] text-sand">Работы</p>
+            </Reveal>
+            <Lines
+              className="text-[clamp(2.6rem,6vw,6rem)] font-light leading-[0.92] tracking-[-0.045em]"
+              lines={["Интерьеры,", "в которых живут"]}
+            />
+          </div>
+          <Reveal delay={0.15} className="flex flex-col items-start gap-6 lg:col-span-4 lg:col-start-9">
+            <p className="max-w-[40ch] text-[15px] leading-[1.6] text-paper/70">
+              Галерея пополняется по&nbsp;мере того, как завершаются новые проекты. Заходите время от&nbsp;времени,
+              здесь будет появляться что-то новое.
+            </p>
+            <Pill onClick={() => setOpen(true)} variant="outline" tone="light">
+              Смотреть все фото
+            </Pill>
+          </Reveal>
+        </div>
+
+        {/* Desktop: hovered photo widens, the rest step back. */}
+        <div className="mt-16 hidden h-[72vh] min-h-[480px] gap-2 md:flex">
+          {FEATURED.map((p, i) => {
+            const on = active === i;
+            return (
+              <button
+                key={p.src}
+                type="button"
+                onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+                onClick={() => setOpen(true)}
+                aria-label={`${p.label}, открыть все фото`}
+                style={{ flexGrow: on ? 6 : 1 }}
+                className="relative min-w-0 basis-0 overflow-hidden text-left transition-[flex-grow] duration-[900ms] ease-soft"
+              >
+                <ImageReveal className="h-full w-full" delay={i * 0.07}>
+                  <div
+                    className={`absolute inset-0 transition-[transform,filter] duration-[900ms] ease-soft ${
+                      on ? "scale-100 grayscale-0" : "scale-110 grayscale-[35%]"
+                    }`}
+                  >
+                    <PhotoFrame src={p.src} alt={p.label} sizes="(min-width: 768px) 60vw, 1px" cover />
+                  </div>
+                </ImageReveal>
+                <div
+                  className={`pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/70 to-transparent transition-opacity duration-700 ${
+                    on ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+                <span
+                  className={`absolute bottom-6 left-6 whitespace-nowrap text-[22px] font-light tracking-[-0.02em] transition-[opacity,transform] duration-700 ease-soft ${
+                    on ? "translate-y-0 opacity-100 delay-200" : "translate-y-4 opacity-0"
+                  }`}
+                >
+                  {p.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Mobile: swipeable strip. */}
+        <div className="no-scrollbar -mx-5 mt-12 flex snap-x snap-mandatory scroll-px-5 gap-3 overflow-x-auto px-5 md:hidden">
+          {FEATURED.map((p, i) => (
+            <button
+              key={p.src}
+              type="button"
+              onClick={() => setOpen(true)}
+              className="w-[78vw] shrink-0 snap-start text-left"
+            >
+              <ImageReveal className="aspect-[3/4] w-full" delay={i * 0.07}>
+                <PhotoFrame src={p.src} alt={p.label} sizes="78vw" cover />
+              </ImageReveal>
+              <span className="mt-3 block text-[15px] font-light">{p.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
-      <p className="mt-2 font-mono text-[11px] uppercase tracking-widest text-[#a49d8c] light:text-[#6b6050]">
-        {photo.label}
-      </p>
-    </div>
+
+      <AnimatePresence>{open && <Lightbox onClose={() => setOpen(false)} />}</AnimatePresence>
+    </section>
   );
 }
 
-function PhotoLightbox({ onClose }: { onClose: () => void }) {
+function Lightbox({ onClose }: { onClose: () => void }) {
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    const root = document.documentElement;
+    root.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = "";
+      root.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
   }, [onClose]);
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
-      className="fixed inset-0 z-[100] bg-[#0F1013]/95 backdrop-blur-xl"
-      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Все фото"
+      className="fixed inset-0 z-[100] overflow-y-auto bg-paper text-ink"
+      initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
+      animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
+      exit={{ clipPath: "inset(0% 0% 100% 0%)" }}
+      transition={{ duration: 0.9, ease: EASE }}
     >
-      <motion.div
-        initial={{ opacity: 0, y: 24, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 16, scale: 0.98 }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        onClick={(e) => e.stopPropagation()}
-        className="mx-auto flex h-full max-w-6xl flex-col overflow-y-auto px-6 py-10 sm:px-10"
-      >
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">Все фото</p>
-            <h3 className="mt-2 font-display text-3xl text-[#EFE9DD]">Коллекция фотографий</h3>
-          </div>
-          <button
-            onClick={onClose}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 text-[#EFE9DD] transition-colors hover:border-[#D4AF37]/60 hover:text-[#D4AF37]"
-            aria-label="Закрыть"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-
-        <div className="grid grid-cols-2 items-start gap-x-4 gap-y-8 pb-6 sm:grid-cols-3">
-          {PHOTOS.map((photo) => (
-            <GalleryCard key={photo.src} photo={photo} />
-          ))}
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-export default function Gallery() {
-  const [open, setOpen] = useState<MediaType>(null);
-
-  return (
-    <section id="gallery" className="px-6 pb-28 sm:px-10 lg:px-16">
-      <div className="mx-auto max-w-7xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-14 text-center"
+      <div className="sticky top-0 z-10 flex items-center justify-between bg-paper/85 px-5 py-4 backdrop-blur-xl sm:px-10 lg:px-16">
+        <p className="text-lg font-light tracking-[-0.03em]">Все фото</p>
+        <button
+          onClick={onClose}
+          aria-label="Закрыть"
+          className="group flex h-11 w-11 items-center justify-center rounded-full border border-ink/20 transition-colors duration-300 hover:bg-ink hover:text-paper"
         >
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">Работы</p>
-          <h2 className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] light:text-[#18140f] sm:text-5xl">
-            Фото и <span className="text-gradient-gold">видео</span>
-          </h2>
-          <p className="mx-auto mt-5 max-w-md text-[14px] text-[#a49d8c] light:text-[#5c5648]">
-            Галерея пополняется по мере того, как завершаются новые проекты —
-            заходите время от времени, здесь будет появляться что-то новое.
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ staggerChildren: 0.1 }}
-          className="grid gap-5 lg:grid-cols-2"
-        >
-          {/* Photo panel */}
-          <motion.button
-            variants={panelItem}
-            onClick={() => setOpen("photo")}
-            className="group relative aspect-[4/5] overflow-hidden rounded-[28px] border border-white/8 light:border-[#18140f]/8 text-left sm:aspect-[3/4]"
-          >
-            <PhotoFrame src="/photos/bedroom.jpg" alt="Спальня" sizes="(min-width: 1024px) 50vw, 100vw" cover />
-            <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0F1013] via-[#0F1013]/10 to-transparent" />
-
-            <span className="absolute left-6 top-6 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0F1013]/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-[#EFE9DD] backdrop-blur-md">
-              <Aperture className="h-3 w-3 text-[#D4AF37]" />
-              Фото
-            </span>
-
-            <div className="absolute inset-x-6 bottom-6 z-10 flex items-end justify-between gap-4">
-              <span className="font-display text-2xl text-[#EFE9DD]">Спальня</span>
-              <span className="flex shrink-0 items-center gap-2 rounded-full border border-[#D4AF37]/50 bg-[#0F1013]/50 px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-[#EFE9DD] backdrop-blur-md transition-colors group-hover:bg-[#D4AF37] group-hover:text-[#0F1013]">
-                Все фото
-                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
-              </span>
-            </div>
-          </motion.button>
-
-          {/* Video panel */}
-          <motion.div
-            variants={panelItem}
-            className="group relative aspect-[4/5] overflow-hidden rounded-[28px] border border-white/8 light:border-[#18140f]/8 text-left sm:aspect-[3/4]"
-          >
-            <PhotoPlaceholder label="Видео-обзор" />
-            <div className="absolute inset-0 bg-[#0F1013]/45" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1013] via-transparent to-transparent" />
-
-            <span className="absolute left-6 top-6 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0F1013]/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-[#EFE9DD] backdrop-blur-md">
-              <Video className="h-3 w-3 text-[#D4AF37]" />
-              Видео
-            </span>
-
-            <span className="absolute inset-0 flex items-center justify-center">
-              <span className="relative flex h-16 w-16 items-center justify-center rounded-full border border-[#D4AF37]/60 bg-[#0F1013]/60 text-[#D4AF37] backdrop-blur-md transition-transform duration-300 group-hover:scale-110">
-                <span className="absolute inset-0 rounded-full border border-[#D4AF37]/30 motion-safe:animate-ping" />
-                <Play className="h-5 w-5 translate-x-[2px]" />
-              </span>
-            </span>
-
-            <div className="absolute inset-x-6 bottom-6 flex items-end justify-between gap-4">
-              <span className="font-display text-2xl text-[#EFE9DD]">Обзор проекта</span>
-              <span className="flex shrink-0 items-center gap-2 rounded-full border border-[#D4AF37]/50 bg-[#0F1013]/50 px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-[#EFE9DD] backdrop-blur-md transition-colors group-hover:bg-[#D4AF37] group-hover:text-[#0F1013]">
-                Все видео
-                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
-              </span>
-            </div>
-          </motion.div>
-        </motion.div>
+          <X className="h-4 w-4 transition-transform duration-[520ms] ease-soft group-hover:rotate-90" strokeWidth={1.5} />
+        </button>
       </div>
 
-      <AnimatePresence>
-        {open === "photo" && <PhotoLightbox onClose={() => setOpen(null)} />}
-      </AnimatePresence>
-    </section>
+      <div className="grid grid-cols-1 gap-x-4 gap-y-10 px-5 pb-16 pt-6 sm:grid-cols-2 sm:px-10 lg:grid-cols-3 lg:px-16">
+        {ALL.map((p, i) => (
+          <motion.figure
+            key={p.src}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: EASE, delay: 0.35 + i * 0.05 }}
+          >
+            <div className="relative aspect-[4/5] overflow-hidden">
+              <PhotoFrame src={p.src} alt={p.label} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" cover />
+            </div>
+            <figcaption className="mt-3 text-[12px] uppercase tracking-[0.16em] text-ink/60">{p.label}</figcaption>
+          </motion.figure>
+        ))}
+      </div>
+    </motion.div>
   );
 }

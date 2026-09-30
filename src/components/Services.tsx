@@ -1,121 +1,60 @@
-"use client";
-
-import { useState } from "react";
-import { motion, type Variants } from "framer-motion";
-import { MessageCircle, PenTool, ShieldCheck, Sofa } from "lucide-react";
-
-const container: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.09 } },
-};
-const item: Variants = {
-  hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
-  show: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
-  },
-};
+import { ArrowUpRight } from "lucide-react";
+import { Lines, Reveal } from "@/components/motion";
 
 const SERVICES = [
-  {
-    icon: PenTool,
-    title: "Дизайн-проект",
-    text: "Планировка, визуализация и вся документация для стройки.",
-    span: "col-span-2 row-span-2",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Авторский надзор",
-    text: "Слежу, чтобы стройка не разошлась с проектом.",
-    span: "col-span-1 sm:col-span-2 row-span-1",
-  },
-  {
-    icon: Sofa,
-    title: "Подбор мебели",
-    text: "Комплектация под бюджет, с учётом сроков поставки.",
-    span: "col-span-1 sm:col-span-2 row-span-1",
-  },
-  {
-    icon: MessageCircle,
-    title: "Онлайн-консультация",
-    text: "Разбор планировки или подбора цвета за один созвон.",
-    span: "col-span-2 sm:col-span-4 row-span-1",
-  },
+  { title: "Дизайн-проект", text: "Планировка, визуализация и вся документация для стройки." },
+  { title: "Авторский надзор", text: "Слежу, чтобы стройка не разошлась с проектом." },
+  { title: "Подбор мебели", text: "Комплектация под бюджет, с учётом сроков поставки." },
+  { title: "Онлайн-консультация", text: "Разбор планировки или подбора цвета за один созвон." },
 ];
-
-function ServiceCard({ s }: { s: (typeof SERVICES)[number] }) {
-  const [flipped, setFlipped] = useState(false);
-  const Icon = s.icon;
-
-  return (
-    <motion.div
-      variants={item}
-      className={`flip-card ${s.span} ${flipped ? "is-flipped" : ""}`}
-      onClick={() => setFlipped((v) => !v)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          setFlipped((v) => !v);
-        }
-      }}
-      role="button"
-      tabIndex={0}
-      aria-label={`${s.title}: ${s.text}`}
-    >
-      <div className="flip-inner cursor-pointer">
-        <div className="flip-face flip-face-front flex flex-col items-center justify-center gap-4 rounded-[20px] border border-white/8 light:border-[#18140f]/8 bg-white/[0.02] light:bg-[#18140f]/[0.02] p-6 text-center">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#D4AF37]/30 text-[#D4AF37]">
-            <Icon className="h-5 w-5" strokeWidth={1.5} />
-          </span>
-          <h3 className="font-display text-2xl text-[#EFE9DD] light:text-[#18140f]">{s.title}</h3>
-        </div>
-
-        <div className="flip-face flip-face-back flex flex-col items-center justify-center gap-3 rounded-[20px] border border-[#D4AF37]/30 bg-gradient-to-br from-[#D4AF37]/12 to-[#D4AF37]/[0.03] p-6 text-center">
-          <Icon className="h-7 w-7 text-[#D4AF37]" strokeWidth={1.5} />
-          <h3 className="font-display text-2xl text-[#EFE9DD] light:text-[#18140f]">{s.title}</h3>
-          <p className="max-w-[26ch] text-[15px] leading-relaxed text-[#c9c2b0] light:text-[#5c5648]">{s.text}</p>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
 
 export default function Services() {
   return (
-    <section id="services" className="px-6 pb-28 sm:px-10 lg:px-16">
-      <div className="mx-auto max-w-6xl">
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-4 font-mono text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]"
-        >
-          [ Услуги ]
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="text-balance mb-14 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-[#EFE9DD] light:text-[#18140f] sm:text-5xl"
-        >
-          Чем могу <span className="text-gradient-gold">помочь</span>
-        </motion.h2>
+    <section id="services" className="bg-paper-2 px-5 py-28 sm:px-10 lg:px-16 lg:py-36">
+      <div className="mx-auto max-w-[1440px]">
+        <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
+            <Reveal>
+              <p className="mb-6 text-[12px] uppercase tracking-[0.16em] text-walnut">Услуги</p>
+            </Reveal>
+            <Lines
+              className="text-[clamp(2.6rem,6vw,6rem)] font-light leading-[0.92] tracking-[-0.045em]"
+              lines={["Чем могу", "помочь"]}
+            />
+          </div>
+          <Reveal delay={0.15} className="lg:col-span-4 lg:col-start-9">
+            <p className="max-w-[38ch] text-[15px] leading-[1.6] text-ink/70">
+              Можно взять весь цикл под&nbsp;ключ или&nbsp;только то, что нужно сейчас. Состав работ обсудим
+              на&nbsp;первом звонке.
+            </p>
+          </Reveal>
+        </div>
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-2 gap-4 [grid-auto-rows:160px] sm:grid-cols-4 sm:[grid-auto-rows:170px]"
-        >
-          {SERVICES.map((s) => (
-            <ServiceCard key={s.title} s={s} />
+        <ul className="mt-16">
+          {SERVICES.map((s, i) => (
+            <Reveal key={s.title} as="li" delay={i * 0.08} y={20}>
+                <a
+                  href="#contact"
+                  className="group relative grid grid-cols-[1fr_auto] items-center gap-x-6 gap-y-2 overflow-hidden border-t border-ink/15 py-8 sm:grid-cols-[1.1fr_1fr_auto] sm:py-10"
+                >
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 origin-bottom scale-y-0 bg-ink transition-transform duration-500 ease-soft group-hover:scale-y-100"
+                  />
+                  <span className="relative text-[clamp(1.6rem,3.2vw,2.8rem)] font-light leading-none tracking-[-0.035em] transition-[color,transform] duration-[320ms] group-hover:translate-x-4 group-hover:text-paper sm:group-hover:translate-x-6">
+                    {s.title}
+                  </span>
+                  <span className="relative col-span-2 max-w-[42ch] text-[15px] leading-[1.55] text-ink/65 transition-colors duration-[320ms] group-hover:text-paper/70 sm:col-span-1 sm:row-start-1 sm:col-start-2">
+                    {s.text}
+                  </span>
+                  <span className="relative col-start-2 row-start-1 flex h-12 w-12 items-center justify-center rounded-full border border-ink/20 transition-[border-color,color,transform] duration-[520ms] ease-soft group-hover:rotate-45 group-hover:border-paper/40 group-hover:text-paper sm:col-start-3 sm:mr-6">
+                    <ArrowUpRight className="h-5 w-5" strokeWidth={1.25} />
+                  </span>
+                </a>
+            </Reveal>
           ))}
-        </motion.div>
+          <li className="border-t border-ink/15" aria-hidden />
+        </ul>
       </div>
     </section>
   );

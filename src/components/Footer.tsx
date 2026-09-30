@@ -1,13 +1,20 @@
+import { Lines } from "@/components/motion";
+
 export default function Footer() {
   return (
-    <footer className="border-t border-white/8 light:border-[#18140f]/8 px-6 pb-8 pt-16 sm:px-10 lg:px-16">
-      <div className="mx-auto max-w-7xl">
-        <p className="font-display text-3xl italic tracking-tight text-[#EFE9DD] light:text-[#18140f] sm:text-4xl">
-          Исакова <span className="text-gradient-gold not-italic">Design</span>
-        </p>
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/8 light:border-[#18140f]/8 pt-6 font-mono text-[11px] uppercase tracking-widest text-[#6b6558] light:text-[#8f8874]">
+    <footer className="overflow-hidden bg-ink px-5 pb-8 pt-24 text-paper sm:px-10 lg:px-16">
+      <div className="mx-auto max-w-[1440px]">
+        <Lines
+          as="p"
+          className="text-[clamp(3.5rem,15vw,15rem)] font-light leading-[0.85] tracking-[-0.06em]"
+          lines={["Исакова", <span key="d" className="text-sand">Design</span>]}
+        />
+        <div className="mt-14 flex flex-col gap-3 border-t border-paper/15 pt-6 text-[13px] text-paper/55 sm:flex-row sm:items-center sm:justify-between">
           <span>© Исакова Евгения, дизайнер интерьера</span>
-          <span>Работаем по всей России</span>
+          <span>Работаю по&nbsp;всей России</span>
+          <a href="#" className="transition-colors duration-300 hover:text-paper">
+            Наверх
+          </a>
         </div>
       </div>
     </footer>

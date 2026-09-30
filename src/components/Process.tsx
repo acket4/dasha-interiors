@@ -1,212 +1,85 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, animate, type AnimationPlaybackControls } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { Lines, Reveal } from "@/components/motion";
 
 const STEPS = [
-  { title: "Бриф", text: "Обмер и разговор о привычках" },
-  { title: "Концепция", text: "Планировка и 3D-визуализация" },
-  { title: "Чертежи", text: "Документация для подрядчиков" },
-  { title: "Стройка", text: "Авторский надзор на объекте" },
-  { title: "Декор", text: "Расстановка и фотосъёмка" },
+  { title: "Бриф", text: "Обмер и разговор о привычках" },
+  { title: "Концепция", text: "Планировка и 3D-визуализация" },
+  { title: "Чертежи", text: "Документация для подрядчиков" },
+  { title: "Стройка", text: "Авторский надзор на объекте" },
+  { title: "Декор", text: "Расстановка и фотосъёмка" },
 ];
 
-const N = STEPS.length;
-const HOLD_DURATION = 1900;
-const STEP_TRANSITION = 0.75;
-const RESUME_DELAY = 3500;
-
 export default function Process() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
-  const activeRef = useRef(0);
-  const x = useMotionValue(0);
-  const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const stepControls = useRef<AnimationPlaybackControls | null>(null);
-  const reducedMotion = useRef(false);
-
-  function trackWidth() {
-    return trackRef.current?.getBoundingClientRect().width ?? 0;
-  }
-
-  function stepToX(i: number) {
-    return (i / (N - 1)) * trackWidth();
-  }
-
-  function updateActive(i: number) {
-    activeRef.current = i;
-    setActive(i);
-  }
-
-  function setActiveFromX(width: number) {
-    const pct = Math.min(1, Math.max(0, x.get() / width));
-    const idx = Math.round(pct * (N - 1));
-    if (idx !== activeRef.current) updateActive(idx);
-  }
-
-  function stopLoop() {
-    if (holdTimer.current) clearTimeout(holdTimer.current);
-    holdTimer.current = null;
-    stepControls.current?.stop();
-    stepControls.current = null;
-  }
-
-  function advance(i: number) {
-    holdTimer.current = setTimeout(() => {
-      const next = (i + 1) % N;
-      updateActive(next);
-      stepControls.current = animate(x, stepToX(next), {
-        duration: STEP_TRANSITION,
-        ease: [0.22, 1, 0.36, 1],
-        onComplete: () => advance(next),
-      });
-    }, HOLD_DURATION);
-  }
-
-  function startLoopFrom(i: number) {
-    if (reducedMotion.current) return;
-    stopLoop();
-    advance(i);
-  }
-
-  function pauseAndScheduleResume() {
-    stopLoop();
-    if (holdTimer.current) clearTimeout(holdTimer.current);
-    holdTimer.current = setTimeout(() => startLoopFrom(activeRef.current), RESUME_DELAY);
-  }
-
-  function snapTo(i: number) {
-    updateActive(i);
-    animate(x, stepToX(i), { type: "spring", stiffness: 380, damping: 34 });
-  }
-
-  function goTo(i: number) {
-    pauseAndScheduleResume();
-    snapTo(i);
-  }
-
-  function handlePointerDown(e: React.PointerEvent<HTMLDivElement>) {
-    pauseAndScheduleResume();
-    e.currentTarget.setPointerCapture(e.pointerId);
-
-    function onMove(ev: PointerEvent) {
-      const rect = trackRef.current?.getBoundingClientRect();
-      if (!rect) return;
-      const px = Math.min(1, Math.max(0, (ev.clientX - rect.left) / rect.width));
-      x.set(px * rect.width);
-      setActiveFromX(rect.width);
-    }
-    function onUp() {
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", onUp);
-      snapTo(activeRef.current);
-    }
-    window.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", onUp);
-  }
-
-  useEffect(() => {
-    reducedMotion.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    x.set(0);
-    startLoopFrom(0);
-
-    const onResize = () => x.set(stepToX(activeRef.current));
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-      stopLoop();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const ref = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.9", "start 0.3"] });
+  const progress = useTransform(scrollYProgress, (v) => (reduced ? 1 : v));
 
   return (
-    <section id="process" className="bg-cream px-6 py-28 text-cream-ink sm:px-10 lg:px-16">
-      <div className="mx-auto max-w-7xl">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#9c6b1f]">
-          [ Процесс ]
-        </p>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="text-balance mt-4 font-display text-4xl leading-[0.95] tracking-[-0.03em] hyphens-none text-cream-ink sm:text-5xl"
-        >
-          Как проходит проект
-        </motion.h2>
+    <section id="process" className="bg-ink px-5 py-28 text-paper sm:px-10 lg:px-16 lg:py-40">
+      <div className="mx-auto max-w-[1440px]">
+        <Reveal>
+          <p className="mb-6 text-[12px] uppercase tracking-[0.16em] text-sand">Процесс</p>
+        </Reveal>
+        <Lines
+          className="text-[clamp(2.6rem,6vw,6rem)] font-light leading-[0.92] tracking-[-0.045em]"
+          lines={["Как проходит", "проект"]}
+        />
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-          className="mt-24 rounded-[24px] border border-[#1c1811]/10 bg-white/50 px-6 py-6 backdrop-blur-xl sm:px-9 sm:py-8"
-        >
-          <div className="mb-8 flex items-center justify-between">
-            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-cream-ink-soft">
-              Этап{" "}
-              <span className="font-body text-lg font-semibold normal-case tracking-normal text-cream-ink">
-                {STEPS[active].title}
-              </span>
-            </span>
-            <span className="font-mono text-[11px] text-cream-ink-soft">
-              0{active + 1} / 0{N}
-            </span>
-          </div>
-
-          <div ref={trackRef} className="relative h-[3px] rounded-full bg-[#1c1811]/10">
-            {STEPS.map((s, i) => (
-              <button
-                key={s.title}
-                onClick={() => goTo(i)}
-                aria-label={s.title}
-                style={{ left: `${(i / (N - 1)) * 100}%` }}
-                className="absolute top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
-              >
-                <span
-                  className={`h-2.5 w-2.5 rounded-full transition-colors duration-300 ${
-                    active === i ? "bg-[#1c1811]" : "bg-[#1c1811]/20 hover:bg-[#1c1811]/40"
-                  }`}
-                />
-              </button>
-            ))}
-
+        <div ref={ref} className="relative mt-20 lg:mt-28">
+          <div className="absolute bottom-0 left-[5px] top-0 w-px bg-paper/15 lg:bottom-auto lg:left-0 lg:right-0 lg:top-[5px] lg:h-px lg:w-auto">
             <motion.div
-              onPointerDown={handlePointerDown}
-              style={{ x }}
-              className="absolute left-0 top-1/2 z-10 h-6 w-6 -translate-y-1/2 cursor-grab touch-none rounded-full bg-[#D4AF37] shadow-[0_2px_12px_rgba(212,175,55,0.45)] active:cursor-grabbing"
+              style={{ scaleY: progress }}
+              className="h-full w-full origin-top bg-sand lg:hidden"
+            />
+            <motion.div
+              style={{ scaleX: progress }}
+              className="hidden h-full w-full origin-left bg-sand lg:block"
             />
           </div>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.18 }}
-          className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-5"
-        >
-          {STEPS.map((s, i) => (
-            <button key={s.title} onClick={() => goTo(i)} className="text-left">
-              <span className="font-mono text-xs text-[#9c6b1f]">0{i + 1}</span>
-              <h4
-                className={`mt-2 font-body font-semibold text-cream-ink transition-all duration-300 ${
-                  active === i ? "text-2xl opacity-100" : "text-base opacity-40"
-                }`}
-              >
-                {s.title}
-              </h4>
-              <p
-                className={`mt-1.5 text-sm leading-relaxed text-cream-ink-soft transition-opacity duration-300 ${
-                  active === i ? "opacity-100" : "opacity-0 sm:opacity-40"
-                }`}
-              >
-                {s.text}
-              </p>
-            </button>
-          ))}
-        </motion.div>
+          <ol className="grid gap-12 lg:grid-cols-5 lg:gap-8">
+            {STEPS.map((s, i) => (
+              <Step key={s.title} index={i} step={s} progress={progress} />
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
+  );
+}
+
+function Step({
+  index,
+  step,
+  progress,
+}: {
+  index: number;
+  step: (typeof STEPS)[number];
+  progress: MotionValue<number>;
+}) {
+  const at = index / (STEPS.length - 1);
+  const lit = useTransform(progress, [Math.max(0, at - 0.12), at], [0, 1]);
+  const opacity = useTransform(lit, [0, 1], [0.3, 1]);
+  const y = useTransform(lit, [0, 1], [18, 0]);
+
+  return (
+    <li className="relative pl-10 lg:pl-0 lg:pt-12">
+      <motion.span
+        style={{ scale: lit }}
+        className="absolute left-0 top-1 h-[11px] w-[11px] rounded-full bg-sand lg:top-0"
+      />
+      <span className="absolute left-0 top-1 h-[11px] w-[11px] rounded-full border border-paper/30 lg:top-0" />
+      <motion.div style={{ opacity, y }}>
+        <span className="text-[13px] tabular-nums text-sand">0{index + 1}</span>
+        <h3 className="mt-3 text-[clamp(1.6rem,2.4vw,2.2rem)] font-light leading-none tracking-[-0.035em]">
+          {step.title}
+        </h3>
+        <p className="mt-3 max-w-[24ch] text-[15px] leading-[1.55] text-paper/65">{step.text}</p>
+      </motion.div>
+    </li>
   );
 }

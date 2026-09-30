@@ -1,22 +1,12 @@
 import { ImageIcon } from "lucide-react";
 
-export default function PhotoPlaceholder({
-  label,
-  className = "",
-}: {
-  label?: string;
-  className?: string;
-}) {
+export default function PhotoPlaceholder({ label, className = "" }: { label?: string; className?: string }) {
   return (
     <div
-      className={`absolute inset-0 flex flex-col items-center justify-center gap-2 border border-dashed border-white/10 light:border-[#18140f]/10 bg-white/[0.03] light:bg-[#18140f]/[0.03] ${className}`}
+      className={`absolute inset-0 flex flex-col items-center justify-center gap-2 border border-dashed border-current/15 bg-current/[0.04] ${className}`}
     >
-      <ImageIcon className="h-6 w-6 text-white/15 light:text-[#18140f]/20" strokeWidth={1.5} />
-      {label && (
-        <span className="px-4 text-center font-mono text-[10px] uppercase tracking-widest text-white/20 light:text-[#18140f]/30">
-          {label}
-        </span>
-      )}
+      <ImageIcon className="h-6 w-6 opacity-25" strokeWidth={1.5} />
+      {label && <span className="px-4 text-center text-[11px] uppercase tracking-[0.18em] opacity-40">{label}</span>}
     </div>
   );
 }
