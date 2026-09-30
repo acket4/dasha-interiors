@@ -26,15 +26,19 @@ export default function Testimonial() {
           [ Отзывы ]
         </motion.p>
 
-        <motion.div
-          variants={item}
-          className="mt-10 flex min-h-[220px] flex-col items-center justify-center gap-3 rounded-[24px] border border-dashed border-white/12 light:border-[#18140f]/12 px-6 py-12"
-        >
-          <Quote className="h-6 w-6 text-white/15 light:text-[#18140f]/20" strokeWidth={1.5} />
-          <p className="font-mono text-[11px] uppercase tracking-widest text-white/25 light:text-[#18140f]/30">
-            Отзыв клиента скоро появится здесь
-          </p>
-        </motion.div>
+        <motion.figure variants={item} className="mt-10 flex flex-col items-center gap-6">
+          <Quote className="h-6 w-6 text-[#D4AF37]" strokeWidth={1.5} />
+          <blockquote className="max-w-2xl text-pretty font-display text-2xl leading-snug text-[#EFE9DD] light:text-[#18140f] sm:text-[1.7rem]">
+            Квартира у нас мансардная, потолки скошенные, и я честно думала, что нормально там ничего
+            не сделать. Женя всё расчертила заранее, каждую полку и розетку, поэтому на стройке почти
+            ничего не переделывали. Пару раз она приезжала смотреть, как мастера кладут плитку, и один
+            косяк поймали сразу, а не когда всё уже закрыли. Ванная получилась именно такая, как
+            хотели. Спасибо ей за терпение, я мнение меняла раз пять.
+          </blockquote>
+          <figcaption className="font-mono text-[11px] uppercase tracking-widest text-[#a49d8c] light:text-[#6b6050]">
+            Марина К., ремонт мансардной квартиры
+          </figcaption>
+        </motion.figure>
       </motion.div>
     </section>
   );
